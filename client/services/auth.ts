@@ -20,15 +20,19 @@ export function setToken(token: string | null) {
 export async function login(
   input: AuthLoginRequest,
 ): Promise<AuthLoginResponse> {
-  const res = await fetch(apiUrl("/api/auth/login"), {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(input),
+  const { supabase } = await import("@/lib/supabase");
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: input.username,
+    password: input.password,
   });
-  if (!res.ok) throw new Error((await res.json()).error || "Login failed");
-  const data = (await res.json()) as AuthLoginResponse;
-  setToken(data.token);
-  return data;
+  if (error || !data?.session) {
+    throw new Error(error?.message || "Login failed (401)");
+  }
+  const token = data.session.access_token;
+  setToken(token);
+  const u = await me();
+  if (!u) throw new Error("Login failed: no profile");
+  return { token, user: u } as AuthLoginResponse;
 }
 
 export async function me(): Promise<User | null> {
@@ -39,8 +43,14 @@ export async function me(): Promise<User | null> {
       apiUrl(`/api/auth/me?token=${encodeURIComponent(token)}`),
     );
     if (!res.ok) return null;
-    const data = (await res.json()) as AuthMeResponse;
-    return data.user;
+    let json: any = null;
+    try {
+      const text = await res.text();
+      json = text ? JSON.parse(text) : null;
+    } catch {
+      json = null;
+    }
+    return (json as AuthMeResponse | null)?.user ?? null;
   } catch {
     return null;
   }
@@ -49,11 +59,18 @@ export async function me(): Promise<User | null> {
 export async function logout() {
   const token = getToken();
   try {
-    await fetch(apiUrl(`/api/auth/logout?token=${encodeURIComponent(token)}`), {
-      method: "POST",
-    });
-  } catch {
-    // ignore network errors on logout
-  }
+    const { supabase } = await import("@/lib/supabase");
+    await supabase.auth.signOut();
+  } catch {}
+  try {
+    if (token) {
+      await fetch(
+        apiUrl(`/api/auth/logout?token=${encodeURIComponent(token)}`),
+        {
+          method: "POST",
+        },
+      );
+    }
+  } catch {}
   setToken(null);
 }

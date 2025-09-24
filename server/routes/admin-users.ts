@@ -24,7 +24,7 @@ export const adminListUsers: RequestHandler = async (req, res) => {
     req.headers.authorization,
     (req.query.token as string) || undefined,
   );
-  const manager = requireManager(token);
+  const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
   if (!ensureSupabase(res)) return;
 
@@ -49,7 +49,7 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
     req.headers.authorization,
     (req.query.token as string) || undefined,
   );
-  const manager = requireManager(token);
+  const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
   if (!ensureSupabase(res)) return;
 
@@ -68,15 +68,13 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
       .status(500)
       .json({ error: cErr?.message || "createUser failed" } as ApiError);
 
-  const { error: iErr } = await supabaseAdmin!
-    .from("user_profiles")
-    .insert({
-      user_id: created.user.id,
-      name: body.name || body.username,
-      email: body.email,
-      role: body.role,
-      active: body.active ?? true,
-    });
+  const { error: iErr } = await supabaseAdmin!.from("user_profiles").insert({
+    user_id: created.user.id,
+    name: body.name || body.username,
+    email: body.email,
+    role: body.role,
+    active: body.active ?? true,
+  });
   if (iErr) return res.status(500).json({ error: iErr.message } as ApiError);
 
   const user: User = {
@@ -95,7 +93,7 @@ export const adminUpdateUser: RequestHandler = async (req, res) => {
     req.headers.authorization,
     (req.query.token as string) || undefined,
   );
-  const manager = requireManager(token);
+  const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
   if (!ensureSupabase(res)) return;
 
@@ -149,7 +147,7 @@ export const adminDeleteUser: RequestHandler = async (req, res) => {
     req.headers.authorization,
     (req.query.token as string) || undefined,
   );
-  const manager = requireManager(token);
+  const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
   if (!ensureSupabase(res)) return;
 
