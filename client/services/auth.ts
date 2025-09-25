@@ -18,14 +18,27 @@ export async function login(input: AuthLoginRequest): Promise<AuthLoginResponse>
     email: input.username,
     password: input.password,
   });
-  if (error || !data?.session) {
+  if (error || !data?.session || !data.user) {
     throw new Error(error?.message || "Login failed (401)");
   }
   const token = data.session.access_token;
   setToken(token);
-  const u = await me();
-  if (!u) throw new Error("Login failed: no profile");
-  return { token, user: u } as AuthLoginResponse;
+  const uid = data.user.id;
+  const { data: profile, error: pErr } = await supabase
+    .from("user_profiles")
+    .select("user_id,name,email,role,active")
+    .eq("user_id", uid)
+    .single();
+  if (pErr || !profile) throw new Error(pErr?.message || "Profile not found");
+  const user: User = {
+    id: profile.user_id,
+    username: profile.name,
+    name: profile.name,
+    email: profile.email,
+    role: profile.role as any,
+    active: Boolean(profile.active),
+  };
+  return { token, user } as AuthLoginResponse;
 }
 
 export async function me(): Promise<User | null> {
