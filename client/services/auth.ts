@@ -14,12 +14,22 @@ export function setToken(token: string | null) {
 
 export async function login(input: AuthLoginRequest): Promise<AuthLoginResponse> {
   const { supabase } = await import("@/lib/supabase");
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: input.username,
-    password: input.password,
-  });
+  let data: any, error: any;
+  try {
+    const res = await supabase.auth.signInWithPassword({
+      email: input.username,
+      password: input.password,
+    });
+    data = res.data; error = res.error;
+  } catch (e: any) {
+    const msg = String(e?.message || e);
+    if (msg.includes("body stream already read")) {
+      throw new Error("Invalid email or password");
+    }
+    throw e;
+  }
   if (error || !data?.session || !data.user) {
-    throw new Error(error?.message || "Login failed (401)");
+    throw new Error(error?.message || "Invalid email or password");
   }
   const token = data.session.access_token;
   setToken(token);
