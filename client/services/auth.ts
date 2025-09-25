@@ -1,4 +1,9 @@
-import type { AuthLoginRequest, AuthLoginResponse, AuthMeResponse, User } from "@shared/api";
+import type {
+  AuthLoginRequest,
+  AuthLoginResponse,
+  AuthMeResponse,
+  User,
+} from "@shared/api";
 import { apiUrl } from "@/lib/api";
 
 const AUTH_KEY = "auth_token";
@@ -12,7 +17,9 @@ export function setToken(token: string | null) {
   else localStorage.removeItem(AUTH_KEY);
 }
 
-export async function login(input: AuthLoginRequest): Promise<AuthLoginResponse> {
+export async function login(
+  input: AuthLoginRequest,
+): Promise<AuthLoginResponse> {
   const { supabase } = await import("@/lib/supabase");
   let data: any, error: any;
   try {
@@ -20,7 +27,8 @@ export async function login(input: AuthLoginRequest): Promise<AuthLoginResponse>
       email: input.username,
       password: input.password,
     });
-    data = res.data; error = res.error;
+    data = res.data;
+    error = res.error;
   } catch (e: any) {
     const msg = String(e?.message || e);
     if (msg.includes("body stream already read")) {
@@ -55,7 +63,9 @@ export async function me(): Promise<User | null> {
   const token = getToken();
   if (!token) return null;
   try {
-    const res = await fetch(apiUrl(`/api/auth/me?token=${encodeURIComponent(token)}`));
+    const res = await fetch(
+      apiUrl(`/api/auth/me?token=${encodeURIComponent(token)}`),
+    );
     if (!res.ok) return null;
     let json: any = null;
     try {
@@ -78,7 +88,10 @@ export async function logout() {
   } catch {}
   try {
     if (token) {
-      await fetch(apiUrl(`/api/auth/logout?token=${encodeURIComponent(token)}`), { method: "POST" });
+      await fetch(
+        apiUrl(`/api/auth/logout?token=${encodeURIComponent(token)}`),
+        { method: "POST" },
+      );
     }
   } catch {}
   setToken(null);

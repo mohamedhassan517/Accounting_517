@@ -79,8 +79,14 @@ export async function createUser(input: UserCreateRequest): Promise<User> {
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     let json: any = null;
-    try { json = text ? JSON.parse(text) : null; } catch {}
-    const msg = (json && json.error) || text || `${res.status} ${res.statusText}` || "Failed to create user";
+    try {
+      json = text ? JSON.parse(text) : null;
+    } catch {}
+    const msg =
+      (json && json.error) ||
+      text ||
+      `${res.status} ${res.statusText}` ||
+      "Failed to create user";
     throw new Error(msg);
   }
   const created = (await res.json()) as User;
@@ -136,8 +142,14 @@ export async function updateUser(
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     let json: any = null;
-    try { json = text ? JSON.parse(text) : null; } catch {}
-    const msg = (json && json.error) || text || `${res.status} ${res.statusText}` || "Failed to update user`";
+    try {
+      json = text ? JSON.parse(text) : null;
+    } catch {}
+    const msg =
+      (json && json.error) ||
+      text ||
+      `${res.status} ${res.statusText}` ||
+      "Failed to update user`";
     throw new Error(msg);
   }
   const updated = (await res.json()) as User;
@@ -175,8 +187,14 @@ export async function deleteUserApi(id: string): Promise<void> {
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     let json: any = null;
-    try { json = text ? JSON.parse(text) : null; } catch {}
-    const msg = (json && json.error) || text || `${res.status} ${res.statusText}` || "Failed to delete user";
+    try {
+      json = text ? JSON.parse(text) : null;
+    } catch {}
+    const msg =
+      (json && json.error) ||
+      text ||
+      `${res.status} ${res.statusText}` ||
+      "Failed to delete user";
     throw new Error(msg);
   }
   const current = (await getCached<User[]>(key)) ?? [];
