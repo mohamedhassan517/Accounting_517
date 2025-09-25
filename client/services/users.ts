@@ -76,17 +76,13 @@ export async function createUser(input: UserCreateRequest): Promise<User> {
     headers,
     body: JSON.stringify(input),
   });
-  const text = await res.text();
-  let json: any = null;
-  try {
-    json = text ? JSON.parse(text) : null;
-  } catch {
-    json = null;
-  }
   if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    let json: any = null;
+    try { json = text ? JSON.parse(text) : null; } catch {}
     throw new Error((json && json.error) || "Failed to create user");
   }
-  const created = json as User;
+  const created = (await res.json()) as User;
   // Update cache
   const current = (await getCached<User[]>(key)) ?? [];
   await setCached(key, [
@@ -136,17 +132,13 @@ export async function updateUser(
     headers,
     body: JSON.stringify(patch),
   });
-  const text = await res.text();
-  let json: any = null;
-  try {
-    json = text ? JSON.parse(text) : null;
-  } catch {
-    json = null;
-  }
   if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    let json: any = null;
+    try { json = text ? JSON.parse(text) : null; } catch {}
     throw new Error((json && json.error) || "Failed to update user");
   }
-  const updated = json as User;
+  const updated = (await res.json()) as User;
   const current = (await getCached<User[]>(key)) ?? [];
   await setCached<User[]>(
     key,
@@ -178,14 +170,10 @@ export async function deleteUserApi(id: string): Promise<void> {
     method: "DELETE",
     headers,
   });
-  const text = await res.text();
-  let json: any = null;
-  try {
-    json = text ? JSON.parse(text) : null;
-  } catch {
-    json = null;
-  }
   if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    let json: any = null;
+    try { json = text ? JSON.parse(text) : null; } catch {}
     throw new Error((json && json.error) || "Failed to delete user");
   }
   const current = (await getCached<User[]>(key)) ?? [];
