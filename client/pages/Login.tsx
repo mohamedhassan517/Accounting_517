@@ -2,28 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { useAuth } from "@/providers/AuthProvider";
-//edit
-let { data: profile } = await supabase
-  .from("profiles")
-  .select("*")
-  .eq("id", user.id)   // or user_id if that’s the column
-  .single();
 
-if (!profile) {
-  const { data: newProfile, error: insertError } = await supabase
-    .from("profiles")
-    .insert({ id: user.id, username: user.email }) // adjust column name
-    .single();
-
-  if (insertError) {
-    return res.status(500).json({ error: insertError.message });
-  }
-
-  profile = newProfile;
-}
-
-
-//endedit
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -47,19 +26,43 @@ export default function Login() {
       <div className="mx-auto max-w-md">
         <div className="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-slate-200">
           <h1 className="text-2xl font-bold text-center mb-1">تسجيل الدخول</h1>
-          <p className="text-center text-sm text-slate-500 mb-6">الدخول فقط بالحسابات الموجودة. المدير فقط يستطيع إدارة المستخدمين.</p>
+          <p className="text-center text-sm text-slate-500 mb-6">
+            الدخول فقط بالحسابات الموجودة. المدير فقط يستطيع إدارة المستخدمين.
+          </p>
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1">اسم المستخدم</label>
-              <input value={username} onChange={(e) => setUsername(e.target.value)} className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" placeholder="root" />
+              <label className="block text-sm font-medium mb-1">
+                اسم المستخدم
+              </label>
+              <input
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                placeholder="root"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">كلمة المرور</label>
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" placeholder="••••••••" />
+              <label className="block text-sm font-medium mb-1">
+                كلمة المرور
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                placeholder="••••••••"
+              />
             </div>
             {error && <div className="text-red-600 text-sm">{error}</div>}
-            <button type="submit" className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 text-white py-2.5 font-medium hover:opacity-90">دخول</button>
-            <p className="text-xs text-slate-500 text-center">مدير النظام الافتراضي: root / password123</p>
+            <button
+              type="submit"
+              className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 text-white py-2.5 font-medium hover:opacity-90"
+            >
+              دخول
+            </button>
+            <p className="text-xs text-slate-500 text-center">
+              مدير النظام الافتراضي: root / password123
+            </p>
           </form>
         </div>
       </div>

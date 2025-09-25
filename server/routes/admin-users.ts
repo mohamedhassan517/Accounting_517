@@ -68,13 +68,16 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
       .status(500)
       .json({ error: cErr?.message || "createUser failed" } as ApiError);
 
-  const { error: iErr } = await supabaseAdmin!.from("user_profiles").insert({
-    user_id: created.user.id,
-    name: body.name || body.username,
-    email: body.email,
-    role: body.role,
-    active: body.active ?? true,
-  });
+  const { error: iErr } = await supabaseAdmin!.from("user_profiles").upsert(
+    {
+      user_id: created.user.id,
+      name: body.name || body.username,
+      email: body.email,
+      role: body.role,
+      active: body.active ?? true,
+    },
+    { onConflict: "user_id" },
+  );
   if (iErr) return res.status(500).json({ error: iErr.message } as ApiError);
 
   const user: User = {

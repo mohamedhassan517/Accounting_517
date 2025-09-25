@@ -8,16 +8,7 @@ interface AuthContextType {
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }
-//edit
-login: async (username, password) => {
-  const res = await authApi.login({ username, password });
-  setUser(res.user); // user from Supabase
-  // if you want profile as well:
-  console.log("Profile:", res.profile);
-},
 
-
-//edit
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -32,18 +23,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })();
   }, []);
 
-  const value = useMemo<AuthContextType>(() => ({
-    user,
-    loading,
-    login: async (username, password) => {
-      const res = await authApi.login({ username, password });
-      setUser(res.user);
-    },
-    logout: async () => {
-      await authApi.logout();
-      setUser(null);
-    },
-  }), [user, loading]);
+  const value = useMemo<AuthContextType>(
+    () => ({
+      user,
+      loading,
+      login: async (username, password) => {
+        const res = await authApi.login({ username, password });
+        setUser(res.user);
+      },
+      logout: async () => {
+        await authApi.logout();
+        setUser(null);
+      },
+    }),
+    [user, loading],
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
