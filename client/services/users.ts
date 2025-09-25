@@ -80,7 +80,8 @@ export async function createUser(input: UserCreateRequest): Promise<User> {
     const text = await res.text().catch(() => "");
     let json: any = null;
     try { json = text ? JSON.parse(text) : null; } catch {}
-    throw new Error((json && json.error) || "Failed to create user");
+    const msg = (json && json.error) || text || `${res.status} ${res.statusText}` || "Failed to create user";
+    throw new Error(msg);
   }
   const created = (await res.json()) as User;
   // Update cache
@@ -136,7 +137,8 @@ export async function updateUser(
     const text = await res.text().catch(() => "");
     let json: any = null;
     try { json = text ? JSON.parse(text) : null; } catch {}
-    throw new Error((json && json.error) || "Failed to update user");
+    const msg = (json && json.error) || text || `${res.status} ${res.statusText}` || "Failed to update user`";
+    throw new Error(msg);
   }
   const updated = (await res.json()) as User;
   const current = (await getCached<User[]>(key)) ?? [];
@@ -174,7 +176,8 @@ export async function deleteUserApi(id: string): Promise<void> {
     const text = await res.text().catch(() => "");
     let json: any = null;
     try { json = text ? JSON.parse(text) : null; } catch {}
-    throw new Error((json && json.error) || "Failed to delete user");
+    const msg = (json && json.error) || text || `${res.status} ${res.statusText}` || "Failed to delete user";
+    throw new Error(msg);
   }
   const current = (await getCached<User[]>(key)) ?? [];
   await setCached<User[]>(
