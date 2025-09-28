@@ -31,7 +31,12 @@ export default function AccountingSystem() {
   const isAccountant = user?.role === "accountant";
   const isEmployee = user?.role === "employee";
   const [active, setActive] = useState<
-    "dashboard" | "transactions" | "inventory" | "projects" | "reports" | "users"
+    | "dashboard"
+    | "transactions"
+    | "inventory"
+    | "projects"
+    | "reports"
+    | "users"
   >("dashboard");
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -50,7 +55,12 @@ export default function AccountingSystem() {
     description: "",
     date: today(),
   }));
-  const [newItem, setNewItem] = useState({ name: "", quantity: "", unit: "طن", min: "" });
+  const [newItem, setNewItem] = useState({
+    name: "",
+    quantity: "",
+    unit: "طن",
+    min: "",
+  });
   const [receive, setReceive] = useState({
     itemId: "",
     qty: "",
@@ -95,7 +105,9 @@ export default function AccountingSystem() {
   const [savingCost, setSavingCost] = useState(false);
   const [savingSale, setSavingSale] = useState(false);
   const [approvingId, setApprovingId] = useState<string | null>(null);
-  const [deletingTransactionId, setDeletingTransactionId] = useState<string | null>(null);
+  const [deletingTransactionId, setDeletingTransactionId] = useState<
+    string | null
+  >(null);
   const [deletingItemId, setDeletingItemId] = useState<string | null>(null);
 
   const loadData = useCallback(async () => {
@@ -113,7 +125,9 @@ export default function AccountingSystem() {
       const message =
         error instanceof Error ? error.message : "حدث خطأ أثناء تحميل البيانات";
       setLoadingError(message);
-      toast.error("تعذر تحميل البيانات من قاعدة البيانات", { description: message });
+      toast.error("تعذر تحميل البيانات من قاعدة البيانات", {
+        description: message,
+      });
     } finally {
       setInitialLoading(false);
     }
@@ -203,7 +217,12 @@ export default function AccountingSystem() {
     }
     const quantity = Number(newItem.quantity);
     const min = Number(newItem.min);
-    if (!Number.isFinite(quantity) || quantity < 0 || !Number.isFinite(min) || min < 0) {
+    if (
+      !Number.isFinite(quantity) ||
+      quantity < 0 ||
+      !Number.isFinite(min) ||
+      min < 0
+    ) {
       toast.error("القيم العددية غير صحيحة");
       return;
     }
@@ -244,13 +263,23 @@ export default function AccountingSystem() {
   };
 
   const receiveSubmit = async () => {
-    if (!receive.itemId || !receive.qty || !receive.unitPrice || !receive.supplier) {
+    if (
+      !receive.itemId ||
+      !receive.qty ||
+      !receive.unitPrice ||
+      !receive.supplier
+    ) {
       toast.error("الرجاء إدخال جميع بيانات الوارد");
       return;
     }
     const qty = Number(receive.qty);
     const unitPrice = Number(receive.unitPrice);
-    if (!Number.isFinite(qty) || qty <= 0 || !Number.isFinite(unitPrice) || unitPrice <= 0) {
+    if (
+      !Number.isFinite(qty) ||
+      qty <= 0 ||
+      !Number.isFinite(unitPrice) ||
+      unitPrice <= 0
+    ) {
       toast.error("القيم العددية غير صحيحة");
       return;
     }
@@ -265,7 +294,9 @@ export default function AccountingSystem() {
         approved: isManager || isAccountant,
         createdBy: user?.role ?? null,
       });
-      setItems((prev) => prev.map((i) => (i.id === result.item.id ? result.item : i)));
+      setItems((prev) =>
+        prev.map((i) => (i.id === result.item.id ? result.item : i)),
+      );
       setMovements((prev) => [result.movement, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
       if (result.item.quantity < result.item.min) {
@@ -273,7 +304,13 @@ export default function AccountingSystem() {
       } else {
         toast.success("تم تسجيل الوارد وتحديث المصروفات");
       }
-      setReceive({ itemId: "", qty: "", unitPrice: "", supplier: "", date: today() });
+      setReceive({
+        itemId: "",
+        qty: "",
+        unitPrice: "",
+        supplier: "",
+        date: today(),
+      });
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل الوارد";
@@ -290,7 +327,12 @@ export default function AccountingSystem() {
     }
     const qty = Number(issue.qty);
     const unitPrice = Number(issue.unitPrice);
-    if (!Number.isFinite(qty) || qty <= 0 || !Number.isFinite(unitPrice) || unitPrice <= 0) {
+    if (
+      !Number.isFinite(qty) ||
+      qty <= 0 ||
+      !Number.isFinite(unitPrice) ||
+      unitPrice <= 0
+    ) {
       toast.error("القيم العددية غير صحيحة");
       return;
     }
@@ -305,7 +347,9 @@ export default function AccountingSystem() {
         approved: isManager || isAccountant,
         createdBy: user?.role ?? null,
       });
-      setItems((prev) => prev.map((i) => (i.id === result.item.id ? result.item : i)));
+      setItems((prev) =>
+        prev.map((i) => (i.id === result.item.id ? result.item : i)),
+      );
       setMovements((prev) => [result.movement, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
       if (result.item.quantity < result.item.min) {
@@ -313,7 +357,13 @@ export default function AccountingSystem() {
       } else {
         toast.success("تم تسجيل الصرف وتحديث المصروفات");
       }
-      setIssue({ itemId: "", qty: "", unitPrice: "", project: "", date: today() });
+      setIssue({
+        itemId: "",
+        qty: "",
+        unitPrice: "",
+        project: "",
+        date: today(),
+      });
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل الصرف";
@@ -324,13 +374,23 @@ export default function AccountingSystem() {
   };
 
   const addProject = async () => {
-    if (!newProject.name || !newProject.location || !newProject.floors || !newProject.units) {
+    if (
+      !newProject.name ||
+      !newProject.location ||
+      !newProject.floors ||
+      !newProject.units
+    ) {
       toast.error("الرجاء إدخال بيانات المشروع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
     const units = Number(newProject.units);
-    if (!Number.isFinite(floors) || floors <= 0 || !Number.isFinite(units) || units <= 0) {
+    if (
+      !Number.isFinite(floors) ||
+      floors <= 0 ||
+      !Number.isFinite(units) ||
+      units <= 0
+    ) {
       toast.error("القيم العددية غير صحيحة");
       return;
     }
@@ -402,7 +462,12 @@ export default function AccountingSystem() {
   };
 
   const addProjectSale = async () => {
-    if (!newSale.projectId || !newSale.price || !newSale.unitNo || !newSale.buyer) {
+    if (
+      !newSale.projectId ||
+      !newSale.price ||
+      !newSale.unitNo ||
+      !newSale.buyer
+    ) {
       toast.error("الرجاء إد��ال بيانات البيع كاملة");
       return;
     }
@@ -432,7 +497,14 @@ export default function AccountingSystem() {
       setSales((prev) => [result.sale, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
       toast.success("تم تسجيل البيع وتحديث الإيرادات");
-      setNewSale({ projectId: "", unitNo: "", buyer: "", price: "", date: today(), terms: "" });
+      setNewSale({
+        projectId: "",
+        unitNo: "",
+        buyer: "",
+        price: "",
+        date: today(),
+        terms: "",
+      });
       printInvoice(result.sale.id, result.sale, project);
     } catch (error) {
       const message =
@@ -445,8 +517,12 @@ export default function AccountingSystem() {
 
   const projectTotals = useCallback(
     (id: string) => {
-      const projectCosts = costs.filter((x) => x.projectId === id).reduce((a, b) => a + b.amount, 0);
-      const projectSales = sales.filter((x) => x.projectId === id).reduce((a, b) => a + b.price, 0);
+      const projectCosts = costs
+        .filter((x) => x.projectId === id)
+        .reduce((a, b) => a + b.amount, 0);
+      const projectSales = sales
+        .filter((x) => x.projectId === id)
+        .reduce((a, b) => a + b.price, 0);
       return {
         costs: projectCosts,
         sales: projectSales,
@@ -464,10 +540,12 @@ export default function AccountingSystem() {
   ) {
     const sale = fallbackSale ?? sales.find((x) => x.id === id);
     if (!sale) return;
-    const project = fallbackProject ?? projects.find((x) => x.id === sale.projectId);
+    const project =
+      fallbackProject ?? projects.find((x) => x.id === sale.projectId);
     const win = window.open("", "_blank");
     if (!win) return;
-    win.document.write(`<!doctype html><html dir="rtl"><head><meta charset="utf-8"><title>فاتورة بيع</title>
+    win.document
+      .write(`<!doctype html><html dir="rtl"><head><meta charset="utf-8"><title>فاتورة بيع</title>
       <style>body{font-family:Arial,system-ui;padding:24px;background:#f6f7fb;color:#111} .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:20px;max-width:720px;margin:0 auto} .h{font-weight:800;font-size:20px;margin-bottom:8px} .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px} .row{display:flex;justify-content:space-between;margin:6px 0} .total{font-weight:800;font-size:18px} .mt{margin-top:16px} .btn{display:inline-block;margin-top:16px;padding:10px 16px;background:#111;color:#fff;border-radius:8px;text-decoration:none}</style>
     </head><body>
       <div class="card">
@@ -514,11 +592,17 @@ export default function AccountingSystem() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
-          <p className="text-slate-500 text-sm">نظام محاسبة عقاري سهل الاستخدام</p>
+          <p className="text-slate-500 text-sm">
+            نظام محاسبة عقاري سهل الاستخدام
+          </p>
         </div>
         <div className="flex gap-2">
           {(() => {
-            const tabs: typeof active[] = ["dashboard", "inventory", "projects"];
+            const tabs: (typeof active)[] = [
+              "dashboard",
+              "inventory",
+              "projects",
+            ];
             if (isManager || isAccountant) tabs.splice(1, 0, "transactions");
             if (isManager || isAccountant) tabs.push("reports");
             if (isManager) tabs.push("users");
@@ -535,14 +619,14 @@ export default function AccountingSystem() {
                 {tab === "dashboard"
                   ? "لوحة التحكم"
                   : tab === "transactions"
-                  ? "المعاملات"
-                  : tab === "inventory"
-                  ? "المخزون"
-                  : tab === "projects"
-                  ? "العقارات"
-                  : tab === "reports"
-                  ? "التقارير"
-                  : "المستخدمون"}
+                    ? "المعاملات"
+                    : tab === "inventory"
+                      ? "المخزون"
+                      : tab === "projects"
+                        ? "العقارات"
+                        : tab === "reports"
+                          ? "التقارير"
+                          : "المستخدمون"}
               </button>
             ));
           })()}
@@ -556,23 +640,44 @@ export default function AccountingSystem() {
               <div className="text-sm opacity-90">الحساب</div>
               <div className="mt-2 text-2xl font-extrabold">{user?.name}</div>
               <div className="text-xs mt-1">
-                الدور: {user?.role === "manager" ? "مدير" : user?.role === "accountant" ? "محاسب" : "موظف"}
+                الدور:{" "}
+                {user?.role === "manager"
+                  ? "مدير"
+                  : user?.role === "accountant"
+                    ? "محاسب"
+                    : "موظف"}
               </div>
             </div>
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
               <div className="text-sm text-slate-600">الوضع</div>
-              <div className="mt-2 text-2xl font-bold">{isManager ? "صلاحيات مدير" : "مستخدم عادي"}</div>
+              <div className="mt-2 text-2xl font-bold">
+                {isManager ? "صلاحيات مدير" : "مستخدم عادي"}
+              </div>
             </div>
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
               <div className="text-sm text-slate-600">الوصول</div>
-              <div className="mt-2 text-2xl font-bold">{isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}</div>
+              <div className="mt-2 text-2xl font-bold">
+                {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
+              </div>
             </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
-            <Stat value={totals.revenue} label="إجمالي الإيرادات" color="text-emerald-600" />
-            <Stat value={totals.expenses} label="إجمالي المصروفات" color="text-rose-600" />
-            <Stat value={totals.profit} label="صافي الربح (ج.م)" color="text-indigo-700" />
+            <Stat
+              value={totals.revenue}
+              label="إجمالي الإيرادات"
+              color="text-emerald-600"
+            />
+            <Stat
+              value={totals.expenses}
+              label="إجمالي المصروفات"
+              color="text-rose-600"
+            />
+            <Stat
+              value={totals.profit}
+              label="صافي الربح (ج.م)"
+              color="text-indigo-700"
+            />
           </div>
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
@@ -581,7 +686,9 @@ export default function AccountingSystem() {
               <select
                 className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 value={quick.type}
-                onChange={(e) => setQuick({ ...quick, type: e.target.value as TransType })}
+                onChange={(e) =>
+                  setQuick({ ...quick, type: e.target.value as TransType })
+                }
               >
                 <option value="revenue">إيراد</option>
                 <option value="expense">مصروف</option>
@@ -602,7 +709,9 @@ export default function AccountingSystem() {
                 className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 md:col-span-2"
                 placeholder="الوصف"
                 value={quick.description}
-                onChange={(e) => setQuick({ ...quick, description: e.target.value })}
+                onChange={(e) =>
+                  setQuick({ ...quick, description: e.target.value })
+                }
               />
             </div>
             <button
@@ -647,7 +756,9 @@ export default function AccountingSystem() {
                       </span>
                     </td>
                     <td className="px-3 py-2">{t.description}</td>
-                    <td className="px-3 py-2">{t.amount.toLocaleString()} ج.م</td>
+                    <td className="px-3 py-2">
+                      {t.amount.toLocaleString()} ج.م
+                    </td>
                     <td className="px-3 py-2">
                       {t.approved ? (
                         <span className="px-2 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700">
@@ -699,18 +810,24 @@ export default function AccountingSystem() {
                 className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 placeholder="اسم المادة"
                 value={newItem.name}
-                onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, name: e.target.value })
+                }
               />
               <input
                 className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 placeholder="الكمية"
                 value={newItem.quantity}
-                onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, quantity: e.target.value })
+                }
               />
               <select
                 className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 value={newItem.unit}
-                onChange={(e) => setNewItem({ ...newItem, unit: e.target.value })}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, unit: e.target.value })
+                }
               >
                 <option value="طن">طن</option>
                 <option value="قطعة">قطعة</option>
@@ -721,7 +838,9 @@ export default function AccountingSystem() {
                 className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 placeholder="الحد الأدنى"
                 value={newItem.min}
-                onChange={(e) => setNewItem({ ...newItem, min: e.target.value })}
+                onChange={(e) =>
+                  setNewItem({ ...newItem, min: e.target.value })
+                }
               />
             </div>
             <button
@@ -740,7 +859,9 @@ export default function AccountingSystem() {
                 <select
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={receive.itemId}
-                  onChange={(e) => setReceive({ ...receive, itemId: e.target.value })}
+                  onChange={(e) =>
+                    setReceive({ ...receive, itemId: e.target.value })
+                  }
                 >
                   <option value="">اختر المادة</option>
                   {items.map((i) => (
@@ -753,25 +874,33 @@ export default function AccountingSystem() {
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="الكمية"
                   value={receive.qty}
-                  onChange={(e) => setReceive({ ...receive, qty: e.target.value })}
+                  onChange={(e) =>
+                    setReceive({ ...receive, qty: e.target.value })
+                  }
                 />
                 <input
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="سعر الوحدة"
                   value={receive.unitPrice}
-                  onChange={(e) => setReceive({ ...receive, unitPrice: e.target.value })}
+                  onChange={(e) =>
+                    setReceive({ ...receive, unitPrice: e.target.value })
+                  }
                 />
                 <input
                   type="date"
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={receive.date}
-                  onChange={(e) => setReceive({ ...receive, date: e.target.value })}
+                  onChange={(e) =>
+                    setReceive({ ...receive, date: e.target.value })
+                  }
                 />
                 <input
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="اسم المورد"
                   value={receive.supplier}
-                  onChange={(e) => setReceive({ ...receive, supplier: e.target.value })}
+                  onChange={(e) =>
+                    setReceive({ ...receive, supplier: e.target.value })
+                  }
                 />
               </div>
               <button
@@ -789,7 +918,9 @@ export default function AccountingSystem() {
                 <select
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={issue.itemId}
-                  onChange={(e) => setIssue({ ...issue, itemId: e.target.value })}
+                  onChange={(e) =>
+                    setIssue({ ...issue, itemId: e.target.value })
+                  }
                 >
                   <option value="">اختر المادة</option>
                   {items.map((i) => (
@@ -808,7 +939,9 @@ export default function AccountingSystem() {
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="سعر الوحدة"
                   value={issue.unitPrice}
-                  onChange={(e) => setIssue({ ...issue, unitPrice: e.target.value })}
+                  onChange={(e) =>
+                    setIssue({ ...issue, unitPrice: e.target.value })
+                  }
                 />
                 <input
                   type="date"
@@ -820,7 +953,9 @@ export default function AccountingSystem() {
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="اسم المشروع"
                   value={issue.project}
-                  onChange={(e) => setIssue({ ...issue, project: e.target.value })}
+                  onChange={(e) =>
+                    setIssue({ ...issue, project: e.target.value })
+                  }
                 />
               </div>
               <button
@@ -843,13 +978,19 @@ export default function AccountingSystem() {
               >
                 <div>
                   <div className="font-medium">{i.name}</div>
-                  <div className="text-xs text-slate-500">آخر تحديث: {i.updatedAt}</div>
+                  <div className="text-xs text-slate-500">
+                    آخر تحديث: {i.updatedAt}
+                  </div>
                 </div>
                 <div className="text-right">
-                  <div className={`font-bold ${i.quantity < i.min ? "text-rose-600" : ""}`}>
+                  <div
+                    className={`font-bold ${i.quantity < i.min ? "text-rose-600" : ""}`}
+                  >
                     {i.quantity.toLocaleString()} {i.unit}
                   </div>
-                  <div className={`text-xs ${i.quantity < i.min ? "text-rose-600" : "text-emerald-600"}`}>
+                  <div
+                    className={`text-xs ${i.quantity < i.min ? "text-rose-600" : "text-emerald-600"}`}
+                  >
                     {i.quantity < i.min ? "مخزون منخفض" : "متوفر"}
                   </div>
                 </div>
@@ -892,10 +1033,18 @@ export default function AccountingSystem() {
                         <tr key={m.id} className="border-t">
                           <td className="px-3 py-2">{m.date}</td>
                           <td className="px-3 py-2">{item?.name ?? "-"}</td>
-                          <td className="px-3 py-2">{m.kind === "in" ? "وارد" : "صرف"}</td>
-                          <td className="px-3 py-2">{m.qty} {item?.unit ?? ""}</td>
-                          <td className="px-3 py-2">{m.unitPrice.toLocaleString()}</td>
-                          <td className="px-3 py-2">{m.total.toLocaleString()}</td>
+                          <td className="px-3 py-2">
+                            {m.kind === "in" ? "وارد" : "صرف"}
+                          </td>
+                          <td className="px-3 py-2">
+                            {m.qty} {item?.unit ?? ""}
+                          </td>
+                          <td className="px-3 py-2">
+                            {m.unitPrice.toLocaleString()}
+                          </td>
+                          <td className="px-3 py-2">
+                            {m.total.toLocaleString()}
+                          </td>
                           <td className="px-3 py-2">{m.party}</td>
                         </tr>
                       );
@@ -918,26 +1067,34 @@ export default function AccountingSystem() {
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="اسم المشروع"
                   value={newProject.name}
-                  onChange={(e) => setNewProject({ ...newProject, name: e.target.value })}
+                  onChange={(e) =>
+                    setNewProject({ ...newProject, name: e.target.value })
+                  }
                 />
                 <input
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="الموقع"
                   value={newProject.location}
-                  onChange={(e) => setNewProject({ ...newProject, location: e.target.value })}
+                  onChange={(e) =>
+                    setNewProject({ ...newProject, location: e.target.value })
+                  }
                 />
                 <div className="grid grid-cols-2 gap-3">
                   <input
                     className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="عدد الأدوار"
                     value={newProject.floors}
-                    onChange={(e) => setNewProject({ ...newProject, floors: e.target.value })}
+                    onChange={(e) =>
+                      setNewProject({ ...newProject, floors: e.target.value })
+                    }
                   />
                   <input
                     className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="عدد الوحدات"
                     value={newProject.units}
-                    onChange={(e) => setNewProject({ ...newProject, units: e.target.value })}
+                    onChange={(e) =>
+                      setNewProject({ ...newProject, units: e.target.value })
+                    }
                   />
                 </div>
                 <button
@@ -956,7 +1113,9 @@ export default function AccountingSystem() {
                 <select
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={newCost.projectId}
-                  onChange={(e) => setNewCost({ ...newCost, projectId: e.target.value })}
+                  onChange={(e) =>
+                    setNewCost({ ...newCost, projectId: e.target.value })
+                  }
                 >
                   <option value="">اختر المشروع</option>
                   {projects.map((p) => (
@@ -970,7 +1129,10 @@ export default function AccountingSystem() {
                     className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     value={newCost.type}
                     onChange={(e) =>
-                      setNewCost({ ...newCost, type: e.target.value as ProjectCost["type"] })
+                      setNewCost({
+                        ...newCost,
+                        type: e.target.value as ProjectCost["type"],
+                      })
                     }
                   >
                     <option value="construction">إنشاء</option>
@@ -981,20 +1143,26 @@ export default function AccountingSystem() {
                     className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="المبلغ"
                     value={newCost.amount}
-                    onChange={(e) => setNewCost({ ...newCost, amount: e.target.value })}
+                    onChange={(e) =>
+                      setNewCost({ ...newCost, amount: e.target.value })
+                    }
                   />
                 </div>
                 <input
                   type="date"
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={newCost.date}
-                  onChange={(e) => setNewCost({ ...newCost, date: e.target.value })}
+                  onChange={(e) =>
+                    setNewCost({ ...newCost, date: e.target.value })
+                  }
                 />
                 <input
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="ملاحظة"
                   value={newCost.note}
-                  onChange={(e) => setNewCost({ ...newCost, note: e.target.value })}
+                  onChange={(e) =>
+                    setNewCost({ ...newCost, note: e.target.value })
+                  }
                 />
                 <button
                   onClick={() => void addProjectCost()}
@@ -1007,12 +1175,16 @@ export default function AccountingSystem() {
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل بيع وحدة وإصدار فاتورة</h3>
+              <h3 className="font-semibold mb-3">
+                تسجيل بيع وحدة وإصدار فاتورة
+              </h3>
               <div className="grid gap-3">
                 <select
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={newSale.projectId}
-                  onChange={(e) => setNewSale({ ...newSale, projectId: e.target.value })}
+                  onChange={(e) =>
+                    setNewSale({ ...newSale, projectId: e.target.value })
+                  }
                 >
                   <option value="">اختر المشروع</option>
                   {projects.map((p) => (
@@ -1026,13 +1198,17 @@ export default function AccountingSystem() {
                     className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="رقم الوحدة"
                     value={newSale.unitNo}
-                    onChange={(e) => setNewSale({ ...newSale, unitNo: e.target.value })}
+                    onChange={(e) =>
+                      setNewSale({ ...newSale, unitNo: e.target.value })
+                    }
                   />
                   <input
                     className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="السعر"
                     value={newSale.price}
-                    onChange={(e) => setNewSale({ ...newSale, price: e.target.value })}
+                    onChange={(e) =>
+                      setNewSale({ ...newSale, price: e.target.value })
+                    }
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -1040,20 +1216,26 @@ export default function AccountingSystem() {
                     className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="اسم المشتري"
                     value={newSale.buyer}
-                    onChange={(e) => setNewSale({ ...newSale, buyer: e.target.value })}
+                    onChange={(e) =>
+                      setNewSale({ ...newSale, buyer: e.target.value })
+                    }
                   />
                   <input
                     type="date"
                     className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     value={newSale.date}
-                    onChange={(e) => setNewSale({ ...newSale, date: e.target.value })}
+                    onChange={(e) =>
+                      setNewSale({ ...newSale, date: e.target.value })
+                    }
                   />
                 </div>
                 <input
                   className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="شروط التعاقد (اختياري)"
                   value={newSale.terms}
-                  onChange={(e) => setNewSale({ ...newSale, terms: e.target.value })}
+                  onChange={(e) =>
+                    setNewSale({ ...newSale, terms: e.target.value })
+                  }
                 />
                 <button
                   onClick={() => void addProjectSale()}
@@ -1091,10 +1273,18 @@ export default function AccountingSystem() {
                         <td className="px-3 py-2">{p.location}</td>
                         <td className="px-3 py-2">{p.floors}</td>
                         <td className="px-3 py-2">{p.units}</td>
-                        <td className="px-3 py-2">{t.sold} / {Math.max(0, p.units - t.sold)}</td>
-                        <td className="px-3 py-2">{t.costs.toLocaleString()} ج.م</td>
-                        <td className="px-3 py-2">{t.sales.toLocaleString()} ج.م</td>
-                        <td className="px-3 py-2">{t.profit.toLocaleString()} ج.م</td>
+                        <td className="px-3 py-2">
+                          {t.sold} / {Math.max(0, p.units - t.sold)}
+                        </td>
+                        <td className="px-3 py-2">
+                          {t.costs.toLocaleString()} ج.م
+                        </td>
+                        <td className="px-3 py-2">
+                          {t.sales.toLocaleString()} ج.م
+                        </td>
+                        <td className="px-3 py-2">
+                          {t.profit.toLocaleString()} ج.م
+                        </td>
                       </tr>
                     );
                   })}
@@ -1125,14 +1315,18 @@ export default function AccountingSystem() {
                   </thead>
                   <tbody>
                     {sales.map((s) => {
-                      const project = projects.find((x) => x.id === s.projectId);
+                      const project = projects.find(
+                        (x) => x.id === s.projectId,
+                      );
                       return (
                         <tr key={s.id} className="border-t">
                           <td className="px-3 py-2">{s.date}</td>
                           <td className="px-3 py-2">{project?.name}</td>
                           <td className="px-3 py-2">{s.unitNo}</td>
                           <td className="px-3 py-2">{s.buyer}</td>
-                          <td className="px-3 py-2">{s.price.toLocaleString()}</td>
+                          <td className="px-3 py-2">
+                            {s.price.toLocaleString()}
+                          </td>
                           <td className="px-3 py-2 text-right">
                             <button
                               className="rounded-md bg-slate-900 text-white px-3 py-1"
@@ -1166,7 +1360,9 @@ export default function AccountingSystem() {
                   </thead>
                   <tbody>
                     {costs.map((c) => {
-                      const project = projects.find((x) => x.id === c.projectId);
+                      const project = projects.find(
+                        (x) => x.id === c.projectId,
+                      );
                       return (
                         <tr key={c.id} className="border-t">
                           <td className="px-3 py-2">{c.date}</td>
@@ -1175,10 +1371,12 @@ export default function AccountingSystem() {
                             {c.type === "construction"
                               ? "إنشاء"
                               : c.type === "operation"
-                              ? "تشغيل"
-                              : "مصروفات"}
+                                ? "تشغيل"
+                                : "مصروفات"}
                           </td>
-                          <td className="px-3 py-2">{c.amount.toLocaleString()}</td>
+                          <td className="px-3 py-2">
+                            {c.amount.toLocaleString()}
+                          </td>
                           <td className="px-3 py-2">{c.note}</td>
                         </tr>
                       );
@@ -1192,7 +1390,13 @@ export default function AccountingSystem() {
       )}
 
       {active === "reports" && (
-        <ReportsSection transactions={transactions} projects={projects} items={items} costs={costs} sales={sales} />
+        <ReportsSection
+          transactions={transactions}
+          projects={projects}
+          items={items}
+          costs={costs}
+          sales={sales}
+        />
       )}
 
       {active === "users" && (
@@ -1210,10 +1414,20 @@ export default function AccountingSystem() {
   );
 }
 
-function Stat({ value, label, color }: { value: number; label: string; color: string }) {
+function Stat({
+  value,
+  label,
+  color,
+}: {
+  value: number;
+  label: string;
+  color: string;
+}) {
   return (
     <div className="rounded-xl p-4 bg-white border border-slate-200 shadow text-center">
-      <div className={`text-3xl font-extrabold ${color}`}>{value.toLocaleString()}</div>
+      <div className={`text-3xl font-extrabold ${color}`}>
+        {value.toLocaleString()}
+      </div>
       <div className="text-sm text-slate-600 mt-1">{label}</div>
     </div>
   );
@@ -1234,7 +1448,13 @@ function ReportsSection({
 }) {
   const [reportType, setReportType] = useState("profit-loss");
   const [selectedProject, setSelectedProject] = useState("");
-  const [dateFrom, setDateFrom] = useState(() => new Date(new Date().getFullYear(), new Date().getMonth(), 1).toLocaleDateString("en-CA"));
+  const [dateFrom, setDateFrom] = useState(() =>
+    new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1,
+    ).toLocaleDateString("en-CA"),
+  );
   const [dateTo, setDateTo] = useState(() => today());
 
   const filtered = useMemo(
@@ -1244,8 +1464,12 @@ function ReportsSection({
 
   const buildReport = useCallback(() => {
     if (reportType === "profit-loss") {
-      const rev = filtered.filter((t) => t.type === "revenue").reduce((a, b) => a + b.amount, 0);
-      const exp = filtered.filter((t) => t.type === "expense").reduce((a, b) => a + b.amount, 0);
+      const rev = filtered
+        .filter((t) => t.type === "revenue")
+        .reduce((a, b) => a + b.amount, 0);
+      const exp = filtered
+        .filter((t) => t.type === "expense")
+        .reduce((a, b) => a + b.amount, 0);
       return {
         title: "تقرير الأرباح والخسائر",
         headers: ["البند", "القيمة"],
@@ -1262,7 +1486,11 @@ function ReportsSection({
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
-          .map((t) => [t.date, t.description, t.amount.toLocaleString() + " ج.م"]),
+          .map((t) => [
+            t.date,
+            t.description,
+            t.amount.toLocaleString() + " ج.م",
+          ]),
       };
     }
     if (reportType === "expense") {
@@ -1271,17 +1499,27 @@ function ReportsSection({
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "expense")
-          .map((t) => [t.date, t.description, t.amount.toLocaleString() + " ج.م"]),
+          .map((t) => [
+            t.date,
+            t.description,
+            t.amount.toLocaleString() + " ج.م",
+          ]),
       };
     }
     if (reportType === "salary") {
       const sal = filtered.filter(
-        (t) => t.type === "expense" && /(راتب|salary|مرتبات|موظف)/i.test(t.description),
+        (t) =>
+          t.type === "expense" &&
+          /(راتب|salary|مرتبات|موظف)/i.test(t.description),
       );
       return {
         title: "تقرير المرتبات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
-        rows: sal.map((t) => [t.date, t.description, t.amount.toLocaleString() + " ج.م"]),
+        rows: sal.map((t) => [
+          t.date,
+          t.description,
+          t.amount.toLocaleString() + " ج.م",
+        ]),
       };
     }
     if (reportType === "inventory") {
@@ -1300,10 +1538,16 @@ function ReportsSection({
     if (reportType === "project") {
       const project = projects.find((p) => p.id === selectedProject);
       const costRows = costs.filter(
-        (x) => x.projectId === selectedProject && x.date >= dateFrom && x.date <= dateTo,
+        (x) =>
+          x.projectId === selectedProject &&
+          x.date >= dateFrom &&
+          x.date <= dateTo,
       );
       const saleRows = sales.filter(
-        (x) => x.projectId === selectedProject && x.date >= dateFrom && x.date <= dateTo,
+        (x) =>
+          x.projectId === selectedProject &&
+          x.date >= dateFrom &&
+          x.date <= dateTo,
       );
       const totalC = costRows.reduce((a, b) => a + b.amount, 0);
       const totalS = saleRows.reduce((a, b) => a + b.price, 0);
@@ -1323,7 +1567,17 @@ function ReportsSection({
       };
     }
     return { title: "تقرير", headers: [], rows: [] };
-  }, [reportType, filtered, items, projects, selectedProject, costs, sales, dateFrom, dateTo]);
+  }, [
+    reportType,
+    filtered,
+    items,
+    projects,
+    selectedProject,
+    costs,
+    sales,
+    dateFrom,
+    dateTo,
+  ]);
 
   const exportCsv = () => {
     const rep = buildReport();
@@ -1344,7 +1598,9 @@ function ReportsSection({
     const rep = buildReport();
     const table = `<!doctype html><html dir="rtl"><head><meta charset="utf-8"></head><body><table border="1">${[
       "<tr>" + rep.headers.map((h) => `<th>${h}</th>`).join("") + "</tr>",
-      ...rep.rows.map((r) => "<tr>" + r.map((c) => `<td>${c}</td>`).join("") + "</tr>"),
+      ...rep.rows.map(
+        (r) => "<tr>" + r.map((c) => `<td>${c}</td>`).join("") + "</tr>",
+      ),
     ].join("")}</table></body></html>`;
     const blob = new Blob([table], { type: "application/vnd.ms-excel" });
     const url = URL.createObjectURL(blob);
@@ -1359,7 +1615,8 @@ function ReportsSection({
     const rep = buildReport();
     const win = window.open("", "_blank");
     if (!win) return;
-    win.document.write(`<!doctype html><html dir="rtl"><head><meta charset="utf-8"><title>${rep.title}</title>
+    win.document
+      .write(`<!doctype html><html dir="rtl"><head><meta charset="utf-8"><title>${rep.title}</title>
       <style>body{font-family:Arial,system-ui;padding:24px} h1{font-size:20px;margin-bottom:12px} table{width:100%;border-collapse:collapse} th,td{border:1px solid #ddd;padding:8px} th{background:#f1f5f9}</style>
     </head><body>
       <h1>${rep.title}</h1>
@@ -1435,11 +1692,32 @@ function ReportsSection({
       </div>
       <div className="border rounded-lg p-3">
         <div className="font-semibold mb-2">نتيجة التقرير</div>
-        <div className="text-sm text-slate-600">الفترة {dateFrom} - {dateTo}</div>
+        <div className="text-sm text-slate-600">
+          الفترة {dateFrom} - {dateTo}
+        </div>
         <div className="mt-3 grid md:grid-cols-3 gap-3">
-          <Stat value={transactions.filter((t) => t.type === "revenue").reduce((a, b) => a + b.amount, 0)} label="إجمالي الإيرادات" color="text-emerald-600" />
-          <Stat value={transactions.filter((t) => t.type === "expense").reduce((a, b) => a + b.amount, 0)} label="إجمالي المصروفات" color="text-rose-600" />
-          <Stat value={transactions.reduce((a, b) => b.type === "revenue" ? a + b.amount : a - b.amount, 0)} label="صافي الربح (ج.م)" color="text-indigo-700" />
+          <Stat
+            value={transactions
+              .filter((t) => t.type === "revenue")
+              .reduce((a, b) => a + b.amount, 0)}
+            label="إجمالي الإيرادات"
+            color="text-emerald-600"
+          />
+          <Stat
+            value={transactions
+              .filter((t) => t.type === "expense")
+              .reduce((a, b) => a + b.amount, 0)}
+            label="إجمالي المصروفات"
+            color="text-rose-600"
+          />
+          <Stat
+            value={transactions.reduce(
+              (a, b) => (b.type === "revenue" ? a + b.amount : a - b.amount),
+              0,
+            )}
+            label="صافي الربح (ج.م)"
+            color="text-indigo-700"
+          />
         </div>
       </div>
     </section>

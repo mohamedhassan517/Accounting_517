@@ -138,7 +138,9 @@ function asNumber(value: number | string | null | undefined): number {
   return typeof value === "number" ? value : Number(value);
 }
 
-async function ensureList<T>(promise: Promise<PostgrestResponse<T>>): Promise<T[]> {
+async function ensureList<T>(
+  promise: Promise<PostgrestResponse<T>>,
+): Promise<T[]> {
   const { data, error } = await promise;
   if (error) {
     throw new Error(error.message);
@@ -231,50 +233,51 @@ function mapProjectSale(row: ProjectSaleRow): ProjectSale {
 }
 
 export async function loadAccountingData(): Promise<AccountingData> {
-  const [transactions, items, movements, projects, costs, sales] = await Promise.all([
-    ensureList<TransactionRow>(
-      supabase
-        .from("transactions")
-        .select("*")
-        .order("date", { ascending: false })
-        .order("created_at", { ascending: false }),
-    ),
-    ensureList<InventoryItemRow>(
-      supabase
-        .from("inventory_items")
-        .select("*")
-        .order("updated_at", { ascending: false })
-        .order("name", { ascending: true }),
-    ),
-    ensureList<MovementRow>(
-      supabase
-        .from("inventory_movements")
-        .select("*")
-        .order("date", { ascending: false })
-        .order("created_at", { ascending: false }),
-    ),
-    ensureList<ProjectRow>(
-      supabase
-        .from("projects")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .order("name", { ascending: true }),
-    ),
-    ensureList<ProjectCostRow>(
-      supabase
-        .from("project_costs")
-        .select("*")
-        .order("date", { ascending: false })
-        .order("created_at", { ascending: false }),
-    ),
-    ensureList<ProjectSaleRow>(
-      supabase
-        .from("project_sales")
-        .select("*")
-        .order("date", { ascending: false })
-        .order("created_at", { ascending: false }),
-    ),
-  ]);
+  const [transactions, items, movements, projects, costs, sales] =
+    await Promise.all([
+      ensureList<TransactionRow>(
+        supabase
+          .from("transactions")
+          .select("*")
+          .order("date", { ascending: false })
+          .order("created_at", { ascending: false }),
+      ),
+      ensureList<InventoryItemRow>(
+        supabase
+          .from("inventory_items")
+          .select("*")
+          .order("updated_at", { ascending: false })
+          .order("name", { ascending: true }),
+      ),
+      ensureList<MovementRow>(
+        supabase
+          .from("inventory_movements")
+          .select("*")
+          .order("date", { ascending: false })
+          .order("created_at", { ascending: false }),
+      ),
+      ensureList<ProjectRow>(
+        supabase
+          .from("projects")
+          .select("*")
+          .order("created_at", { ascending: false })
+          .order("name", { ascending: true }),
+      ),
+      ensureList<ProjectCostRow>(
+        supabase
+          .from("project_costs")
+          .select("*")
+          .order("date", { ascending: false })
+          .order("created_at", { ascending: false }),
+      ),
+      ensureList<ProjectSaleRow>(
+        supabase
+          .from("project_sales")
+          .select("*")
+          .order("date", { ascending: false })
+          .order("created_at", { ascending: false }),
+      ),
+    ]);
 
   return {
     transactions: transactions.map(mapTransaction),
@@ -354,7 +357,10 @@ export async function createInventoryItem(input: {
 }
 
 export async function deleteInventoryItem(id: string): Promise<void> {
-  const { error } = await supabase.from("inventory_items").delete().eq("id", id);
+  const { error } = await supabase
+    .from("inventory_items")
+    .delete()
+    .eq("id", id);
   if (error) {
     throw new Error(error.message);
   }
