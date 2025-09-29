@@ -256,7 +256,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذ�� حذف المادة";
-      toast.error("فشل حذف المادة", { description: message });
+      toast.error("فشل حذف الما��ة", { description: message });
     } finally {
       setDeletingItemId(null);
     }
@@ -468,7 +468,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إد��ال بيانات البيع كاملة");
+      toast.error("الرجاء إد���ال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل البيانات من قاعدة البيانات...
+        جارٍ تحمي�� البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -589,7 +589,7 @@ export default function AccountingSystem() {
         </div>
       )}
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
           <p className="text-slate-500 text-sm">
@@ -657,7 +657,7 @@ export default function AccountingSystem() {
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
               <div className="text-sm text-slate-600">الوصول</div>
               <div className="mt-2 text-2xl font-bold">
-                {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
+                {isManager ? "إدارة المستخدمين مسموحة" : "غير متا��ة"}
               </div>
             </div>
           </div>
@@ -1369,7 +1369,7 @@ export default function AccountingSystem() {
                           <td className="px-3 py-2">{project?.name}</td>
                           <td className="px-3 py-2">
                             {c.type === "construction"
-                              ? "إنشاء"
+                              ? "إنشا��"
                               : c.type === "operation"
                                 ? "تشغيل"
                                 : "مصروفات"}
