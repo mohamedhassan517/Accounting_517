@@ -972,11 +972,11 @@ export default function AccountingSystem() {
             {items.map((i) => (
               <div
                 key={i.id}
-                className={`flex items-center justify-between bg-white border rounded-lg p-3 ${
+                className={`flex flex-col gap-3 rounded-lg border bg-white p-3 sm:flex-row sm:items-center sm:justify-between ${
                   i.quantity < i.min ? "border-rose-300" : "border-slate-200"
                 }`}
               >
-                <div>
+                <div className="space-y-1">
                   <div className="font-medium">{i.name}</div>
                   <div className="text-xs text-slate-500">
                     آخر تحديث: {i.updatedAt}
@@ -1556,7 +1556,7 @@ function ReportsSection({
         ["الموقع", project?.location || "-"],
         ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
-        ["إجمالي ��لتكاليف", totalC.toLocaleString() + " ج.م"],
+        ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
