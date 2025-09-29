@@ -816,7 +816,7 @@ export default function AccountingSystem() {
               />
               <input
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                placeholder="الكمية"
+                placeholder="الكمي��"
                 value={newItem.quantity}
                 onChange={(e) =>
                   setNewItem({ ...newItem, quantity: e.target.value })
@@ -846,7 +846,7 @@ export default function AccountingSystem() {
             <button
               onClick={() => void addItem()}
               disabled={savingItem}
-              className="mt-3 rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+              className="mt-3 w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
               {savingItem ? "جاري الحفظ..." : "حفظ المادة"}
             </button>
@@ -1527,7 +1527,7 @@ function ReportsSection({
         i.name,
         i.quantity.toLocaleString() + " " + i.unit,
         i.min.toLocaleString(),
-        i.quantity < i.min ? "منخفض" : "جيد",
+        i.quantity < i.min ? "��نخفض" : "جيد",
       ]);
       return {
         title: "تقرير المخزون",
@@ -1566,7 +1566,7 @@ function ReportsSection({
         rows,
       };
     }
-    return { title: "تق��ير", headers: [], rows: [] };
+    return { title: "تقرير", headers: [], rows: [] };
   }, [
     reportType,
     filtered,
