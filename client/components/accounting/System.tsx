@@ -468,7 +468,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("ال��جاء إد��ال بيانات البيع كاملة");
+      toast.error("الرجاء إد��ال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل البيانات من قاعدة البيانات...
+        جارٍ تحميل ��لبيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -596,7 +596,7 @@ export default function AccountingSystem() {
             نظام محاسبة عقاري سهل الاستخدا��
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex w-full flex-wrap gap-2 md:w-auto md:justify-end">
           {(() => {
             const tabs: (typeof active)[] = [
               "dashboard",
