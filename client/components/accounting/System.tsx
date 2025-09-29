@@ -717,7 +717,7 @@ export default function AccountingSystem() {
             <button
               onClick={() => void addQuick()}
               disabled={savingQuick}
-              className="mt-3 rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+              className="mt-3 w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
               {savingQuick ? "جاري الحفظ..." : "إضافة معاملة"}
             </button>
@@ -794,7 +794,7 @@ export default function AccountingSystem() {
             </table>
             {transactions.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا توجد م���املات مسجلة بعد.
+                لا توجد م��املات مسجلة بعد.
               </div>
             )}
           </div>
@@ -1566,7 +1566,7 @@ function ReportsSection({
         rows,
       };
     }
-    return { title: "تقرير", headers: [], rows: [] };
+    return { title: "تق��ير", headers: [], rows: [] };
   }, [
     reportType,
     filtered,
