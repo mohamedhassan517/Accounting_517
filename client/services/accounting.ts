@@ -100,7 +100,7 @@ type MovementRow = {
   kind: "in" | "out";
   qty: number;
   unit_price: number;
-  total: number;
+  total: number | null;
   party: string;
   date: string;
 };
@@ -192,7 +192,7 @@ function mapMovement(row: MovementRow): Movement {
     kind: row.kind,
     qty: asNumber(row.qty),
     unitPrice: asNumber(row.unit_price),
-    total: asNumber(row.total),
+    total: asNumber(row.total ?? row.qty * row.unit_price),
     party: row.party,
     date: row.date,
   };
@@ -408,7 +408,6 @@ export async function recordInventoryReceipt(input: {
         kind: "in",
         qty: input.qty,
         unit_price: input.unitPrice,
-        total,
         party: input.supplier,
         date: input.date,
       })
@@ -475,7 +474,6 @@ export async function recordInventoryIssue(input: {
         kind: "out",
         qty: input.qty,
         unit_price: input.unitPrice,
-        total,
         party: input.project,
         date: input.date,
       })
