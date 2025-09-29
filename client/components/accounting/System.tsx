@@ -166,7 +166,7 @@ export default function AccountingSystem() {
         description: quick.description,
         amount,
         approved,
-        createdBy: user?.role ?? null,
+        createdBy: user?.id ?? null,
       });
       setTransactions((prev) => [transaction, ...prev]);
       setQuick({ type: "revenue", amount: "", description: "", date: today() });
