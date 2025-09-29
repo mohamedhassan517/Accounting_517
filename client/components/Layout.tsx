@@ -7,20 +7,36 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gradient-to-br from-indigo-50 to-slate-100">
+    <div
+      dir="rtl"
+      className="min-h-screen bg-gradient-to-br from-indigo-50 to-slate-100"
+    >
       <header className="backdrop-blur bg-white/70 border-b border-slate-200 sticky top-0 z-20">
         <div className="container mx-auto flex flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
-          <Link to={user ? "/dashboard" : "/"} className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+          <Link
+            to={user ? "/dashboard" : "/"}
+            className="font-extrabold text-xl tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent"
+          >
             نظام المحاسبة | Accounting
           </Link>
           <nav className="flex w-full flex-col items-stretch gap-2 text-sm sm:w-auto sm:flex-row sm:items-center sm:gap-4">
             {user && (
               <>
-                <Link className={navClass(location.pathname === "/dashboard")} to="/dashboard">لوحة التحكم</Link>
+                <Link
+                  className={navClass(location.pathname === "/dashboard")}
+                  to="/dashboard"
+                >
+                  لوحة التحكم
+                </Link>
               </>
             )}
             {!user && (
-              <Link className={navClass(location.pathname === "/login")} to="/login">تسجيل الدخول</Link>
+              <Link
+                className={navClass(location.pathname === "/login")}
+                to="/login"
+              >
+                تسجيل الدخول
+              </Link>
             )}
             {user && (
               <button
