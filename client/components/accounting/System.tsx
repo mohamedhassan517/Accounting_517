@@ -125,7 +125,7 @@ export default function AccountingSystem() {
       const message =
         error instanceof Error ? error.message : "حدث خطأ أثناء تحميل البيانات";
       setLoadingError(message);
-      toast.error("تعذر تحميل البيانات من قاعدة البيان��ت", {
+      toast.error("تعذر تحميل البيانات من قاعدة البيانات", {
         description: message,
       });
     } finally {
@@ -557,7 +557,7 @@ export default function AccountingSystem() {
           <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
           <div class="row"><div>التاريخ:</div><div>${sale.date}</div></div>
         </div>
-        <div class="mt row total"><div>السعر الإج��الي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
+        <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
         ${sale.terms ? `<div class="mt">الشروط: ${sale.terms}</div>` : ""}
         <a href="#" class="btn" onclick="window.print();return false;">طباعة</a>
       </div>
@@ -961,7 +961,7 @@ export default function AccountingSystem() {
               <button
                 onClick={() => void issueSubmit()}
                 disabled={savingIssue}
-                className="mt-3 rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="mt-3 w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
               >
                 {savingIssue ? "جاري التسجيل..." : "تسجيل الصرف"}
               </button>
@@ -1242,7 +1242,7 @@ export default function AccountingSystem() {
                   disabled={savingSale}
                   className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فاتورة"}
+                  {savingSale ? "جاري التسجيل..." : "تسجيل البي�� + فاتورة"}
                 </button>
               </div>
             </div>
