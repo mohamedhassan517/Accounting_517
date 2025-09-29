@@ -125,7 +125,7 @@ export default function AccountingSystem() {
       const message =
         error instanceof Error ? error.message : "حدث خطأ أثناء تحميل البيانات";
       setLoadingError(message);
-      toast.error("تعذر تحميل البيانات من قاعدة البيا��ات", {
+      toast.error("تعذر تحميل البيانات من قاعدة البيانات", {
         description: message,
       });
     } finally {
@@ -203,7 +203,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف المعاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حذ�� المعاملة";
+        error instanceof Error ? error.message : "تعذر حذف المعاملة";
       toast.error("فشل حذف المعاملة", { description: message });
     } finally {
       setDeletingTransactionId(null);
@@ -557,7 +557,7 @@ export default function AccountingSystem() {
           <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
           <div class="row"><div>التاريخ:</div><div>${sale.date}</div></div>
         </div>
-        <div class="mt row total"><div>السعر الإ��مالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
+        <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
         ${sale.terms ? `<div class="mt">الشروط: ${sale.terms}</div>` : ""}
         <a href="#" class="btn" onclick="window.print();return false;">طباعة</a>
       </div>
@@ -1240,7 +1240,7 @@ export default function AccountingSystem() {
                 <button
                   onClick={() => void addProjectSale()}
                   disabled={savingSale}
-                  className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
                   {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فاتورة"}
                 </button>
@@ -1482,7 +1482,7 @@ function ReportsSection({
     }
     if (reportType === "revenue") {
       return {
-        title: "تقرير الإيرا��ات",
+        title: "تقرير الإيرادات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
@@ -1556,7 +1556,7 @@ function ReportsSection({
         ["الموقع", project?.location || "-"],
         ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
-        ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
+        ["إجمالي ��لتكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
