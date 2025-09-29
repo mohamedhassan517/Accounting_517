@@ -995,7 +995,7 @@ export default function AccountingSystem() {
                   </div>
                 </div>
                 <button
-                  className="rounded-md bg-red-600 text-white px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="w-full rounded-md bg-red-600 px-3 py-1 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                   onClick={() => void deleteItem(i.id)}
                   disabled={deletingItemId === i.id}
                 >
@@ -1476,7 +1476,7 @@ function ReportsSection({
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
           ["إجمالي المصروفات", exp.toLocaleString() + " ج.م"],
-          ["صافي الربح", (rev - exp).toLocaleString() + " ج.م"],
+          ["صافي ��لربح", (rev - exp).toLocaleString() + " ج.م"],
         ],
       };
     }
@@ -1555,7 +1555,7 @@ function ReportsSection({
         ["المشروع", project?.name || "-"],
         ["الموقع", project?.location || "-"],
         ["عدد الأدوار", String(project?.floors ?? "-")],
-        ["عدد الوحدات", String(project?.units ?? "-")],
+        ["عد�� الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
