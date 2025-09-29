@@ -292,7 +292,7 @@ export default function AccountingSystem() {
         supplier: receive.supplier,
         date: receive.date,
         approved: isManager || isAccountant,
-        createdBy: user?.role ?? null,
+        createdBy: user?.id ?? null,
       });
       setItems((prev) =>
         prev.map((i) => (i.id === result.item.id ? result.item : i)),
@@ -345,7 +345,7 @@ export default function AccountingSystem() {
         project: issue.project,
         date: issue.date,
         approved: isManager || isAccountant,
-        createdBy: user?.role ?? null,
+        createdBy: user?.id ?? null,
       });
       setItems((prev) =>
         prev.map((i) => (i.id === result.item.id ? result.item : i)),
@@ -391,7 +391,7 @@ export default function AccountingSystem() {
       !Number.isFinite(units) ||
       units <= 0
     ) {
-      toast.error("القيم العددية غير صحيحة");
+      toast.error("ا��قيم العددية غير صحيحة");
       return;
     }
     try {
@@ -440,7 +440,7 @@ export default function AccountingSystem() {
         date: newCost.date,
         note: newCost.note,
         approved: isManager || isAccountant,
-        createdBy: user?.role ?? null,
+        createdBy: user?.id ?? null,
       });
       setCosts((prev) => [result.cost, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
@@ -492,7 +492,7 @@ export default function AccountingSystem() {
         date: newSale.date,
         terms: newSale.terms,
         approved: isManager || isAccountant,
-        createdBy: user?.role ?? null,
+        createdBy: user?.id ?? null,
       });
       setSales((prev) => [result.sale, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
