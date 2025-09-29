@@ -125,7 +125,7 @@ export default function AccountingSystem() {
       const message =
         error instanceof Error ? error.message : "حدث خطأ أثناء تحميل البيانات";
       setLoadingError(message);
-      toast.error("تعذر تحميل البيانات من قاعدة البيانات", {
+      toast.error("تعذر تحميل البيانات من قاعدة البيا��ات", {
         description: message,
       });
     } finally {
@@ -203,7 +203,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف المعاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حذف المعاملة";
+        error instanceof Error ? error.message : "تعذر حذ�� المعاملة";
       toast.error("فشل حذف المعاملة", { description: message });
     } finally {
       setDeletingTransactionId(null);
@@ -367,7 +367,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل الصرف";
-      toast.error("فشل تسجيل ��لصرف", { description: message });
+      toast.error("فشل تسجيل الصرف", { description: message });
     } finally {
       setSavingIssue(false);
     }
@@ -557,7 +557,7 @@ export default function AccountingSystem() {
           <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
           <div class="row"><div>التاريخ:</div><div>${sale.date}</div></div>
         </div>
-        <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
+        <div class="mt row total"><div>السعر الإ��مالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
         ${sale.terms ? `<div class="mt">الشروط: ${sale.terms}</div>` : ""}
         <a href="#" class="btn" onclick="window.print();return false;">طباعة</a>
       </div>
@@ -1073,7 +1073,7 @@ export default function AccountingSystem() {
                 />
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="��لموقع"
+                  placeholder="الموقع"
                   value={newProject.location}
                   onChange={(e) =>
                     setNewProject({ ...newProject, location: e.target.value })
@@ -1167,7 +1167,7 @@ export default function AccountingSystem() {
                 <button
                   onClick={() => void addProjectCost()}
                   disabled={savingCost}
-                  className="rounded-md bg-slate-900 text-white px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="w-full rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
                   {savingCost ? "جاري التسجيل..." : "تسجيل التكلفة"}
                 </button>
@@ -1482,7 +1482,7 @@ function ReportsSection({
     }
     if (reportType === "revenue") {
       return {
-        title: "تقرير الإيرادات",
+        title: "تقرير الإيرا��ات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
