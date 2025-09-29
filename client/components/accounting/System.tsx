@@ -173,7 +173,7 @@ export default function AccountingSystem() {
       toast.success("تمت إضافة ال��عاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حفظ المعاملة";
+        error instanceof Error ? error.message : "تعذر حفظ المعامل��";
       toast.error("لم يتم حفظ المعاملة", { description: message });
     } finally {
       setSavingQuick(false);
@@ -1476,7 +1476,7 @@ function ReportsSection({
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
           ["إجمالي المصروفات", exp.toLocaleString() + " ج.م"],
-          ["صافي ��لربح", (rev - exp).toLocaleString() + " ج.م"],
+          ["صافي الربح", (rev - exp).toLocaleString() + " ج.م"],
         ],
       };
     }
@@ -1555,7 +1555,7 @@ function ReportsSection({
         ["المشروع", project?.name || "-"],
         ["الموقع", project?.location || "-"],
         ["عدد الأدوار", String(project?.floors ?? "-")],
-        ["عد�� الوحدات", String(project?.units ?? "-")],
+        ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
@@ -1673,7 +1673,7 @@ function ReportsSection({
         />
         <button
           onClick={exportPDF}
-          className="rounded-md bg-indigo-600 text-white px-4 py-2"
+          className="w-full rounded-md bg-indigo-600 px-4 py-2 text-white transition-colors sm:w-auto"
         >
           تصدير PDF
         </button>
