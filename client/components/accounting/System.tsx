@@ -173,7 +173,7 @@ export default function AccountingSystem() {
       toast.success("تمت إضافة ال��عاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حفظ المعامل��";
+        error instanceof Error ? error.message : "تعذر حفظ المعاملة";
       toast.error("لم يتم حفظ المعاملة", { description: message });
     } finally {
       setSavingQuick(false);
@@ -380,7 +380,7 @@ export default function AccountingSystem() {
       !newProject.floors ||
       !newProject.units
     ) {
-      toast.error("الرجاء إدخال بيانات المشروع كاملة");
+      toast.error("الرجاء إدخال بيانات المش��وع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
@@ -829,7 +829,7 @@ export default function AccountingSystem() {
                   setNewItem({ ...newItem, unit: e.target.value })
                 }
               >
-                <option value="طن">طن</option>
+                <option value="طن">ط��</option>
                 <option value="قطعة">قطعة</option>
                 <option value="متر">متر</option>
                 <option value="لتر">لتر</option>
@@ -1021,7 +1021,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">المادة</th>
                       <th className="px-3 py-2">نوع الحركة</th>
                       <th className="px-3 py-2">الكمية</th>
-                      <th className="px-3 py-2">سعر الوحدة</th>
+                      <th className="px-3 py-2">سعر ا��وحدة</th>
                       <th className="px-3 py-2">الإجمالي</th>
                       <th className="px-3 py-2">الجهة</th>
                     </tr>
@@ -1527,7 +1527,7 @@ function ReportsSection({
         i.name,
         i.quantity.toLocaleString() + " " + i.unit,
         i.min.toLocaleString(),
-        i.quantity < i.min ? "منخفض" : "جيد",
+        i.quantity < i.min ? "منخفض" : "ج��د",
       ]);
       return {
         title: "تقرير المخزون",
@@ -1679,7 +1679,7 @@ function ReportsSection({
         </button>
         <button
           onClick={exportExcel}
-          className="rounded-md bg-emerald-600 text-white px-4 py-2"
+          className="w-full rounded-md bg-emerald-600 px-4 py-2 text-white transition-colors sm:w-auto"
         >
           تصدير Excel
         </button>
