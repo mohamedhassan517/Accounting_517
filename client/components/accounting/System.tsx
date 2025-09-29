@@ -255,7 +255,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف المادة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حذف المادة";
+        error instanceof Error ? error.message : "تعذ�� حذف المادة";
       toast.error("فشل حذف المادة", { description: message });
     } finally {
       setDeletingItemId(null);
@@ -706,7 +706,7 @@ export default function AccountingSystem() {
                 onChange={(e) => setQuick({ ...quick, date: e.target.value })}
               />
               <input
-                className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 md:col-span-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 md:col-span-2"
                 placeholder="الوصف"
                 value={quick.description}
                 onChange={(e) =>
