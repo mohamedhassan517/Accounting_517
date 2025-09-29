@@ -170,7 +170,7 @@ export default function AccountingSystem() {
       });
       setTransactions((prev) => [transaction, ...prev]);
       setQuick({ type: "revenue", amount: "", description: "", date: today() });
-      toast.success("تمت إضافة المعاملة");
+      toast.success("تمت إضافة ال��عاملة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المعاملة";
@@ -333,7 +333,7 @@ export default function AccountingSystem() {
       !Number.isFinite(unitPrice) ||
       unitPrice <= 0
     ) {
-      toast.error("القيم العددية غير صحيحة");
+      toast.error("القيم العددية غ��ر صحيحة");
       return;
     }
     try {
@@ -391,7 +391,7 @@ export default function AccountingSystem() {
       !Number.isFinite(units) ||
       units <= 0
     ) {
-      toast.error("ا��قيم العددية غير صحيحة");
+      toast.error("القيم العددية غير صحيحة");
       return;
     }
     try {
@@ -593,7 +593,7 @@ export default function AccountingSystem() {
         <div>
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
           <p className="text-slate-500 text-sm">
-            نظام محاسبة عقاري سهل الاستخدام
+            نظام محاسبة عقاري سهل الاستخدا��
           </p>
         </div>
         <div className="flex gap-2">
@@ -684,7 +684,7 @@ export default function AccountingSystem() {
             <h3 className="font-semibold mb-3">إضافة معاملة سريعة</h3>
             <div className="grid md:grid-cols-5 gap-3">
               <select
-                className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 value={quick.type}
                 onChange={(e) =>
                   setQuick({ ...quick, type: e.target.value as TransType })
@@ -694,14 +694,14 @@ export default function AccountingSystem() {
                 <option value="expense">مصروف</option>
               </select>
               <input
-                className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 placeholder="المبلغ"
                 value={quick.amount}
                 onChange={(e) => setQuick({ ...quick, amount: e.target.value })}
               />
               <input
                 type="date"
-                className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 value={quick.date}
                 onChange={(e) => setQuick({ ...quick, date: e.target.value })}
               />
@@ -794,7 +794,7 @@ export default function AccountingSystem() {
             </table>
             {transactions.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا توجد معاملات مسجلة بعد.
+                لا توجد م��املات مسجلة بعد.
               </div>
             )}
           </div>
@@ -807,7 +807,7 @@ export default function AccountingSystem() {
             <h3 className="font-semibold mb-3">إضافة مادة جديدة</h3>
             <div className="grid md:grid-cols-4 gap-3">
               <input
-                className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 placeholder="اسم المادة"
                 value={newItem.name}
                 onChange={(e) =>
@@ -815,7 +815,7 @@ export default function AccountingSystem() {
                 }
               />
               <input
-                className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 placeholder="الكمية"
                 value={newItem.quantity}
                 onChange={(e) =>
@@ -823,7 +823,7 @@ export default function AccountingSystem() {
                 }
               />
               <select
-                className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 value={newItem.unit}
                 onChange={(e) =>
                   setNewItem({ ...newItem, unit: e.target.value })
@@ -835,7 +835,7 @@ export default function AccountingSystem() {
                 <option value="لتر">لتر</option>
               </select>
               <input
-                className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 placeholder="الحد الأدنى"
                 value={newItem.min}
                 onChange={(e) =>
@@ -857,7 +857,7 @@ export default function AccountingSystem() {
               <h3 className="font-semibold mb-3">تسجيل وارد من مورد</h3>
               <div className="grid md:grid-cols-5 gap-3">
                 <select
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={receive.itemId}
                   onChange={(e) =>
                     setReceive({ ...receive, itemId: e.target.value })
@@ -871,7 +871,7 @@ export default function AccountingSystem() {
                   ))}
                 </select>
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="الكمية"
                   value={receive.qty}
                   onChange={(e) =>
@@ -879,7 +879,7 @@ export default function AccountingSystem() {
                   }
                 />
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="سعر الوحدة"
                   value={receive.unitPrice}
                   onChange={(e) =>
@@ -888,14 +888,14 @@ export default function AccountingSystem() {
                 />
                 <input
                   type="date"
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={receive.date}
                   onChange={(e) =>
                     setReceive({ ...receive, date: e.target.value })
                   }
                 />
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="اسم المورد"
                   value={receive.supplier}
                   onChange={(e) =>
@@ -916,7 +916,7 @@ export default function AccountingSystem() {
               <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
               <div className="grid md:grid-cols-5 gap-3">
                 <select
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={issue.itemId}
                   onChange={(e) =>
                     setIssue({ ...issue, itemId: e.target.value })
@@ -930,13 +930,13 @@ export default function AccountingSystem() {
                   ))}
                 </select>
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="الكمية"
                   value={issue.qty}
                   onChange={(e) => setIssue({ ...issue, qty: e.target.value })}
                 />
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="سعر الوحدة"
                   value={issue.unitPrice}
                   onChange={(e) =>
@@ -945,12 +945,12 @@ export default function AccountingSystem() {
                 />
                 <input
                   type="date"
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={issue.date}
                   onChange={(e) => setIssue({ ...issue, date: e.target.value })}
                 />
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="اسم المشروع"
                   value={issue.project}
                   onChange={(e) =>
@@ -1064,7 +1064,7 @@ export default function AccountingSystem() {
               <h3 className="font-semibold mb-3">إضافة مشروع عقاري</h3>
               <div className="grid gap-3">
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="اسم المشروع"
                   value={newProject.name}
                   onChange={(e) =>
@@ -1072,7 +1072,7 @@ export default function AccountingSystem() {
                   }
                 />
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="الموقع"
                   value={newProject.location}
                   onChange={(e) =>
@@ -1081,15 +1081,15 @@ export default function AccountingSystem() {
                 />
                 <div className="grid grid-cols-2 gap-3">
                   <input
-                    className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    placeholder="عدد الأدوار"
+                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                    placeholder="عدد الأد��ار"
                     value={newProject.floors}
                     onChange={(e) =>
                       setNewProject({ ...newProject, floors: e.target.value })
                     }
                   />
                   <input
-                    className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="عدد الوحدات"
                     value={newProject.units}
                     onChange={(e) =>
@@ -1111,7 +1111,7 @@ export default function AccountingSystem() {
               <h3 className="font-semibold mb-3">تسجيل تكلفة للمشروع</h3>
               <div className="grid gap-3">
                 <select
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={newCost.projectId}
                   onChange={(e) =>
                     setNewCost({ ...newCost, projectId: e.target.value })
@@ -1126,7 +1126,7 @@ export default function AccountingSystem() {
                 </select>
                 <div className="grid grid-cols-2 gap-3">
                   <select
-                    className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     value={newCost.type}
                     onChange={(e) =>
                       setNewCost({
@@ -1140,7 +1140,7 @@ export default function AccountingSystem() {
                     <option value="expense">مصروفات</option>
                   </select>
                   <input
-                    className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="المبلغ"
                     value={newCost.amount}
                     onChange={(e) =>
@@ -1150,14 +1150,14 @@ export default function AccountingSystem() {
                 </div>
                 <input
                   type="date"
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={newCost.date}
                   onChange={(e) =>
                     setNewCost({ ...newCost, date: e.target.value })
                   }
                 />
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="ملاحظة"
                   value={newCost.note}
                   onChange={(e) =>
@@ -1180,7 +1180,7 @@ export default function AccountingSystem() {
               </h3>
               <div className="grid gap-3">
                 <select
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={newSale.projectId}
                   onChange={(e) =>
                     setNewSale({ ...newSale, projectId: e.target.value })
@@ -1195,7 +1195,7 @@ export default function AccountingSystem() {
                 </select>
                 <div className="grid grid-cols-2 gap-3">
                   <input
-                    className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="رقم الوحدة"
                     value={newSale.unitNo}
                     onChange={(e) =>
@@ -1203,7 +1203,7 @@ export default function AccountingSystem() {
                     }
                   />
                   <input
-                    className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="السعر"
                     value={newSale.price}
                     onChange={(e) =>
@@ -1213,7 +1213,7 @@ export default function AccountingSystem() {
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <input
-                    className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     placeholder="اسم المشتري"
                     value={newSale.buyer}
                     onChange={(e) =>
@@ -1222,7 +1222,7 @@ export default function AccountingSystem() {
                   />
                   <input
                     type="date"
-                    className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                     value={newSale.date}
                     onChange={(e) =>
                       setNewSale({ ...newSale, date: e.target.value })
@@ -1230,7 +1230,7 @@ export default function AccountingSystem() {
                   />
                 </div>
                 <input
-                  className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   placeholder="شروط التعاقد (اختياري)"
                   value={newSale.terms}
                   onChange={(e) =>
@@ -1634,7 +1634,7 @@ function ReportsSection({
       <h3 className="font-semibold">التقارير</h3>
       <div className="grid md:grid-cols-4 gap-3">
         <select
-          className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+          className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
           value={reportType}
           onChange={(e) => setReportType(e.target.value)}
         >
@@ -1642,12 +1642,12 @@ function ReportsSection({
           <option value="revenue">الإيرادات</option>
           <option value="expense">المصروفات</option>
           <option value="salary">المرتبات</option>
-          <option value="project">تقرير مشروع</option>
+          <option value="project">تقرير مش��وع</option>
           <option value="inventory">تقرير المخزون</option>
         </select>
         {reportType === "project" && (
           <select
-            className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+            className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
             value={selectedProject}
             onChange={(e) => setSelectedProject(e.target.value)}
           >
@@ -1661,13 +1661,13 @@ function ReportsSection({
         )}
         <input
           type="date"
-          className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+          className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
           value={dateFrom}
           onChange={(e) => setDateFrom(e.target.value)}
         />
         <input
           type="date"
-          className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+          className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
           value={dateTo}
           onChange={(e) => setDateTo(e.target.value)}
         />
