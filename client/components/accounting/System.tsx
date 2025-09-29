@@ -380,7 +380,7 @@ export default function AccountingSystem() {
       !newProject.floors ||
       !newProject.units
     ) {
-      toast.error("الرجاء إدخال بيانات المش��وع كاملة");
+      toast.error("الرجاء إدخال بيانات المشروع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
@@ -829,7 +829,7 @@ export default function AccountingSystem() {
                   setNewItem({ ...newItem, unit: e.target.value })
                 }
               >
-                <option value="طن">ط��</option>
+                <option value="طن">طن</option>
                 <option value="قطعة">قطعة</option>
                 <option value="متر">متر</option>
                 <option value="لتر">لتر</option>
@@ -1021,7 +1021,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">المادة</th>
                       <th className="px-3 py-2">نوع الحركة</th>
                       <th className="px-3 py-2">الكمية</th>
-                      <th className="px-3 py-2">سعر ا��وحدة</th>
+                      <th className="px-3 py-2">سعر الوحدة</th>
                       <th className="px-3 py-2">الإجمالي</th>
                       <th className="px-3 py-2">الجهة</th>
                     </tr>
@@ -1527,7 +1527,7 @@ function ReportsSection({
         i.name,
         i.quantity.toLocaleString() + " " + i.unit,
         i.min.toLocaleString(),
-        i.quantity < i.min ? "منخفض" : "ج��د",
+        i.quantity < i.min ? "منخفض" : "جيد",
       ]);
       return {
         title: "تقرير المخزون",
@@ -1685,7 +1685,7 @@ function ReportsSection({
         </button>
         <button
           onClick={exportCsv}
-          className="rounded-md bg-slate-900 text-white px-4 py-2"
+          className="w-full rounded-md bg-slate-900 px-4 py-2 text-white transition-colors sm:w-auto"
         >
           تصدير CSV
         </button>
