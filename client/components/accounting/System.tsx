@@ -302,7 +302,7 @@ export default function AccountingSystem() {
       if (result.item.quantity < result.item.min) {
         toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
-        toast.success("تم تسجيل الوارد وتحديث المصروفات");
+        toast.success("ت�� تسجيل الوارد وتحديث المصروفات");
       }
       setReceive({
         itemId: "",
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل البيانات من قاعدة البيانات...
+        جارٍ تحميل البيانات من قاع��ة البيانات...
       </div>
     );
   }
@@ -657,7 +657,7 @@ export default function AccountingSystem() {
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
               <div className="text-sm text-slate-600">الوصول</div>
               <div className="mt-2 text-2xl font-bold">
-                {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
+                {isManager ? "��دارة المستخدمين مسموحة" : "غير متاحة"}
               </div>
             </div>
           </div>
@@ -682,7 +682,7 @@ export default function AccountingSystem() {
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <h3 className="font-semibold mb-3">إضافة معاملة سريعة</h3>
-            <div className="grid md:grid-cols-5 gap-3">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
               <select
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 value={quick.type}
@@ -690,7 +690,7 @@ export default function AccountingSystem() {
                   setQuick({ ...quick, type: e.target.value as TransType })
                 }
               >
-                <option value="revenue">إيراد</option>
+                <option value="revenue">إير��د</option>
                 <option value="expense">مصروف</option>
               </select>
               <input
@@ -855,7 +855,7 @@ export default function AccountingSystem() {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
               <h3 className="font-semibold mb-3">تسجيل وارد من مورد</h3>
-              <div className="grid md:grid-cols-5 gap-3">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={receive.itemId}
@@ -914,7 +914,7 @@ export default function AccountingSystem() {
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
               <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
-              <div className="grid md:grid-cols-5 gap-3">
+              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={issue.itemId}
@@ -1531,7 +1531,7 @@ function ReportsSection({
       ]);
       return {
         title: "تقرير المخزون",
-        headers: ["المادة", "الكمية", "الحد الأدنى", "الحالة"],
+        headers: ["المادة", "الكمية", "الحد الأدنى", "الحال��"],
         rows,
       };
     }
