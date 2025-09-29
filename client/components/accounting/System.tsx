@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل ��لبيانات من قاعدة البيانات...
+        جارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -610,7 +610,7 @@ export default function AccountingSystem() {
               <button
                 key={tab}
                 onClick={() => setActive(tab)}
-                className={`px-3 py-2 rounded-full border transition disabled:cursor-not-allowed disabled:opacity-50 ${
+                className={`w-full rounded-full border px-3 py-2 text-center transition sm:w-auto disabled:cursor-not-allowed disabled:opacity-50 ${
                   active === tab
                     ? "bg-gradient-to-r from-indigo-600 to-violet-600 text-white border-transparent"
                     : "border-indigo-300 text-indigo-700"
@@ -794,7 +794,7 @@ export default function AccountingSystem() {
             </table>
             {transactions.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا توجد م��املات مسجلة بعد.
+                لا توجد م���املات مسجلة بعد.
               </div>
             )}
           </div>
