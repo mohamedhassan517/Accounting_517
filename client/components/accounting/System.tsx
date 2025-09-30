@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DollarSign, ArrowUp, ArrowDown, Plus } from "lucide-react";
+import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useAuth } from "@/providers/AuthProvider";
 import UserManagement from "@/components/users/UserManagement";
 import { toast } from "sonner";
@@ -325,7 +326,7 @@ export default function AccountingSystem() {
 
   const issueSubmit = async () => {
     if (!issue.itemId || !issue.qty || !issue.unitPrice || !issue.project) {
-      toast.error("الرجاء إد��ال جميع بيانات الصرف");
+      toast.error("الرجاء إدخال جميع بيانات الصرف");
       return;
     }
     const qty = Number(issue.qty);
