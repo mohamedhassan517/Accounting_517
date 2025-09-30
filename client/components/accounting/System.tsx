@@ -417,7 +417,7 @@ export default function AccountingSystem() {
 
   const addProjectCost = async () => {
     if (!newCost.projectId || !newCost.amount) {
-      toast.error("الرجاء اختيار المشروع ��إدخال المبلغ");
+      toast.error("الرجاء اختيار المشروع وإدخال المبلغ");
       return;
     }
     const project = projects.find((p) => p.id === newCost.projectId);
@@ -830,7 +830,7 @@ export default function AccountingSystem() {
                 }
               >
                 <option value="طن">طن</option>
-                <option value="قطعة">قط��ة</option>
+                <option value="قطعة">قطعة</option>
                 <option value="متر">متر</option>
                 <option value="لتر">لتر</option>
               </select>
@@ -1186,7 +1186,7 @@ export default function AccountingSystem() {
                     setNewSale({ ...newSale, projectId: e.target.value })
                   }
                 >
-                  <option value="">اختر المشرو��</option>
+                  <option value="">اختر المشروع</option>
                   {projects.map((p) => (
                     <option key={p.id} value={p.id}>
                       {p.name}
@@ -1352,7 +1352,7 @@ export default function AccountingSystem() {
                   <thead>
                     <tr className="text-left bg-slate-50">
                       <th className="px-3 py-2">التاريخ</th>
-                      <th className="px-3 py-2">الم��روع</th>
+                      <th className="px-3 py-2">المشروع</th>
                       <th className="px-3 py-2">النوع</th>
                       <th className="px-3 py-2">المبلغ</th>
                       <th className="px-3 py-2">ملاحظة</th>
@@ -1476,7 +1476,7 @@ function ReportsSection({
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
           ["إجمالي المصروفات", exp.toLocaleString() + " ج.م"],
-          ["صافي الربح", (rev - exp).toLocaleString() + " ��.م"],
+          ["صافي الربح", (rev - exp).toLocaleString() + " ج.م"],
         ],
       };
     }
