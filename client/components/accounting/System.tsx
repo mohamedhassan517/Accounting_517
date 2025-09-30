@@ -913,7 +913,7 @@ export default function AccountingSystem() {
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
+              <h3 className="font-semibold mb-3">تس��يل صرف لمشروع</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1022,7 +1022,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">نوع الحركة</th>
                       <th className="px-3 py-2">الكمية</th>
                       <th className="px-3 py-2">سعر الوحدة</th>
-                      <th className="px-3 py-2">الإجما��ي</th>
+                      <th className="px-3 py-2">الإجمالي</th>
                       <th className="px-3 py-2">الجهة</th>
                     </tr>
                   </thead>
