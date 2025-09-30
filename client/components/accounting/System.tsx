@@ -212,7 +212,7 @@ export default function AccountingSystem() {
 
   const addItem = async () => {
     if (!newItem.name || !newItem.quantity || !newItem.min) {
-      toast.error("الرجاء إدخال بيانات المادة كاملة");
+      toast.error("الرجاء إد��ال بيانات المادة كاملة");
       return;
     }
     const quantity = Number(newItem.quantity);
@@ -422,7 +422,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("المشروع غير موجود");
+      toast.error("ا��مشروع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -854,7 +854,7 @@ export default function AccountingSystem() {
 
           <div className="grid gap-4 xl:grid-cols-2">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل وارد من مورد</h3>
+              <h3 className="font-semibold mb-3">تسجيل وارد من ��ورد</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1021,7 +1021,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">المادة</th>
                       <th className="px-3 py-2">نوع الحركة</th>
                       <th className="px-3 py-2">الكمية</th>
-                      <th className="px-3 py-2">سعر ال��حدة</th>
+                      <th className="px-3 py-2">سعر الوحدة</th>
                       <th className="px-3 py-2">الإجمالي</th>
                       <th className="px-3 py-2">الجهة</th>
                     </tr>
@@ -1425,7 +1425,7 @@ function Stat({
 }) {
   return (
     <div className="rounded-xl p-4 bg-white border border-slate-200 shadow text-center">
-      <div className={`text-3xl font-extrabold ${color}`}>
+      <div className={`text-2xl sm:text-3xl font-extrabold ${color}`}>
         {value.toLocaleString()}
       </div>
       <div className="text-sm text-slate-600 mt-1">{label}</div>
@@ -1482,7 +1482,7 @@ function ReportsSection({
     }
     if (reportType === "revenue") {
       return {
-        title: "تقرير الإيرادات",
+        title: "تقرير الإيرادا��",
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
