@@ -472,7 +472,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال ��يانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -512,8 +512,8 @@ export default function AccountingSystem() {
       printInvoice(result.sale.id, result.sale, project);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر تسجيل البيع";
-      toast.error("فشل ت��جيل البيع", { description: message });
+        error instanceof Error ? error.message : "تع��ر تسجيل البيع";
+      toast.error("فشل تسجيل البيع", { description: message });
     } finally {
       setSavingSale(false);
     }
@@ -557,7 +557,7 @@ export default function AccountingSystem() {
         <div class="grid">
           <div class="row"><div>المشروع:</div><div>${project?.name ?? ""}</div></div>
           <div class="row"><div>الموقع:</div><div>${project?.location ?? ""}</div></div>
-          <div class="row"><div>رق�� الوحدة:</div><div>${sale.unitNo}</div></div>
+          <div class="row"><div>رقم الوحدة:</div><div>${sale.unitNo}</div></div>
           <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
           <div class="row"><div>التاريخ:</div><div>${sale.date}</div></div>
         </div>
@@ -738,7 +738,7 @@ export default function AccountingSystem() {
                   <th className="px-3 py-2">التاريخ</th>
                   <th className="px-3 py-2">النوع</th>
                   <th className="px-3 py-2">الوصف</th>
-                  <th className="px-3 py-2">المبلغ</th>
+                  <th className="px-3 py-2">ا��مبلغ</th>
                   <th className="px-3 py-2">الحالة</th>
                   <th className="px-3 py-2"></th>
                 </tr>
