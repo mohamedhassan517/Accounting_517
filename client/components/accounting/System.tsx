@@ -127,7 +127,7 @@ export default function AccountingSystem() {
       setSales(data.sales);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "حدث خطأ أثناء تح��يل البيانات";
+        error instanceof Error ? error.message : "حدث خطأ أثناء تحميل البيانات";
       setLoadingError(message);
       toast.error("تعذر تحميل البيانات من قاعدة البيانات", {
         description: message,
@@ -409,7 +409,7 @@ export default function AccountingSystem() {
       });
       setProjects((prev) => [project, ...prev]);
       setNewProject({ name: "", location: "", floors: "", units: "" });
-      toast.success("تمت إضافة المشروع العقاري");
+      toast.success("تمت إضافة المشروع ��لعقاري");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر إضافة المشروع";
@@ -458,7 +458,7 @@ export default function AccountingSystem() {
       });
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر تسجي�� التكلفة";
+        error instanceof Error ? error.message : "تعذر تسجيل التكلفة";
       toast.error("فشل تسجيل التكلفة", { description: message });
     } finally {
       setSavingCost(false);
@@ -1069,7 +1069,7 @@ export default function AccountingSystem() {
           <div className="grid gap-3">
             <input
               className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-              placeholder="ا��م المشروع"
+              placeholder="اسم المشروع"
               value={newProject.name}
               onChange={(e) =>
                 setNewProject({ ...newProject, name: e.target.value })
@@ -1123,7 +1123,7 @@ export default function AccountingSystem() {
       {/* Below: cost and sale side-by-side */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-          <h3 className="font-semibold mb-3">تسجيل تكلفة للمشروع</h3>
+          <h3 className="font-semibold mb-3">ت��جيل تكلفة للمشروع</h3>
           <div className="grid gap-3">
             <select
               className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1191,7 +1191,7 @@ export default function AccountingSystem() {
                 onClick={() => setNewCost({ projectId: "", type: "construction", amount: "", date: today(), note: "" })}
                 className="rounded-md border px-3 py-2 bg-white"
               >
-                إع��دة تعيين
+                إعادة تعيين
               </button>
             </div>
           </div>
@@ -1531,6 +1531,16 @@ function ReportsSection({
     [transactions, dateFrom, dateTo],
   );
 
+  const formatDateLabel = (d: string) => {
+    try {
+      const dt = new Date(d);
+      if (isNaN(dt.getTime())) return d;
+      return dt.toLocaleDateString("ar-EG", { day: "2-digit", month: "short", year: "numeric" });
+    } catch {
+      return d;
+    }
+  };
+
   const buildReport = useCallback(() => {
     if (reportType === "profit-loss") {
       const rev = filtered
@@ -1729,7 +1739,7 @@ function ReportsSection({
           </select>
         )}
         <div>
-          <label className="text-sm text-slate-600 mb-1 inline-block">من</label>
+          <label className="text-sm text-slate-600 mb-1 inline-block">��ن</label>
           <input
             type="date"
             className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
