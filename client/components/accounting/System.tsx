@@ -174,7 +174,7 @@ export default function AccountingSystem() {
       });
       setTransactions((prev) => [transaction, ...prev]);
       setQuick({ type: "revenue", amount: "", description: "", date: today() });
-      toast.success("تمت إضافة ال��عاملة");
+      toast.success("تمت إض��فة المعاملة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المعاملة";
@@ -1198,7 +1198,7 @@ export default function AccountingSystem() {
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-          <h3 className="font-semibold mb-3">تسجيل ��يع وحدة وإصدار فاتورة</h3>
+          <h3 className="font-semibold mb-3">��سجيل بيع وحدة وإصدار فاتورة</h3>
           <div className="grid gap-3">
             <select
               className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1782,7 +1782,7 @@ function ReportsSection({
       <div className="border rounded-lg p-3">
         <div className="font-semibold mb-2">نتيجة التقرير</div>
         <div className="text-sm text-slate-600">
-          الفترة {dateFrom} - {dateTo}
+          الفترة: من {formatDateLabel(dateFrom)} إلى {formatDateLabel(dateTo)}
         </div>
         <div className="mt-3 grid md:grid-cols-3 gap-3">
           <Stat
