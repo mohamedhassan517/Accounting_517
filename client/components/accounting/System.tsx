@@ -99,6 +99,8 @@ export default function AccountingSystem() {
   });
 
   const [savingQuick, setSavingQuick] = useState(false);
+
+  const [projQuery, setProjQuery] = useState("");
   const [savingItem, setSavingItem] = useState(false);
   const [savingReceive, setSavingReceive] = useState(false);
   const [savingIssue, setSavingIssue] = useState(false);
@@ -558,7 +560,7 @@ export default function AccountingSystem() {
           <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
           <div class="row"><div>التا��يخ:</div><div>${sale.date}</div></div>
         </div>
-        <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
+        <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ��.م</div></div>
         ${sale.terms ? `<div class="mt">الشروط: ${sale.terms}</div>` : ""}
         <a href="#" class="btn" onclick="window.print();return false;">طباعة</a>
       </div>
@@ -1261,7 +1263,7 @@ export default function AccountingSystem() {
                     <th className="px-3 py-2">مباعة/متاحة</th>
                     <th className="px-3 py-2">التكاليف</th>
                     <th className="px-3 py-2">المبيعات</th>
-                    <th className="px-3 py-2">الربح</th>
+                    <th className="px-3 py-2">الر��ح</th>
                   </tr>
                 </thead>
                 <tbody>
