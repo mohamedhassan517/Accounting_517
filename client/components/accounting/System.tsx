@@ -1,4 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { DollarSign, ArrowUp, ArrowDown, Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { useAuth } from "@/providers/AuthProvider";
 import UserManagement from "@/components/users/UserManagement";
 import { toast } from "sonner";
@@ -98,6 +106,8 @@ export default function AccountingSystem() {
   });
 
   const [savingQuick, setSavingQuick] = useState(false);
+
+  const [projQuery, setProjQuery] = useState("");
   const [savingItem, setSavingItem] = useState(false);
   const [savingReceive, setSavingReceive] = useState(false);
   const [savingIssue, setSavingIssue] = useState(false);
@@ -355,7 +365,7 @@ export default function AccountingSystem() {
       if (result.item.quantity < result.item.min) {
         toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
-        toast.success("تم تسجيل الصرف وتحديث المصروفات");
+        toast.success("تم تسجيل الصرف وتحديث المصرو��ات");
       }
       setIssue({
         itemId: "",
@@ -636,55 +646,51 @@ export default function AccountingSystem() {
       {active === "dashboard" && (
         <section className="space-y-6">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <div className="rounded-xl p-4 bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow">
-              <div className="text-sm opacity-90">الحساب</div>
-              <div className="mt-2 text-2xl font-extrabold">{user?.name}</div>
-              <div className="text-xs mt-1">
-                الدور:{" "}
-                {user?.role === "manager"
-                  ? "مدير"
-                  : user?.role === "accountant"
-                    ? "محاسب"
-                    : "موظف"}
+            <div className="rounded-xl p-4 bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-lg flex flex-col justify-between">
+              <div>
+                <div className="text-sm opacity-90">الحساب</div>
+                <div className="mt-2 text-2xl font-extrabold">{user?.name}</div>
+                <div className="text-xs mt-1">
+                  الدور:{" "}
+                  {user?.role === "manager"
+                    ? "مدير"
+                    : user?.role === "accountant"
+                      ? "محاسب"
+                      : "موظف"}
+                </div>
               </div>
-            </div>
-            <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
-              <div className="text-sm text-slate-600">الوضع</div>
-              <div className="mt-2 text-2xl font-bold">
-                {isManager ? "صلاحيات مدير" : "مستخدم عادي"}
-              </div>
-            </div>
-            <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
-              <div className="text-sm text-slate-600">الوصول</div>
-              <div className="mt-2 text-2xl font-bold">
-                {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
+              <div className="mt-4 text-xs opacity-90">
+                مرحباً بك في لوحة التحكم — يمكنك إدارة العمليات بسرعة وسهولة.
               </div>
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
             <Stat
               value={totals.revenue}
               label="إجمالي الإيرادات"
-              color="text-emerald-600"
+              color="from-emerald-100 to-emerald-300"
+              icon={<ArrowUp className="h-5 w-5 text-emerald-700" />}
             />
             <Stat
               value={totals.expenses}
               label="إجمالي المصروفات"
-              color="text-rose-600"
+              color="from-rose-100 to-rose-200"
+              icon={<ArrowDown className="h-5 w-5 text-rose-700" />}
             />
             <Stat
               value={totals.profit}
-              label="صافي الربح (ج.م)"
-              color="text-indigo-700"
+              label="صافي الربح"
+              color="from-indigo-100 to-indigo-200"
+              icon={<DollarSign className="h-5 w-5 text-indigo-700" />}
             />
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-md">
             <h3 className="font-semibold mb-3">إضافة معاملة سريعة</h3>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
               <select
-                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 bg-white"
                 value={quick.type}
                 onChange={(e) =>
                   setQuick({ ...quick, type: e.target.value as TransType })
@@ -714,13 +720,29 @@ export default function AccountingSystem() {
                 }
               />
             </div>
-            <button
-              onClick={() => void addQuick()}
-              disabled={savingQuick}
-              className="mt-3 w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-            >
-              {savingQuick ? "جاري الحفظ..." : "إضافة معاملة"}
-            </button>
+            <div className="mt-3 flex items-center gap-2">
+              <button
+                onClick={() => void addQuick()}
+                disabled={savingQuick}
+                className="flex items-center gap-2 rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <Plus className="h-4 w-4" />
+                {savingQuick ? "جاري الحفظ..." : "إضافة معاملة"}
+              </button>
+              <button
+                onClick={() =>
+                  setQuick({
+                    type: "revenue",
+                    amount: "",
+                    description: "",
+                    date: today(),
+                  })
+                }
+                className="rounded-md border px-3 py-2 bg-white"
+              >
+                إعادة تعيين
+              </button>
+            </div>
           </div>
         </section>
       )}
@@ -913,7 +935,7 @@ export default function AccountingSystem() {
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تس��يل صرف لمشروع</h3>
+              <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1059,7 +1081,8 @@ export default function AccountingSystem() {
 
       {active === "projects" && (
         <section className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {/* Add project occupies full width */}
+          <div className="">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
               <h3 className="font-semibold mb-3">إضافة مشروع عقاري</h3>
               <div className="grid gap-3">
@@ -1097,16 +1120,34 @@ export default function AccountingSystem() {
                     }
                   />
                 </div>
-                <button
-                  onClick={() => void addProject()}
-                  disabled={savingProject}
-                  className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-                >
-                  {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => void addProject()}
+                    disabled={savingProject}
+                    className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
+                  </button>
+                  <button
+                    onClick={() =>
+                      setNewProject({
+                        name: "",
+                        location: "",
+                        floors: "",
+                        units: "",
+                      })
+                    }
+                    className="rounded-md border px-3 py-2 bg-white"
+                  >
+                    إعادة تعيين
+                  </button>
+                </div>
               </div>
             </div>
+          </div>
 
+          {/* Below: cost and sale side-by-side */}
+          <div className="grid gap-4 sm:grid-cols-2">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
               <h3 className="font-semibold mb-3">تسجيل تكلفة للمشروع</h3>
               <div className="grid gap-3">
@@ -1164,13 +1205,29 @@ export default function AccountingSystem() {
                     setNewCost({ ...newCost, note: e.target.value })
                   }
                 />
-                <button
-                  onClick={() => void addProjectCost()}
-                  disabled={savingCost}
-                  className="w-full rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-                >
-                  {savingCost ? "جاري التسجيل..." : "تسجيل التكلفة"}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => void addProjectCost()}
+                    disabled={savingCost}
+                    className="rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {savingCost ? "جاري التسجيل..." : "تسجيل التكلفة"}
+                  </button>
+                  <button
+                    onClick={() =>
+                      setNewCost({
+                        projectId: "",
+                        type: "construction",
+                        amount: "",
+                        date: today(),
+                        note: "",
+                      })
+                    }
+                    className="rounded-md border px-3 py-2 bg-white"
+                  >
+                    إعادة تعيين
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -1237,65 +1294,155 @@ export default function AccountingSystem() {
                     setNewSale({ ...newSale, terms: e.target.value })
                   }
                 />
-                <button
-                  onClick={() => void addProjectSale()}
-                  disabled={savingSale}
-                  className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-                >
-                  {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فاتورة"}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => void addProjectSale()}
+                    disabled={savingSale}
+                    className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فاتورة"}
+                  </button>
+                  <button
+                    onClick={() =>
+                      setNewSale({
+                        projectId: "",
+                        unitNo: "",
+                        buyer: "",
+                        price: "",
+                        date: today(),
+                        terms: "",
+                      })
+                    }
+                    className="rounded-md border px-3 py-2 bg-white"
+                  >
+                    إعادة تعيين
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-            <h3 className="font-semibold mb-3">المشروعات</h3>
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-sm">
-                <thead>
-                  <tr className="text-left bg-slate-50">
-                    <th className="px-3 py-2">المشروع</th>
-                    <th className="px-3 py-2">الموقع</th>
-                    <th className="px-3 py-2">الأدوار</th>
-                    <th className="px-3 py-2">الوحدات</th>
-                    <th className="px-3 py-2">مباعة/متاحة</th>
-                    <th className="px-3 py-2">التكاليف</th>
-                    <th className="px-3 py-2">المبيعات</th>
-                    <th className="px-3 py-2">الربح</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {projects.map((p) => {
-                    const t = projectTotals(p.id);
-                    return (
-                      <tr key={p.id} className="border-t">
-                        <td className="px-3 py-2">{p.name}</td>
-                        <td className="px-3 py-2">{p.location}</td>
-                        <td className="px-3 py-2">{p.floors}</td>
-                        <td className="px-3 py-2">{p.units}</td>
-                        <td className="px-3 py-2">
-                          {t.sold} / {Math.max(0, p.units - t.sold)}
-                        </td>
-                        <td className="px-3 py-2">
-                          {t.costs.toLocaleString()} ج.م
-                        </td>
-                        <td className="px-3 py-2">
-                          {t.sales.toLocaleString()} ج.م
-                        </td>
-                        <td className="px-3 py-2">
-                          {t.profit.toLocaleString()} ج.م
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-              {projects.length === 0 && (
-                <div className="py-6 text-center text-sm text-slate-500">
-                  لا توجد مشروعات مسجلة بعد.
-                </div>
-              )}
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold">المشروعات</h3>
+              <div className="flex items-center gap-2">
+                <input
+                  placeholder="ابحث عن مشروع أو موقع"
+                  className="rounded-md border-2 border-slate-200 px-3 py-2 outline-none focus:border-indigo-500"
+                  value={projQuery}
+                  onChange={(e) => setProjQuery(e.target.value)}
+                />
+              </div>
             </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {projects
+                .filter((p) =>
+                  projQuery
+                    ? (p.name + " " + p.location)
+                        .toLowerCase()
+                        .includes(projQuery.toLowerCase())
+                    : true,
+                )
+                .map((p) => {
+                  const t = projectTotals(p.id);
+                  return (
+                    <div
+                      key={p.id}
+                      className="rounded-lg border p-4 bg-white shadow"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <div className="font-semibold text-lg">{p.name}</div>
+                          <div className="text-sm text-slate-500">
+                            {p.location}
+                          </div>
+                        </div>
+                        <div className="text-sm text-slate-400">
+                          {p.floors} طوابق
+                        </div>
+                      </div>
+                      <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <div className="text-xs text-slate-500">الوحدات</div>
+                          <div className="font-medium">{p.units}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-slate-500">مباعة</div>
+                          <div className="font-medium">{t.sold}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-slate-500">التكاليف</div>
+                          <div className="font-medium">
+                            {t.costs.toLocaleString()} ج.م
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-slate-500">المبيعات</div>
+                          <div className="font-medium">
+                            {t.sales.toLocaleString()} ج.م
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-3 flex items-center justify-between">
+                        <div className="text-sm text-slate-500">
+                          الربح:{" "}
+                          <span className="font-semibold text-slate-700">
+                            {t.profit.toLocaleString()} ج.م
+                          </span>
+                        </div>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <button className="rounded-md bg-slate-900 text-white px-3 py-1">
+                              عرض
+                            </button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-lg">
+                            <DialogTitle>تفاصيل المشروع</DialogTitle>
+                            <DialogDescription asChild>
+                              <div className="mt-2 space-y-2">
+                                <div>
+                                  <strong>الاسم:</strong> {p.name}
+                                </div>
+                                <div>
+                                  <strong>الموقع:</strong> {p.location}
+                                </div>
+                                <div>
+                                  <strong>الأدوار:</strong> {p.floors}
+                                </div>
+                                <div>
+                                  <strong>الوحدات:</strong> {p.units}
+                                </div>
+                                <div>
+                                  <strong>مباعة:</strong> {t.sold}
+                                </div>
+                                <div>
+                                  <strong>التكاليف:</strong>{" "}
+                                  {t.costs.toLocaleString()} ج.م
+                                </div>
+                                <div>
+                                  <strong>المبيعات:</strong>{" "}
+                                  {t.sales.toLocaleString()} ج.م
+                                </div>
+                                <div>
+                                  <strong>الربح:</strong>{" "}
+                                  {t.profit.toLocaleString()} ج.م
+                                </div>
+                              </div>
+                            </DialogDescription>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+
+            {projects.length === 0 && (
+              <div className="py-6 text-center text-sm text-slate-500">
+                لا توجد مشروعات مسجلة بعد.
+              </div>
+            )}
           </div>
 
           {sales.length > 0 && (
@@ -1418,17 +1565,29 @@ function Stat({
   value,
   label,
   color,
+  icon,
 }: {
   value: number;
   label: string;
-  color: string;
+  color?: string;
+  icon?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl p-4 bg-white border border-slate-200 shadow text-center">
-      <div className={`text-2xl sm:text-3xl font-extrabold ${color}`}>
-        {value.toLocaleString()}
+    <div className="rounded-xl p-4 bg-white border border-slate-200 shadow flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <div
+          className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${color ?? "from-slate-100 to-slate-50"}`}
+        >
+          {icon ?? <DollarSign className="h-5 w-5 text-slate-700" />}
+        </div>
+        <div>
+          <div className="text-lg sm:text-xl font-extrabold">
+            {value.toLocaleString()}
+          </div>
+          <div className="text-sm text-slate-500 mt-1">{label}</div>
+        </div>
       </div>
-      <div className="text-sm text-slate-600 mt-1">{label}</div>
+      <div className="text-sm text-slate-400">ج.م</div>
     </div>
   );
 }
@@ -1461,6 +1620,20 @@ function ReportsSection({
     () => transactions.filter((t) => t.date >= dateFrom && t.date <= dateTo),
     [transactions, dateFrom, dateTo],
   );
+
+  const formatDateLabel = (d: string) => {
+    try {
+      const dt = new Date(d);
+      if (isNaN(dt.getTime())) return d;
+      return dt.toLocaleDateString("ar-EG", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+    } catch {
+      return d;
+    }
+  };
 
   const buildReport = useCallback(() => {
     if (reportType === "profit-loss") {
@@ -1561,7 +1734,7 @@ function ReportsSection({
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
-        title: "تقري�� مشروع عقاري",
+        title: "تقرير مشروع عقاري",
         headers: ["البند", "القيمة"],
         rows,
       };
@@ -1615,12 +1788,14 @@ function ReportsSection({
     const rep = buildReport();
     const win = window.open("", "_blank");
     if (!win) return;
+    const fromLabel = formatDateLabel(dateFrom);
+    const toLabel = formatDateLabel(dateTo);
     win.document
       .write(`<!doctype html><html dir="rtl"><head><meta charset="utf-8"><title>${rep.title}</title>
       <style>body{font-family:Arial,system-ui;padding:24px} h1{font-size:20px;margin-bottom:12px} table{width:100%;border-collapse:collapse} th,td{border:1px solid #ddd;padding:8px} th{background:#f1f5f9}</style>
     </head><body>
       <h1>${rep.title}</h1>
-      <div>الفترة: ${dateFrom} - ${dateTo}</div>
+      <div>الفترة: من ${fromLabel} إلى ${toLabel}</div>
       <table><thead><tr>${rep.headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>
         ${rep.rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}
       </tbody></table>
@@ -1632,68 +1807,87 @@ function ReportsSection({
   return (
     <section className="bg-white border border-slate-200 rounded-xl p-4 shadow space-y-4">
       <h3 className="font-semibold">التقارير</h3>
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <select
-          className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-          value={reportType}
-          onChange={(e) => setReportType(e.target.value)}
-        >
-          <option value="profit-loss">الأرباح والخسائر</option>
-          <option value="revenue">الإيرادات</option>
-          <option value="expense">المصروفات</option>
-          <option value="salary">المرتبات</option>
-          <option value="project">تقرير مشروع</option>
-          <option value="inventory">تقرير المخزون</option>
-        </select>
-        {reportType === "project" && (
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 items-end">
+        <div className="flex flex-col">
+          <label className="text-sm text-slate-600 mb-1">نوع التقرير</label>
           <select
             className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-            value={selectedProject}
-            onChange={(e) => setSelectedProject(e.target.value)}
+            value={reportType}
+            onChange={(e) => setReportType(e.target.value)}
           >
-            <option value="">اختر المشروع</option>
-            {projects.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name}
-              </option>
-            ))}
+            <option value="profit-loss">الأرباح والخسائر</option>
+            <option value="revenue">الإيرادات</option>
+            <option value="expense">المصروفات</option>
+            <option value="salary">المرتبات</option>
+            <option value="project">تقرير مشروع</option>
+            <option value="inventory">تقرير المخزون</option>
           </select>
+        </div>
+
+        {reportType === "project" && (
+          <div className="flex flex-col">
+            <label className="text-sm text-slate-600 mb-1">المشروع</label>
+            <select
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              value={selectedProject}
+              onChange={(e) => setSelectedProject(e.target.value)}
+            >
+              <option value="">اختر المشروع</option>
+              {projects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
+          </div>
         )}
-        <input
-          type="date"
-          className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-          value={dateFrom}
-          onChange={(e) => setDateFrom(e.target.value)}
-        />
-        <input
-          type="date"
-          className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-          value={dateTo}
-          onChange={(e) => setDateTo(e.target.value)}
-        />
-        <button
-          onClick={exportPDF}
-          className="w-full rounded-md bg-indigo-600 px-4 py-2 text-white transition-colors sm:w-auto"
-        >
-          تصدير PDF
-        </button>
-        <button
-          onClick={exportExcel}
-          className="w-full rounded-md bg-emerald-600 px-4 py-2 text-white transition-colors sm:w-auto"
-        >
-          تصدير Excel
-        </button>
-        <button
-          onClick={exportCsv}
-          className="w-full rounded-md bg-slate-900 px-4 py-2 text-white transition-colors sm:w-auto"
-        >
-          تصدير CSV
-        </button>
+
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <label className="text-sm text-slate-600 mb-1 inline-block">
+              من
+            </label>
+            <input
+              type="date"
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              value={dateFrom}
+              onChange={(e) => setDateFrom(e.target.value)}
+              aria-label="تاريخ من"
+            />
+          </div>
+          <div className="flex-1">
+            <label className="text-sm text-slate-600 mb-1 inline-block">
+              إلى
+            </label>
+            <input
+              type="date"
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              value={dateTo}
+              onChange={(e) => setDateTo(e.target.value)}
+              aria-label="تاريخ إلى"
+            />
+          </div>
+        </div>
+
+        <div className="flex gap-2 col-span-3 sm:col-auto sm:justify-end">
+          <button
+            onClick={exportPDF}
+            className="rounded-md bg-indigo-600 px-4 py-2 text-white transition-colors"
+          >
+            تصدير PDF
+          </button>
+          <button
+            onClick={exportExcel}
+            className="rounded-md bg-emerald-600 px-4 py-2 text-white transition-colors"
+          >
+            تصدير Excel
+          </button>
+        </div>
       </div>
       <div className="border rounded-lg p-3">
         <div className="font-semibold mb-2">نتيجة التقرير</div>
         <div className="text-sm text-slate-600">
-          الفترة {dateFrom} - {dateTo}
+          الفترة: من {formatDateLabel(dateFrom)} إلى {formatDateLabel(dateTo)}
         </div>
         <div className="mt-3 grid md:grid-cols-3 gap-3">
           <Stat
@@ -1707,7 +1901,7 @@ function ReportsSection({
             value={transactions
               .filter((t) => t.type === "expense")
               .reduce((a, b) => a + b.amount, 0)}
-            label="إجمالي المصروفات"
+            label="إجم��لي المصروفات"
             color="text-rose-600"
           />
           <Stat
