@@ -1554,14 +1554,14 @@ function ReportsSection({
       const rows: string[][] = [
         ["المشروع", project?.name || "-"],
         ["الموقع", project?.location || "-"],
-        ["عدد الأدوار", String(project?.floors ?? "-")],
+        ["��دد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
-        ["إجمالي التكال��ف", totalC.toLocaleString() + " ج.م"],
+        ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
-        title: "تقرير ��شروع عقاري",
+        title: "تقرير مشروع عقاري",
         headers: ["البند", "القيمة"],
         rows,
       };
