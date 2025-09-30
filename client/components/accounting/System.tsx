@@ -256,7 +256,7 @@ export default function AccountingSystem() {
       setDeletingItemId(id);
       await deleteInventoryItem(id);
       setItems((prev) => prev.filter((i) => i.id !== id));
-      toast.success("تم حذف المادة");
+      toast.success("ت�� حذف المادة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
@@ -384,7 +384,7 @@ export default function AccountingSystem() {
       !newProject.floors ||
       !newProject.units
     ) {
-      toast.error("الرجاء إدخال بيانات المشروع كاملة");
+      toast.error("الرجا�� إدخال بيانات المشروع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
@@ -512,7 +512,7 @@ export default function AccountingSystem() {
       printInvoice(result.sale.id, result.sale, project);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر تسجيل البيع";
+        error instanceof Error ? error.message : "تعذر ت��جيل البيع";
       toast.error("فشل تسجيل البيع", { description: message });
     } finally {
       setSavingSale(false);
@@ -1132,7 +1132,7 @@ export default function AccountingSystem() {
                 setNewCost({ ...newCost, projectId: e.target.value })
               }
             >
-              <option value="">��ختر المشروع</option>
+              <option value="">اختر المشروع</option>
               {projects.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.name}
