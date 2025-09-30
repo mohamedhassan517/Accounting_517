@@ -256,7 +256,7 @@ export default function AccountingSystem() {
       setDeletingItemId(id);
       await deleteInventoryItem(id);
       setItems((prev) => prev.filter((i) => i.id !== id));
-      toast.success("ت�� حذف المادة");
+      toast.success("تم حذف المادة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
@@ -326,7 +326,7 @@ export default function AccountingSystem() {
 
   const issueSubmit = async () => {
     if (!issue.itemId || !issue.qty || !issue.unitPrice || !issue.project) {
-      toast.error("الرجاء إدخال جميع بيانات الصرف");
+      toast.error("��لرجاء إدخال جميع بيانات الصرف");
       return;
     }
     const qty = Number(issue.qty);
@@ -384,7 +384,7 @@ export default function AccountingSystem() {
       !newProject.floors ||
       !newProject.units
     ) {
-      toast.error("الرجا�� إدخال بيانات المشروع كاملة");
+      toast.error("الرجاء إدخال بيانات المشروع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
@@ -512,7 +512,7 @@ export default function AccountingSystem() {
       printInvoice(result.sale.id, result.sale, project);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر ت��جيل البيع";
+        error instanceof Error ? error.message : "تعذر تسجيل البيع";
       toast.error("فشل تسجيل البيع", { description: message });
     } finally {
       setSavingSale(false);
@@ -730,7 +730,7 @@ export default function AccountingSystem() {
 
       {active === "transactions" && (
         <section className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-          <h3 className="font-semibold mb-3">المعاملات المالية</h3>
+          <h3 className="font-semibold mb-3">المعاملات ا��مالية</h3>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead>
