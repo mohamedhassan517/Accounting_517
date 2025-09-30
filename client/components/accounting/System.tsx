@@ -170,7 +170,7 @@ export default function AccountingSystem() {
       });
       setTransactions((prev) => [transaction, ...prev]);
       setQuick({ type: "revenue", amount: "", description: "", date: today() });
-      toast.success("تمت إضافة ال��عاملة");
+      toast.success("تمت إضافة المعاملة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المعاملة";
@@ -212,7 +212,7 @@ export default function AccountingSystem() {
 
   const addItem = async () => {
     if (!newItem.name || !newItem.quantity || !newItem.min) {
-      toast.error("الرجاء إد��ال بيانات المادة كاملة");
+      toast.error("الرجاء إدخال بيانات المادة كاملة");
       return;
     }
     const quantity = Number(newItem.quantity);
@@ -255,7 +255,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف المادة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذ�� حذف المادة";
+        error instanceof Error ? error.message : "تعذر حذف المادة";
       toast.error("فشل حذف المادة", { description: message });
     } finally {
       setDeletingItemId(null);
@@ -302,7 +302,7 @@ export default function AccountingSystem() {
       if (result.item.quantity < result.item.min) {
         toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
-        toast.success("ت�� تسجيل الوارد وتحديث المصروفات");
+        toast.success("تم تسجيل الوارد وتحديث المصروفات");
       }
       setReceive({
         itemId: "",
@@ -333,7 +333,7 @@ export default function AccountingSystem() {
       !Number.isFinite(unitPrice) ||
       unitPrice <= 0
     ) {
-      toast.error("القيم العددية غ��ر صحيحة");
+      toast.error("القيم العددية غير صحيحة");
       return;
     }
     try {
@@ -422,7 +422,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("ا��مشروع غير موجود");
+      toast.error("المشروع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -468,12 +468,12 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إد��ال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
     if (!project) {
-      toast.error("المشروع غير موج��د");
+      toast.error("المشروع غير موجود");
       return;
     }
     const price = Number(newSale.price);
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل البيانات من قاع��ة البيانات...
+        جا��ٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -593,7 +593,7 @@ export default function AccountingSystem() {
         <div className="space-y-1">
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
           <p className="text-slate-500 text-sm">
-            نظام محاسبة عقاري سهل الاستخدا��
+            نظام محاسبة عقاري سهل الاستخدام
           </p>
         </div>
         <div className="flex w-full flex-wrap gap-2 justify-center sm:justify-start md:w-auto md:justify-end">
@@ -657,7 +657,7 @@ export default function AccountingSystem() {
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
               <div className="text-sm text-slate-600">الوصول</div>
               <div className="mt-2 text-2xl font-bold">
-                {isManager ? "��دارة المستخدمين مسموحة" : "غير متاحة"}
+                {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
               </div>
             </div>
           </div>
@@ -690,7 +690,7 @@ export default function AccountingSystem() {
                   setQuick({ ...quick, type: e.target.value as TransType })
                 }
               >
-                <option value="revenue">إير��د</option>
+                <option value="revenue">إيراد</option>
                 <option value="expense">مصروف</option>
               </select>
               <input
@@ -794,7 +794,7 @@ export default function AccountingSystem() {
             </table>
             {transactions.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا توجد م��املات مسجلة بعد.
+                لا توجد معاملات مسجلة بعد.
               </div>
             )}
           </div>
@@ -854,7 +854,7 @@ export default function AccountingSystem() {
 
           <div className="grid gap-4 xl:grid-cols-2">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل وارد من ��ورد</h3>
+              <h3 className="font-semibold mb-3">تسجيل وارد من مورد</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1021,7 +1021,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">المادة</th>
                       <th className="px-3 py-2">نوع الحركة</th>
                       <th className="px-3 py-2">الكمية</th>
-                      <th className="px-3 py-2">سعر الوحدة</th>
+                      <th className="px-3 py-2">��عر الوحدة</th>
                       <th className="px-3 py-2">الإجمالي</th>
                       <th className="px-3 py-2">الجهة</th>
                     </tr>
@@ -1082,7 +1082,7 @@ export default function AccountingSystem() {
                 <div className="grid grid-cols-2 gap-3">
                   <input
                     className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    placeholder="عدد الأد��ار"
+                    placeholder="عدد الأدوار"
                     value={newProject.floors}
                     onChange={(e) =>
                       setNewProject({ ...newProject, floors: e.target.value })
@@ -1482,7 +1482,7 @@ function ReportsSection({
     }
     if (reportType === "revenue") {
       return {
-        title: "تقرير الإيرادا��",
+        title: "تقرير الإيرادات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
@@ -1531,7 +1531,7 @@ function ReportsSection({
       ]);
       return {
         title: "تقرير المخزون",
-        headers: ["المادة", "الكمية", "الحد الأدنى", "الحال��"],
+        headers: ["المادة", "الكمية", "الحد الأدنى", "الحالة"],
         rows,
       };
     }
@@ -1642,7 +1642,7 @@ function ReportsSection({
           <option value="revenue">الإيرادات</option>
           <option value="expense">المصروفات</option>
           <option value="salary">المرتبات</option>
-          <option value="project">تقرير مش��وع</option>
+          <option value="project">تقرير مشروع</option>
           <option value="inventory">تقرير المخزون</option>
         </select>
         {reportType === "project" && (
