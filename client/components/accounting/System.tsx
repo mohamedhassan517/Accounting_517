@@ -655,7 +655,7 @@ export default function AccountingSystem() {
               </div>
             </div>
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
-              <div className="text-sm text-slate-600">الوصو��</div>
+              <div className="text-sm text-slate-600">الوصول</div>
               <div className="mt-2 text-2xl font-bold">
                 {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
               </div>
