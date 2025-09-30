@@ -49,7 +49,9 @@ export async function listUsers(): Promise<User[]> {
           }
         } catch {}
         if (res.status === 403) {
-          throw new Error("غير مصرح: فقط المدير يمكنه عرض المستخدمين. تأكد أن دورك 'manager' وأن الخادم مهيأ.");
+          throw new Error(
+            "غير مصرح: فقط المدير يمكنه عرض المستخدمين. تأكد أن دورك 'manager' وأن الخادم مهيأ.",
+          );
         }
         throw new Error(message || "تعذر جلب قائمة المستخدمين");
       }
@@ -58,7 +60,9 @@ export async function listUsers(): Promise<User[]> {
       const cached = await getCached<User[]>(key);
       if (cached) return cached;
       throw new Error(
-        e instanceof Error ? e.message : "تعذر الاتصال بالخادم ولا توجد بيانات مخزنة"
+        e instanceof Error
+          ? e.message
+          : "تعذر الاتصال بالخادم ولا توجد بيانات مخزنة",
       );
     }
   }
