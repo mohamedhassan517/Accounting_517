@@ -1530,7 +1530,7 @@ function ReportsSection({
         i.quantity < i.min ? "منخفض" : "جيد",
       ]);
       return {
-        title: "تق��ير المخزون",
+        title: "تقرير المخزون",
         headers: ["المادة", "الكمية", "الحد الأدنى", "الحالة"],
         rows,
       };
@@ -1556,7 +1556,7 @@ function ReportsSection({
         ["الموقع", project?.location || "-"],
         ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
-        ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
+        ["إجمالي التكال��ف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
