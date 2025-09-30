@@ -657,7 +657,7 @@ export default function AccountingSystem() {
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
               <div className="text-sm text-slate-600">الوصول</div>
               <div className="mt-2 text-2xl font-bold">
-                {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
+                {isManager ? "إدارة المستخ��مين مسموحة" : "غير متاحة"}
               </div>
             </div>
           </div>
@@ -831,7 +831,7 @@ export default function AccountingSystem() {
               >
                 <option value="طن">طن</option>
                 <option value="قطعة">قطعة</option>
-                <option value="م��ر">متر</option>
+                <option value="متر">متر</option>
                 <option value="لتر">لتر</option>
               </select>
               <input
