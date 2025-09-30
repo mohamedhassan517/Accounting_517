@@ -365,7 +365,7 @@ export default function AccountingSystem() {
       if (result.item.quantity < result.item.min) {
         toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
-        toast.success("تم تسجيل الصرف وتحديث المصرو��ات");
+        toast.success("تم تسجيل الصرف وتحديث المصروفات");
       }
       setIssue({
         itemId: "",
@@ -603,7 +603,7 @@ export default function AccountingSystem() {
         <div className="space-y-1">
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
           <p className="text-slate-500 text-sm">
-            نظام محاسبة عقاري سهل الاستخدام
+            نظام محاسبة عقاري 
           </p>
         </div>
         <div className="flex w-full flex-wrap gap-2 justify-center sm:justify-start md:w-auto md:justify-end">
@@ -687,7 +687,7 @@ export default function AccountingSystem() {
           </div>
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-md">
-            <h3 className="font-semibold mb-3">إضافة معاملة سريعة</h3>
+            <h3 className="font-semibold mb-3">إضافة معاملة </h3>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
               <select
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 bg-white"
@@ -1901,7 +1901,7 @@ function ReportsSection({
             value={transactions
               .filter((t) => t.type === "expense")
               .reduce((a, b) => a + b.amount, 0)}
-            label="إجم��لي المصروفات"
+            label="إجمالي المصروفات"
             color="text-rose-600"
           />
           <Stat
