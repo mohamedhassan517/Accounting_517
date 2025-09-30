@@ -31,13 +31,26 @@ export default function UserManagement() {
 
   useEffect(() => { load(); }, []);
 
-  const resetForm = () => setForm({ username: "", name: "", email: "", role: "employee", password: "", active: true });
+  const resetForm = () => setForm({ name: "", email: "", role: "employee", password: "", active: true });
+
+  const generateUsername = (name: string, email: string) => {
+    if (name && name.trim()) return name.replace(/\s+/g, "").toLowerCase();
+    return (email || "").split("@")[0];
+  };
 
   const onCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     try {
-      await usersApi.createUser(form);
+      const payload = {
+        username: generateUsername(form.name, form.email),
+        name: form.name,
+        email: form.email,
+        role: form.role,
+        password: form.password,
+        active: form.active,
+      };
+      await usersApi.createUser(payload);
       resetForm();
       await load();
     } catch (e: any) {
@@ -85,7 +98,7 @@ export default function UserManagement() {
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
           <h3 className="font-semibold mb-3">إضافة مستخدم جديد</h3>
           <form onSubmit={onCreate} className="grid gap-3">
-            <input className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" placeholder="اس�� المستخدم" value={form.username} onChange={(e)=>setForm({ ...form, username: e.target.value })} />
+            <input className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" placeholder="اسم الم��تخدم" value={form.username} onChange={(e)=>setForm({ ...form, username: e.target.value })} />
             <input className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" placeholder="الاسم" value={form.name} onChange={(e)=>setForm({ ...form, name: e.target.value })} />
             <input className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" placeholder="البريد الإلكتروني" value={form.email} onChange={(e)=>setForm({ ...form, email: e.target.value })} />
             <select className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" value={form.role} onChange={(e)=>setForm({ ...form, role: e.target.value as Role })}>
