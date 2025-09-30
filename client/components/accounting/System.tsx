@@ -201,7 +201,7 @@ export default function AccountingSystem() {
       setDeletingTransactionId(id);
       await deleteTransaction(id);
       setTransactions((prev) => prev.filter((t) => t.id !== id));
-      toast.success("تم حذف المعاملة");
+      toast.success("تم حذف المعا��لة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المعاملة";
@@ -497,7 +497,7 @@ export default function AccountingSystem() {
       });
       setSales((prev) => [result.sale, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
-      toast.success("تم تسجيل البيع وتحديث الإيرادات");
+      toast.success("تم تسجيل البيع وتحديث الإيراد��ت");
       setNewSale({
         projectId: "",
         unitNo: "",
@@ -556,7 +556,7 @@ export default function AccountingSystem() {
           <div class="row"><div>الموقع:</div><div>${project?.location ?? ""}</div></div>
           <div class="row"><div>رقم الوحدة:</div><div>${sale.unitNo}</div></div>
           <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
-          <div class="row"><div>التاريخ:</div><div>${sale.date}</div></div>
+          <div class="row"><div>التا��يخ:</div><div>${sale.date}</div></div>
         </div>
         <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
         ${sale.terms ? `<div class="mt">الشروط: ${sale.terms}</div>` : ""}
@@ -636,20 +636,6 @@ export default function AccountingSystem() {
 
       {active === "dashboard" && (
         <section className="space-y-6">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <div className="rounded-xl p-4 bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow">
-              <div className="text-sm opacity-90">الحساب</div>
-              <div className="mt-2 text-2xl font-extrabold">{user?.name}</div>
-              <div className="text-xs mt-1">
-                الدور:{" "}
-                {user?.role === "manager"
-                  ? "مدير"
-                  : user?.role === "accountant"
-                    ? "محاسب"
-                    : "موظف"}
-              </div>
-            </div>
-          </div>
 
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div className="rounded-xl p-4 bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-lg flex flex-col justify-between">
