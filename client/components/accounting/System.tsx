@@ -170,7 +170,7 @@ export default function AccountingSystem() {
       });
       setTransactions((prev) => [transaction, ...prev]);
       setQuick({ type: "revenue", amount: "", description: "", date: today() });
-      toast.success("تمت إضافة ال��عاملة");
+      toast.success("تمت إضافة المعاملة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المعاملة";
@@ -255,7 +255,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف المادة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذ�� حذف المادة";
+        error instanceof Error ? error.message : "تعذر حذف المادة";
       toast.error("فشل حذف المادة", { description: message });
     } finally {
       setDeletingItemId(null);
@@ -302,7 +302,7 @@ export default function AccountingSystem() {
       if (result.item.quantity < result.item.min) {
         toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
-        toast.success("ت�� تسجيل الوارد وتحديث المصروفات");
+        toast.success("تم تسجيل الوارد وتحديث المصروفات");
       }
       setReceive({
         itemId: "",
@@ -333,7 +333,7 @@ export default function AccountingSystem() {
       !Number.isFinite(unitPrice) ||
       unitPrice <= 0
     ) {
-      toast.error("القيم العددية غ��ر صحيحة");
+      toast.error("القيم العددية غير صحيحة");
       return;
     }
     try {
@@ -468,12 +468,12 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إد��ال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
     if (!project) {
-      toast.error("المشروع غير موج��د");
+      toast.error("المشروع غير موجود");
       return;
     }
     const price = Number(newSale.price);
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل البيانات من قاع��ة البيانات...
+        جارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -593,10 +593,10 @@ export default function AccountingSystem() {
         <div className="space-y-1">
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
           <p className="text-slate-500 text-sm">
-            نظام محاسبة عقاري سهل الاستخدا��
+            نظام محاسبة عقاري سهل الاستخدام
           </p>
         </div>
-        <div className="flex w-full flex-wrap gap-2 md:w-auto md:justify-end">
+        <div className="flex w-full flex-wrap gap-2 justify-center sm:justify-start md:w-auto md:justify-end">
           {(() => {
             const tabs: (typeof active)[] = [
               "dashboard",
@@ -635,7 +635,7 @@ export default function AccountingSystem() {
 
       {active === "dashboard" && (
         <section className="space-y-6">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div className="rounded-xl p-4 bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow">
               <div className="text-sm opacity-90">الحساب</div>
               <div className="mt-2 text-2xl font-extrabold">{user?.name}</div>
@@ -657,12 +657,12 @@ export default function AccountingSystem() {
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
               <div className="text-sm text-slate-600">الوصول</div>
               <div className="mt-2 text-2xl font-bold">
-                {isManager ? "��دارة المستخدمين مسموحة" : "غير متاحة"}
+                {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
               </div>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <Stat
               value={totals.revenue}
               label="إجمالي الإيرادات"
@@ -682,7 +682,7 @@ export default function AccountingSystem() {
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <h3 className="font-semibold mb-3">إضافة معاملة سريعة</h3>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
               <select
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 value={quick.type}
@@ -690,7 +690,7 @@ export default function AccountingSystem() {
                   setQuick({ ...quick, type: e.target.value as TransType })
                 }
               >
-                <option value="revenue">إير��د</option>
+                <option value="revenue">إيراد</option>
                 <option value="expense">مصروف</option>
               </select>
               <input
@@ -706,7 +706,7 @@ export default function AccountingSystem() {
                 onChange={(e) => setQuick({ ...quick, date: e.target.value })}
               />
               <input
-                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 md:col-span-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 sm:col-span-2 xl:col-span-2"
                 placeholder="الوصف"
                 value={quick.description}
                 onChange={(e) =>
@@ -794,7 +794,7 @@ export default function AccountingSystem() {
             </table>
             {transactions.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا توجد م��املات مسجلة بعد.
+                لا توجد معاملات مسجلة بعد.
               </div>
             )}
           </div>
@@ -805,7 +805,7 @@ export default function AccountingSystem() {
         <section className="space-y-4">
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <h3 className="font-semibold mb-3">إضافة مادة جديدة</h3>
-            <div className="grid md:grid-cols-4 gap-3">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               <input
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 placeholder="اسم المادة"
@@ -852,10 +852,10 @@ export default function AccountingSystem() {
             </button>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 xl:grid-cols-2">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
               <h3 className="font-semibold mb-3">تسجيل وارد من مورد</h3>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={receive.itemId}
@@ -913,8 +913,8 @@ export default function AccountingSystem() {
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              <h3 className="font-semibold mb-3">تس��يل صرف لمشروع</h3>
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={issue.itemId}
@@ -1059,7 +1059,7 @@ export default function AccountingSystem() {
 
       {active === "projects" && (
         <section className="space-y-4">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
               <h3 className="font-semibold mb-3">إضافة مشروع عقاري</h3>
               <div className="grid gap-3">
@@ -1082,7 +1082,7 @@ export default function AccountingSystem() {
                 <div className="grid grid-cols-2 gap-3">
                   <input
                     className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    placeholder="عدد الأد��ار"
+                    placeholder="عدد الأدوار"
                     value={newProject.floors}
                     onChange={(e) =>
                       setNewProject({ ...newProject, floors: e.target.value })
@@ -1425,7 +1425,7 @@ function Stat({
 }) {
   return (
     <div className="rounded-xl p-4 bg-white border border-slate-200 shadow text-center">
-      <div className={`text-3xl font-extrabold ${color}`}>
+      <div className={`text-2xl sm:text-3xl font-extrabold ${color}`}>
         {value.toLocaleString()}
       </div>
       <div className="text-sm text-slate-600 mt-1">{label}</div>
@@ -1531,7 +1531,7 @@ function ReportsSection({
       ]);
       return {
         title: "تقرير المخزون",
-        headers: ["المادة", "الكمية", "الحد الأدنى", "الحال��"],
+        headers: ["المادة", "الكمية", "الحد الأدنى", "الحالة"],
         rows,
       };
     }
@@ -1561,7 +1561,7 @@ function ReportsSection({
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
-        title: "تقرير مشروع عقاري",
+        title: "تقري�� مشروع عقاري",
         headers: ["البند", "القيمة"],
         rows,
       };
@@ -1632,7 +1632,7 @@ function ReportsSection({
   return (
     <section className="bg-white border border-slate-200 rounded-xl p-4 shadow space-y-4">
       <h3 className="font-semibold">التقارير</h3>
-      <div className="grid md:grid-cols-4 gap-3">
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <select
           className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
           value={reportType}
@@ -1642,7 +1642,7 @@ function ReportsSection({
           <option value="revenue">الإيرادات</option>
           <option value="expense">المصروفات</option>
           <option value="salary">المرتبات</option>
-          <option value="project">تقرير مش��وع</option>
+          <option value="project">تقرير مشروع</option>
           <option value="inventory">تقرير المخزون</option>
         </select>
         {reportType === "project" && (
