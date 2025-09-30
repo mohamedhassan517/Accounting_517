@@ -193,7 +193,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر اعتماد المعاملة";
-      toast.error("فشل اعتماد ��لمعاملة", { description: message });
+      toast.error("فشل اعتماد المعاملة", { description: message });
     } finally {
       setApprovingId(null);
     }
@@ -426,7 +426,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("المشروع غير موجود");
+      toast.error("ال��شروع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -911,7 +911,7 @@ export default function AccountingSystem() {
                 disabled={savingReceive}
                 className="mt-3 w-full rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
               >
-                {savingReceive ? "جاري التسجيل..." : "تسجيل الوارد"}
+                {savingReceive ? "جا��ي التسجيل..." : "تسجيل الوارد"}
               </button>
             </div>
 
@@ -1107,7 +1107,7 @@ export default function AccountingSystem() {
                 disabled={savingProject}
                 className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
+                {savingProject ? "جاري الح��ظ..." : "حفظ المشروع"}
               </button>
               <button
                 onClick={() => setNewProject({ name: "", location: "", floors: "", units: "" })}
