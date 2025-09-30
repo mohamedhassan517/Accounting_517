@@ -468,7 +468,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الر��اء إدخال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال بي��نات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تح��يل الب��انات من قاعدة البيانات...
+        جارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -1530,7 +1530,7 @@ function ReportsSection({
         i.quantity < i.min ? "منخفض" : "جيد",
       ]);
       return {
-        title: "تقرير المخزون",
+        title: "تق��ير المخزون",
         headers: ["المادة", "الكمية", "الحد الأدنى", "الحالة"],
         rows,
       };
@@ -1561,7 +1561,7 @@ function ReportsSection({
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
-        title: "تقرير مشروع عقاري",
+        title: "تقرير ��شروع عقاري",
         headers: ["البند", "القيمة"],
         rows,
       };
