@@ -256,7 +256,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
-      toast.error("فشل حذف الماد��", { description: message });
+      toast.error("فشل حذف المادة", { description: message });
     } finally {
       setDeletingItemId(null);
     }
@@ -468,7 +468,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء ��دخال بيانات البيع كاملة");
+      toast.error("الرج��ء ��دخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -593,7 +593,7 @@ export default function AccountingSystem() {
         <div className="space-y-1">
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
           <p className="text-slate-500 text-sm">
-            نظام محاسبة عقاري سهل الاستخدام
+            نظام محاسبة عقاري سهل الاستخدا��
           </p>
         </div>
         <div className="flex w-full flex-wrap gap-2 justify-center sm:justify-start md:w-auto md:justify-end">
@@ -651,7 +651,7 @@ export default function AccountingSystem() {
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
               <div className="text-sm text-slate-600">الوضع</div>
               <div className="mt-2 text-2xl font-bold">
-                {isManager ? "صلاحيات مدير" : "مستخدم عادي"}
+                {isManager ? "صلاحيات مدير" : "مست��دم عادي"}
               </div>
             </div>
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
@@ -1554,7 +1554,7 @@ function ReportsSection({
       const rows: string[][] = [
         ["المشروع", project?.name || "-"],
         ["الموقع", project?.location || "-"],
-        ["��دد الأدوار", String(project?.floors ?? "-")],
+        ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
