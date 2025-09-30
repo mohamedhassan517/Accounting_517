@@ -427,7 +427,7 @@ export default function AccountingSystem() {
     }
     const amount = Number(newCost.amount);
     if (!Number.isFinite(amount) || amount <= 0) {
-      toast.error("قيمة المبلغ غير صح��حة");
+      toast.error("قيمة المبلغ غير صحيحة");
       return;
     }
     try {
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل البيانات من قاعدة البيانات...
+        جارٍ تحميل ��لبيانات من قاعدة البيانات...
       </div>
     );
   }
