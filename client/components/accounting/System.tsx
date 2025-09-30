@@ -422,7 +422,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("المشروع غير موجود");
+      toast.error("الم��روع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -913,7 +913,7 @@ export default function AccountingSystem() {
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تس��يل صرف لمشروع</h3>
+              <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1483,7 +1483,7 @@ function ReportsSection({
     if (reportType === "revenue") {
       return {
         title: "تقرير الإيرادات",
-        headers: ["التاريخ", "الوصف", "المبلغ"],
+        headers: ["التاريخ", "الوصف", "ا��مبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
           .map((t) => [
@@ -1558,10 +1558,10 @@ function ReportsSection({
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
-        ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
+        ["الربح/الخ��ارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
-        title: "تقري�� مشروع عقاري",
+        title: "تقرير مشروع عقاري",
         headers: ["البند", "القيمة"],
         rows,
       };
