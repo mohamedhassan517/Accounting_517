@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { DollarSign, ArrowUp, ArrowDown, Plus } from "lucide-react";
 import { useAuth } from "@/providers/AuthProvider";
 import UserManagement from "@/components/users/UserManagement";
 import { toast } from "sonner";
