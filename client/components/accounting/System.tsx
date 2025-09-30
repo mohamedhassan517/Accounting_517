@@ -300,7 +300,7 @@ export default function AccountingSystem() {
       setMovements((prev) => [result.movement, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
       if (result.item.quantity < result.item.min) {
-        toast.warning(`تنبيه: مخزون ${result.item.name} ��نخفض`);
+        toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
         toast.success("تم تسجيل الوارد وتحديث المصروفات");
       }
@@ -468,7 +468,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال بيانات البيع ��املة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل البيانات من قاعدة البيانات...
+        جارٍ تحميل الب��انات من قاعدة البيانات...
       </div>
     );
   }
