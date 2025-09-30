@@ -468,12 +468,12 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع كاملة");
+      toast.error("الرجاء ��دخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
     if (!project) {
-      toast.error("المشروع غير موجود");
+      toast.error("المشروع غير م��جود");
       return;
     }
     const price = Number(newSale.price);
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل ��لبيانات من قاعدة البيانات...
+        جارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -655,9 +655,9 @@ export default function AccountingSystem() {
               </div>
             </div>
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
-              <div className="text-sm text-slate-600">الوصول</div>
+              <div className="text-sm text-slate-600">الوصو��</div>
               <div className="mt-2 text-2xl font-bold">
-                {isManager ? "إدارة المستخ��مين مسموحة" : "غير متاحة"}
+                {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
               </div>
             </div>
           </div>
