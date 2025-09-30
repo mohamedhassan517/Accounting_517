@@ -318,7 +318,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل الوارد";
-      toast.error("فشل تسجيل الو��رد", { description: message });
+      toast.error("فشل تسجيل الوارد", { description: message });
     } finally {
       setSavingReceive(false);
     }
@@ -384,7 +384,7 @@ export default function AccountingSystem() {
       !newProject.floors ||
       !newProject.units
     ) {
-      toast.error("الرجاء إدخال بيانات المشروع كاملة");
+      toast.error("الرجاء إدخال بيانات المش��وع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
@@ -426,7 +426,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("ال��شروع غير موجود");
+      toast.error("المشروع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -911,7 +911,7 @@ export default function AccountingSystem() {
                 disabled={savingReceive}
                 className="mt-3 w-full rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
               >
-                {savingReceive ? "جا��ي التسجيل..." : "تسجيل الوارد"}
+                {savingReceive ? "جاري التسجيل..." : "تسجيل الوارد"}
               </button>
             </div>
 
@@ -1107,7 +1107,7 @@ export default function AccountingSystem() {
                 disabled={savingProject}
                 className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {savingProject ? "جاري الح��ظ..." : "حفظ المشروع"}
+                {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
               </button>
               <button
                 onClick={() => setNewProject({ name: "", location: "", floors: "", units: "" })}
@@ -1787,7 +1787,7 @@ function ReportsSection({
         </div>
       </div>
       <div className="border rounded-lg p-3">
-        <div className="font-semibold mb-2">نتيجة التقرير</div>
+        <div className="font-semibold mb-2">��تيجة التقرير</div>
         <div className="text-sm text-slate-600">
           الفترة: من {formatDateLabel(dateFrom)} إلى {formatDateLabel(dateTo)}
         </div>
