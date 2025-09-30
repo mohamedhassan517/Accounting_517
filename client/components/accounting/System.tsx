@@ -550,7 +550,7 @@ export default function AccountingSystem() {
       <style>body{font-family:Arial,system-ui;padding:24px;background:#f6f7fb;color:#111} .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:20px;max-width:720px;margin:0 auto} .h{font-weight:800;font-size:20px;margin-bottom:8px} .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px} .row{display:flex;justify-content:space-between;margin:6px 0} .total{font-weight:800;font-size:18px} .mt{margin-top:16px} .btn{display:inline-block;margin-top:16px;padding:10px 16px;background:#111;color:#fff;border-radius:8px;text-decoration:none}</style>
     </head><body>
       <div class="card">
-        <div class="h">فاتورة بيع وحدة عقارية</div>
+        <div class="h">فاتورة ��يع وحدة عقارية</div>
         <div class="grid">
           <div class="row"><div>المشروع:</div><div>${project?.name ?? ""}</div></div>
           <div class="row"><div>الموقع:</div><div>${project?.location ?? ""}</div></div>
@@ -578,7 +578,7 @@ export default function AccountingSystem() {
     <div className="space-y-6">
       {loadingError && (
         <div className="rounded-lg border border-rose-200 bg-rose-50 p-4 text-rose-700">
-          <div className="font-semibold">تعذر تحميل البيانات</div>
+          <div className="font-semibold">ت��ذر تحميل البيانات</div>
           <div className="text-sm">{loadingError}</div>
           <button
             type="button"
@@ -664,28 +664,52 @@ export default function AccountingSystem() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="rounded-xl p-4 bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-lg flex flex-col justify-between">
+              <div>
+                <div className="text-sm opacity-90">الحساب</div>
+                <div className="mt-2 text-2xl font-extrabold">{user?.name}</div>
+                <div className="text-xs mt-1">الدور: {user?.role === "manager" ? "مدير" : user?.role === "accountant" ? "محاسب" : "موظف"}</div>
+              </div>
+              <div className="mt-4 text-xs opacity-90">مرحباً بك في لوحة التحكم — يمكنك إدارة العمليات بسرعة وسهولة.</div>
+            </div>
+
+            <div className="rounded-xl p-4 bg-white border border-slate-200 shadow hover:shadow-md transition-shadow">
+              <div className="text-sm text-slate-600">الوضع</div>
+              <div className="mt-2 text-2xl font-bold">{isManager ? "صلاحيات مدير" : "مستخدم عادي"}</div>
+            </div>
+
+            <div className="rounded-xl p-4 bg-white border border-slate-200 shadow hover:shadow-md transition-shadow">
+              <div className="text-sm text-slate-600">الوصول</div>
+              <div className="mt-2 text-2xl font-bold">{isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}</div>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <Stat
               value={totals.revenue}
-              label="إجمالي الإيرادات"
-              color="text-emerald-600"
+              label="إجما��ي الإيرادات"
+              color="from-emerald-100 to-emerald-300"
+              icon={<ArrowUp className="h-5 w-5 text-emerald-700" />}
             />
             <Stat
               value={totals.expenses}
               label="إجمالي المصروفات"
-              color="text-rose-600"
+              color="from-rose-100 to-rose-200"
+              icon={<ArrowDown className="h-5 w-5 text-rose-700" />}
             />
             <Stat
               value={totals.profit}
-              label="صافي الربح (ج.م)"
-              color="text-indigo-700"
+              label="صافي الربح"
+              color="from-indigo-100 to-indigo-200"
+              icon={<DollarSign className="h-5 w-5 text-indigo-700" />}
             />
           </div>
 
-          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
+          <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-md">
             <h3 className="font-semibold mb-3">إضافة معاملة سريعة</h3>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
               <select
-                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 bg-white"
                 value={quick.type}
                 onChange={(e) =>
                   setQuick({ ...quick, type: e.target.value as TransType })
@@ -715,13 +739,22 @@ export default function AccountingSystem() {
                 }
               />
             </div>
-            <button
-              onClick={() => void addQuick()}
-              disabled={savingQuick}
-              className="mt-3 w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-            >
-              {savingQuick ? "جاري الحفظ..." : "إضافة معاملة"}
-            </button>
+            <div className="mt-3 flex items-center gap-2">
+              <button
+                onClick={() => void addQuick()}
+                disabled={savingQuick}
+                className="flex items-center gap-2 rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <Plus className="h-4 w-4" />
+                {savingQuick ? "جاري الحفظ..." : "إضافة معاملة"}
+              </button>
+              <button
+                onClick={() => setQuick({ type: "revenue", amount: "", description: "", date: today() })}
+                className="rounded-md border px-3 py-2 bg-white"
+              >
+                إعادة تعيين
+              </button>
+            </div>
           </div>
         </section>
       )}
