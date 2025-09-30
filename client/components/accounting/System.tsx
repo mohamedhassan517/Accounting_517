@@ -468,7 +468,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال بيانات ال��يع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -655,7 +655,7 @@ export default function AccountingSystem() {
               </div>
             </div>
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
-              <div className="text-sm text-slate-600">ال��صول</div>
+              <div className="text-sm text-slate-600">الوصول</div>
               <div className="mt-2 text-2xl font-bold">
                 {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
               </div>
