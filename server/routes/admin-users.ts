@@ -9,15 +9,13 @@ import type {
   UsersListResponse,
 } from "@shared/api";
 import { extractToken } from "./auth";
-import { requireManager } from "../store/auth";
-
-function ensureSupabase(res: any) {
-  if (!supabaseAdmin) {
-    res.status(500).json({ error: "Supabase not configured" } as ApiError);
-    return false;
-  }
-  return true;
-}
+import {
+  requireManager,
+  listUsers as listUsersFallback,
+  createUser as createUserFallback,
+  updateUser as updateUserFallback,
+  deleteUser as deleteUserFallback,
+} from "../store/auth";
 
 export const adminListUsers: RequestHandler = async (req, res) => {
   const token = extractToken(
@@ -26,9 +24,13 @@ export const adminListUsers: RequestHandler = async (req, res) => {
   );
   const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
-  if (!ensureSupabase(res)) return;
 
-  const { data, error } = await supabaseAdmin!
+  if (!supabaseAdmin) {
+    const users = listUsersFallback();
+    return res.json({ users } as UsersListResponse);
+  }
+
+  const { data, error } = await supabaseAdmin
     .from("user_profiles")
     .select("*")
     .order("created_at", { ascending: false });
@@ -51,24 +53,34 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
   );
   const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
-  if (!ensureSupabase(res)) return;
 
   const body = req.body as UserCreateRequest;
   if (!body.email || !body.password || !body.role || !body.name)
     return res.status(400).json({ error: "Missing fields" } as ApiError);
 
-  const { data: created, error: cErr } =
-    await supabaseAdmin!.auth.admin.createUser({
+  if (!supabaseAdmin) {
+    const user = createUserFallback({
+      username: body.username || body.name,
+      name: body.name,
       email: body.email,
+      role: body.role,
       password: body.password,
-      email_confirm: true,
+      active: body.active ?? true,
     });
+    return res.status(201).json(user);
+  }
+
+  const { data: created, error: cErr } = await supabaseAdmin.auth.admin.createUser({
+    email: body.email,
+    password: body.password,
+    email_confirm: true,
+  });
   if (cErr || !created.user)
     return res
       .status(500)
       .json({ error: cErr?.message || "createUser failed" } as ApiError);
 
-  const { error: iErr } = await supabaseAdmin!.from("user_profiles").upsert(
+  const { error: iErr } = await supabaseAdmin.from("user_profiles").upsert(
     {
       user_id: created.user.id,
       name: body.name || body.username,
@@ -98,7 +110,6 @@ export const adminUpdateUser: RequestHandler = async (req, res) => {
   );
   const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
-  if (!ensureSupabase(res)) return;
 
   const id = req.params.id;
   const patch = req.body as UserUpdateRequest & {
@@ -107,8 +118,15 @@ export const adminUpdateUser: RequestHandler = async (req, res) => {
     name?: string;
   };
 
+  if (!supabaseAdmin) {
+    const updated = updateUserFallback(id, patch as any);
+    if (!updated)
+      return res.status(404).json({ error: "User not found" } as ApiError);
+    return res.json(updated);
+  }
+
   if (patch.password || patch.email) {
-    const { error: uErr } = await supabaseAdmin!.auth.admin.updateUserById(id, {
+    const { error: uErr } = await supabaseAdmin.auth.admin.updateUserById(id, {
       password: patch.password,
       email: patch.email,
     });
@@ -122,14 +140,14 @@ export const adminUpdateUser: RequestHandler = async (req, res) => {
   if (patch.email) update.email = patch.email;
 
   if (Object.keys(update).length) {
-    const { error: pErr } = await supabaseAdmin!
+    const { error: pErr } = await supabaseAdmin
       .from("user_profiles")
       .update(update)
       .eq("user_id", id);
     if (pErr) return res.status(500).json({ error: pErr.message } as ApiError);
   }
 
-  const { data } = await supabaseAdmin!
+  const { data } = await supabaseAdmin
     .from("user_profiles")
     .select("*")
     .eq("user_id", id)
@@ -152,11 +170,18 @@ export const adminDeleteUser: RequestHandler = async (req, res) => {
   );
   const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
-  if (!ensureSupabase(res)) return;
 
   const id = req.params.id;
-  const { error } = await supabaseAdmin!.auth.admin.deleteUser(id);
+
+  if (!supabaseAdmin) {
+    const ok = deleteUserFallback(id);
+    if (!ok)
+      return res.status(404).json({ error: "User not found" } as ApiError);
+    return res.status(204).end();
+  }
+
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(id);
   if (error) return res.status(500).json({ error: error.message } as ApiError);
-  await supabaseAdmin!.from("user_profiles").delete().eq("user_id", id);
+  await supabaseAdmin.from("user_profiles").delete().eq("user_id", id);
   res.status(204).end();
 };
