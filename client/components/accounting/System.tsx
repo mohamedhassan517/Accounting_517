@@ -256,7 +256,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
-      toast.error("فشل حذف المادة", { description: message });
+      toast.error("فشل حذف الما��ة", { description: message });
     } finally {
       setDeletingItemId(null);
     }
@@ -300,7 +300,7 @@ export default function AccountingSystem() {
       setMovements((prev) => [result.movement, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
       if (result.item.quantity < result.item.min) {
-        toast.warning(`تنبي��: مخزون ${result.item.name} منخفض`);
+        toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
         toast.success("تم تسجيل الوارد وتحديث المصروفات");
       }
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل الب��انات من قاعدة البيانات...
+        ��ارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -794,7 +794,7 @@ export default function AccountingSystem() {
             </table>
             {transactions.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا توجد معاملات مسجلة بعد.
+                لا توجد معاملات مسجل�� بعد.
               </div>
             )}
           </div>
@@ -1566,7 +1566,7 @@ function ReportsSection({
         rows,
       };
     }
-    return { title: "��قرير", headers: [], rows: [] };
+    return { title: "تقرير", headers: [], rows: [] };
   }, [
     reportType,
     filtered,
