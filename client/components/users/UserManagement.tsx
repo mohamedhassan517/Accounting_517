@@ -98,7 +98,6 @@ export default function UserManagement() {
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
           <h3 className="font-semibold mb-3">إضافة مستخدم جديد</h3>
           <form onSubmit={onCreate} className="grid gap-3">
-            <input className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" placeholder="اسم الم��تخدم" value={form.username} onChange={(e)=>setForm({ ...form, username: e.target.value })} />
             <input className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" placeholder="الاسم" value={form.name} onChange={(e)=>setForm({ ...form, name: e.target.value })} />
             <input className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" placeholder="البريد الإلكتروني" value={form.email} onChange={(e)=>setForm({ ...form, email: e.target.value })} />
             <select className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2" value={form.role} onChange={(e)=>setForm({ ...form, role: e.target.value as Role })}>
@@ -122,7 +121,6 @@ export default function UserManagement() {
                 <thead>
                   <tr className="text-left bg-slate-50">
                     <th className="px-3 py-2">الاسم</th>
-                    <th className="px-3 py-2">اسم المستخدم</th>
                     <th className="px-3 py-2">البريد</th>
                     <th className="px-3 py-2">الدور</th>
                     <th className="px-3 py-2">الحالة</th>
@@ -133,7 +131,6 @@ export default function UserManagement() {
                   {users.map(u => (
                     <tr key={u.id} className="border-t">
                       <td className="px-3 py-2">{u.name}</td>
-                      <td className="px-3 py-2">{u.username}</td>
                       <td className="px-3 py-2">{u.email}</td>
                       <td className="px-3 py-2">{roleLabel[u.role]}</td>
                       <td className="px-3 py-2">{u.active ? "نشط" : "معطل"}</td>
