@@ -596,7 +596,7 @@ export default function AccountingSystem() {
             نظام محاسبة عقاري سهل الاستخدا��
           </p>
         </div>
-        <div className="flex w-full flex-wrap gap-2 md:w-auto md:justify-end">
+        <div className="flex w-full flex-wrap gap-2 justify-center sm:justify-start md:w-auto md:justify-end">
           {(() => {
             const tabs: (typeof active)[] = [
               "dashboard",
@@ -635,7 +635,7 @@ export default function AccountingSystem() {
 
       {active === "dashboard" && (
         <section className="space-y-6">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div className="rounded-xl p-4 bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow">
               <div className="text-sm opacity-90">الحساب</div>
               <div className="mt-2 text-2xl font-extrabold">{user?.name}</div>
@@ -662,7 +662,7 @@ export default function AccountingSystem() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <Stat
               value={totals.revenue}
               label="إجمالي الإيرادات"
@@ -682,7 +682,7 @@ export default function AccountingSystem() {
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <h3 className="font-semibold mb-3">إضافة معاملة سريعة</h3>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
               <select
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 value={quick.type}
@@ -706,7 +706,7 @@ export default function AccountingSystem() {
                 onChange={(e) => setQuick({ ...quick, date: e.target.value })}
               />
               <input
-                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 md:col-span-2"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 sm:col-span-2 xl:col-span-2"
                 placeholder="الوصف"
                 value={quick.description}
                 onChange={(e) =>
@@ -805,7 +805,7 @@ export default function AccountingSystem() {
         <section className="space-y-4">
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <h3 className="font-semibold mb-3">إضافة مادة جديدة</h3>
-            <div className="grid md:grid-cols-4 gap-3">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               <input
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                 placeholder="اسم المادة"
@@ -852,10 +852,10 @@ export default function AccountingSystem() {
             </button>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 xl:grid-cols-2">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
               <h3 className="font-semibold mb-3">تسجيل وارد من مورد</h3>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={receive.itemId}
@@ -914,7 +914,7 @@ export default function AccountingSystem() {
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
               <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
                   value={issue.itemId}
@@ -1021,7 +1021,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">المادة</th>
                       <th className="px-3 py-2">نوع الحركة</th>
                       <th className="px-3 py-2">الكمية</th>
-                      <th className="px-3 py-2">سعر الوحدة</th>
+                      <th className="px-3 py-2">سعر ال��حدة</th>
                       <th className="px-3 py-2">الإجمالي</th>
                       <th className="px-3 py-2">الجهة</th>
                     </tr>
@@ -1059,7 +1059,7 @@ export default function AccountingSystem() {
 
       {active === "projects" && (
         <section className="space-y-4">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
               <h3 className="font-semibold mb-3">إضافة مشروع عقاري</h3>
               <div className="grid gap-3">
@@ -1632,7 +1632,7 @@ function ReportsSection({
   return (
     <section className="bg-white border border-slate-200 rounded-xl p-4 shadow space-y-4">
       <h3 className="font-semibold">التقارير</h3>
-      <div className="grid md:grid-cols-4 gap-3">
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <select
           className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
           value={reportType}
