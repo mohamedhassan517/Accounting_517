@@ -3,9 +3,12 @@ import { createUser, deleteUser, listUsers, requireManager, updateUser } from ".
 import type { ApiError, UserCreateRequest, UserUpdateRequest, UsersListResponse } from "@shared/api";
 import { extractToken } from "./auth";
 
-export const listUsersHandler: RequestHandler = (req, res) => {
-  const token = extractToken(req.headers.authorization);
-  const manager = requireManager(token);
+export const listUsersHandler: RequestHandler = async (req, res) => {
+  const token = extractToken(
+    req.headers.authorization,
+    (req.query.token as string) || undefined,
+  );
+  const manager = await requireManager(token);
   if (!manager) {
     res.status(403).json({ error: "Forbidden" } as ApiError);
     return;
@@ -13,9 +16,12 @@ export const listUsersHandler: RequestHandler = (req, res) => {
   res.json({ users: listUsers() } as UsersListResponse);
 };
 
-export const createUserHandler: RequestHandler = (req, res) => {
-  const token = extractToken(req.headers.authorization);
-  const manager = requireManager(token);
+export const createUserHandler: RequestHandler = async (req, res) => {
+  const token = extractToken(
+    req.headers.authorization,
+    (req.query.token as string) || undefined,
+  );
+  const manager = await requireManager(token);
   if (!manager) {
     res.status(403).json({ error: "Forbidden" } as ApiError);
     return;
@@ -29,9 +35,12 @@ export const createUserHandler: RequestHandler = (req, res) => {
   res.status(201).json(user);
 };
 
-export const updateUserHandler: RequestHandler = (req, res) => {
-  const token = extractToken(req.headers.authorization);
-  const manager = requireManager(token);
+export const updateUserHandler: RequestHandler = async (req, res) => {
+  const token = extractToken(
+    req.headers.authorization,
+    (req.query.token as string) || undefined,
+  );
+  const manager = await requireManager(token);
   if (!manager) {
     res.status(403).json({ error: "Forbidden" } as ApiError);
     return;
@@ -46,9 +55,12 @@ export const updateUserHandler: RequestHandler = (req, res) => {
   res.json(updated);
 };
 
-export const deleteUserHandler: RequestHandler = (req, res) => {
-  const token = extractToken(req.headers.authorization);
-  const manager = requireManager(token);
+export const deleteUserHandler: RequestHandler = async (req, res) => {
+  const token = extractToken(
+    req.headers.authorization,
+    (req.query.token as string) || undefined,
+  );
+  const manager = await requireManager(token);
   if (!manager) {
     res.status(403).json({ error: "Forbidden" } as ApiError);
     return;
