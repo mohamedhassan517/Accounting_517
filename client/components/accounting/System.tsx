@@ -409,7 +409,7 @@ export default function AccountingSystem() {
       });
       setProjects((prev) => [project, ...prev]);
       setNewProject({ name: "", location: "", floors: "", units: "" });
-      toast.success("تمت إضافة المشروع العقاري");
+      toast.success("تمت إضافة المشروع الع��اري");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر إضافة المشروع";
@@ -448,7 +448,7 @@ export default function AccountingSystem() {
       });
       setCosts((prev) => [result.cost, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
-      toast.success("تم تسجيل تكلفة المشر��ع وتحديث المصروفات");
+      toast.success("تم تسجيل تكلفة المشروع وتحديث المصروفات");
       setNewCost({
         projectId: "",
         type: "construction",
@@ -557,7 +557,7 @@ export default function AccountingSystem() {
         <div class="grid">
           <div class="row"><div>المشروع:</div><div>${project?.name ?? ""}</div></div>
           <div class="row"><div>الموقع:</div><div>${project?.location ?? ""}</div></div>
-          <div class="row"><div>رقم الوحدة:</div><div>${sale.unitNo}</div></div>
+          <div class="row"><div>رق�� الوحدة:</div><div>${sale.unitNo}</div></div>
           <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
           <div class="row"><div>التاريخ:</div><div>${sale.date}</div></div>
         </div>
@@ -1185,7 +1185,7 @@ export default function AccountingSystem() {
                 disabled={savingCost}
                 className="rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {savingCost ? "جاري التسجيل..." : "تسجيل التكلف��"}
+                {savingCost ? "جاري التسجيل..." : "تسجيل التكلفة"}
               </button>
               <button
                 onClick={() => setNewCost({ projectId: "", type: "construction", amount: "", date: today(), note: "" })}
@@ -1327,7 +1327,7 @@ export default function AccountingSystem() {
                         </div>
                       </div>
                       <div className="mt-3 flex items-center justify-between">
-                        <div className="text-sm text-slate-500">الربح: <span className="font-semibold text-slate-700">{t.profit.toLocaleString()} ج.م</span></div>
+                        <div className="text-sm text-slate-500">ال��بح: <span className="font-semibold text-slate-700">{t.profit.toLocaleString()} ج.م</span></div>
                         <Dialog>
                           <DialogTrigger asChild>
                             <button className="rounded-md bg-slate-900 text-white px-3 py-1">عرض</button>
@@ -1562,7 +1562,7 @@ function ReportsSection({
     if (reportType === "revenue") {
       return {
         title: "تقرير الإيرادات",
-        headers: ["الت��ريخ", "الوصف", "المبلغ"],
+        headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
           .map((t) => [
