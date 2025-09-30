@@ -359,7 +359,7 @@ export default function AccountingSystem() {
       if (result.item.quantity < result.item.min) {
         toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
-        toast.success("تم تسجيل الصرف وتحديث المصروفات");
+        toast.success("تم تسجيل الصرف وتحديث المصرو��ات");
       }
       setIssue({
         itemId: "",
@@ -384,7 +384,7 @@ export default function AccountingSystem() {
       !newProject.floors ||
       !newProject.units
     ) {
-      toast.error("الرجاء إدخال بيان��ت المشروع كاملة");
+      toast.error("الرجاء إدخال بيانات المشروع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
@@ -627,7 +627,7 @@ export default function AccountingSystem() {
                     : tab === "inventory"
                       ? "المخزون"
                       : tab === "projects"
-                        ? "ال��قارات"
+                        ? "العقارات"
                         : tab === "reports"
                           ? "التقارير"
                           : "المستخدمون"}
@@ -1020,7 +1020,7 @@ export default function AccountingSystem() {
                 <table className="min-w-full text-sm">
                   <thead>
                     <tr className="text-left bg-slate-50">
-                      <th className="px-3 py-2">ا��تاريخ</th>
+                      <th className="px-3 py-2">التاريخ</th>
                       <th className="px-3 py-2">المادة</th>
                       <th className="px-3 py-2">نوع الحركة</th>
                       <th className="px-3 py-2">الكمية</th>
@@ -1787,7 +1787,7 @@ function ReportsSection({
         </div>
       </div>
       <div className="border rounded-lg p-3">
-        <div className="font-semibold mb-2">نتيجة ��لتقرير</div>
+        <div className="font-semibold mb-2">نتيجة التقرير</div>
         <div className="text-sm text-slate-600">
           الفترة: من {formatDateLabel(dateFrom)} إلى {formatDateLabel(dateTo)}
         </div>
@@ -1803,7 +1803,7 @@ function ReportsSection({
             value={transactions
               .filter((t) => t.type === "expense")
               .reduce((a, b) => a + b.amount, 0)}
-            label="إجمالي المصروفات"
+            label="إجم��لي المصروفات"
             color="text-rose-600"
           />
           <Stat
