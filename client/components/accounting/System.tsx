@@ -125,7 +125,7 @@ export default function AccountingSystem() {
       const message =
         error instanceof Error ? error.message : "حدث خطأ أثناء تحميل البيانات";
       setLoadingError(message);
-      toast.error("تعذر تحميل البيانات من قاعدة البيانات", {
+      toast.error("تعذر تحميل البيانات من قا��دة البيانات", {
         description: message,
       });
     } finally {
@@ -203,7 +203,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف المعاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حذف المعاملة";
+        error instanceof Error ? error.message : "��عذر حذف المعاملة";
       toast.error("فشل حذف المعاملة", { description: message });
     } finally {
       setDeletingTransactionId(null);
@@ -422,7 +422,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("الم��روع غير موجود");
+      toast.error("المشروع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -1292,7 +1292,7 @@ export default function AccountingSystem() {
               </table>
               {projects.length === 0 && (
                 <div className="py-6 text-center text-sm text-slate-500">
-                  لا توجد مشروعات مسجلة بعد.
+                  لا ��وجد مشروعات مسجلة بعد.
                 </div>
               )}
             </div>
@@ -1475,7 +1475,7 @@ function ReportsSection({
         headers: ["البند", "القيمة"],
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
-          ["إجمالي المصروفات", exp.toLocaleString() + " ج.م"],
+          ["إ��مالي المصروفات", exp.toLocaleString() + " ج.م"],
           ["صافي الربح", (rev - exp).toLocaleString() + " ج.م"],
         ],
       };
@@ -1483,7 +1483,7 @@ function ReportsSection({
     if (reportType === "revenue") {
       return {
         title: "تقرير الإيرادات",
-        headers: ["التاريخ", "الوصف", "ا��مبلغ"],
+        headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
           .map((t) => [
@@ -1558,7 +1558,7 @@ function ReportsSection({
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
-        ["الربح/الخ��ارة", (totalS - totalC).toLocaleString() + " ج.م"],
+        ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
         title: "تقرير مشروع عقاري",
