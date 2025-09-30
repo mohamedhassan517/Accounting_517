@@ -174,7 +174,7 @@ export default function AccountingSystem() {
       });
       setTransactions((prev) => [transaction, ...prev]);
       setQuick({ type: "revenue", amount: "", description: "", date: today() });
-      toast.success("تمت إض��فة المعاملة");
+      toast.success("تمت إضافة المعاملة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المعاملة";
@@ -204,11 +204,11 @@ export default function AccountingSystem() {
       setDeletingTransactionId(id);
       await deleteTransaction(id);
       setTransactions((prev) => prev.filter((t) => t.id !== id));
-      toast.success("تم حذف المعا��لة");
+      toast.success("تم حذف المعاملة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المعاملة";
-      toast.error("فشل حذف المعام��ة", { description: message });
+      toast.error("فشل حذف المعاملة", { description: message });
     } finally {
       setDeletingTransactionId(null);
     }
@@ -241,7 +241,7 @@ export default function AccountingSystem() {
       });
       setItems((prev) => [item, ...prev]);
       setNewItem({ name: "", quantity: "", unit: "طن", min: "" });
-      toast.success("تم حف�� المادة");
+      toast.success("تم حفظ المادة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المادة";
@@ -284,7 +284,7 @@ export default function AccountingSystem() {
       !Number.isFinite(unitPrice) ||
       unitPrice <= 0
     ) {
-      toast.error("القيم العددية غير صح��حة");
+      toast.error("القيم العددية غير صحيحة");
       return;
     }
     try {
@@ -371,7 +371,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل الصرف";
-      toast.error("فشل تسجيل الص��ف", { description: message });
+      toast.error("فشل تسجيل الصرف", { description: message });
     } finally {
       setSavingIssue(false);
     }
@@ -409,7 +409,7 @@ export default function AccountingSystem() {
       });
       setProjects((prev) => [project, ...prev]);
       setNewProject({ name: "", location: "", floors: "", units: "" });
-      toast.success("تمت إضافة المشروع ��لعقاري");
+      toast.success("تمت إضافة المشروع العقاري");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر إضافة المشروع";
@@ -448,7 +448,7 @@ export default function AccountingSystem() {
       });
       setCosts((prev) => [result.cost, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
-      toast.success("تم تسجيل تكلفة المشروع وتحديث المصروفات");
+      toast.success("تم تسجيل تكلفة المشر��ع وتحديث المصروفات");
       setNewCost({
         projectId: "",
         type: "construction",
@@ -500,7 +500,7 @@ export default function AccountingSystem() {
       });
       setSales((prev) => [result.sale, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
-      toast.success("تم تسجيل البيع وتحديث الإيراد��ت");
+      toast.success("تم تسجيل البيع وتحديث الإيرادات");
       setNewSale({
         projectId: "",
         unitNo: "",
@@ -558,11 +558,11 @@ export default function AccountingSystem() {
           <div class="row"><div>المشروع:</div><div>${project?.name ?? ""}</div></div>
           <div class="row"><div>الموقع:</div><div>${project?.location ?? ""}</div></div>
           <div class="row"><div>رقم الوحدة:</div><div>${sale.unitNo}</div></div>
-          <div class="row"><div>المش��ري:</div><div>${sale.buyer}</div></div>
-          <div class="row"><div>التا��يخ:</div><div>${sale.date}</div></div>
+          <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
+          <div class="row"><div>التاريخ:</div><div>${sale.date}</div></div>
         </div>
         <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
-        ${sale.terms ? `<div class="mt">ال��روط: ${sale.terms}</div>` : ""}
+        ${sale.terms ? `<div class="mt">الشروط: ${sale.terms}</div>` : ""}
         <a href="#" class="btn" onclick="window.print();return false;">طباعة</a>
       </div>
     </body></html>`);
@@ -675,7 +675,7 @@ export default function AccountingSystem() {
           </div>
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-md">
-            <h3 className="font-semibold mb-3">إضافة معام��ة سريعة</h3>
+            <h3 className="font-semibold mb-3">إضافة معاملة سريعة</h3>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
               <select
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 bg-white"
@@ -857,7 +857,7 @@ export default function AccountingSystem() {
 
           <div className="grid gap-4 xl:grid-cols-2">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل وار�� من مورد</h3>
+              <h3 className="font-semibold mb-3">تسجيل وارد من مورد</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -934,7 +934,7 @@ export default function AccountingSystem() {
                 </select>
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="الكم��ة"
+                  placeholder="الكمية"
                   value={issue.qty}
                   onChange={(e) => setIssue({ ...issue, qty: e.target.value })}
                 />
@@ -1123,7 +1123,7 @@ export default function AccountingSystem() {
       {/* Below: cost and sale side-by-side */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-          <h3 className="font-semibold mb-3">ت��جيل تكلفة للمشروع</h3>
+          <h3 className="font-semibold mb-3">تسجيل تكلفة للمشروع</h3>
           <div className="grid gap-3">
             <select
               className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1185,7 +1185,7 @@ export default function AccountingSystem() {
                 disabled={savingCost}
                 className="rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {savingCost ? "جاري التسجيل..." : "تسجيل التكلفة"}
+                {savingCost ? "جاري التسجيل..." : "تسجيل التكلف��"}
               </button>
               <button
                 onClick={() => setNewCost({ projectId: "", type: "construction", amount: "", date: today(), note: "" })}
@@ -1198,7 +1198,7 @@ export default function AccountingSystem() {
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-          <h3 className="font-semibold mb-3">��سجيل بيع وحدة وإصدار فاتورة</h3>
+          <h3 className="font-semibold mb-3">تسجيل بيع وحدة وإصدار فاتورة</h3>
           <div className="grid gap-3">
             <select
               className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1279,7 +1279,7 @@ export default function AccountingSystem() {
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold">��لمشروعات</h3>
+              <h3 className="font-semibold">المشروعات</h3>
               <div className="flex items-center gap-2">
                 <input
                   placeholder="ابحث عن مشروع أو موقع"
@@ -1343,7 +1343,7 @@ export default function AccountingSystem() {
                                 <div><strong>مباعة:</strong> {t.sold}</div>
                                 <div><strong>التكاليف:</strong> {t.costs.toLocaleString()} ج.م</div>
                                 <div><strong>المبيعات:</strong> {t.sales.toLocaleString()} ج.م</div>
-                                <div><strong>الربح:</strong> {t.profit.toLocaleString()} ��.م</div>
+                                <div><strong>الربح:</strong> {t.profit.toLocaleString()} ج.م</div>
                               </div>
                             </DialogDescription>
                           </DialogContent>
@@ -1562,7 +1562,7 @@ function ReportsSection({
     if (reportType === "revenue") {
       return {
         title: "تقرير الإيرادات",
-        headers: ["التاريخ", "الوصف", "المبلغ"],
+        headers: ["الت��ريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
           .map((t) => [
@@ -1581,7 +1581,7 @@ function ReportsSection({
           .map((t) => [
             t.date,
             t.description,
-            t.amount.toLocaleString() + " ��.م",
+            t.amount.toLocaleString() + " ج.م",
           ]),
       };
     }
@@ -1635,7 +1635,7 @@ function ReportsSection({
         ["الموقع", project?.location || "-"],
         ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
-        ["��جمالي التكاليف", totalC.toLocaleString() + " ج.م"],
+        ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
