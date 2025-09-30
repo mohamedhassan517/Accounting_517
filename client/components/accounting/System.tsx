@@ -127,7 +127,7 @@ export default function AccountingSystem() {
       setSales(data.sales);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "حدث خطأ أثناء تحميل البيانات";
+        error instanceof Error ? error.message : "حدث خطأ أثناء تح��يل البيانات";
       setLoadingError(message);
       toast.error("تعذر تحميل البيانات من قاعدة البيانات", {
         description: message,
@@ -458,7 +458,7 @@ export default function AccountingSystem() {
       });
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر تسجيل التكلفة";
+        error instanceof Error ? error.message : "تعذر تسجي�� التكلفة";
       toast.error("فشل تسجيل التكلفة", { description: message });
     } finally {
       setSavingCost(false);
@@ -1069,7 +1069,7 @@ export default function AccountingSystem() {
           <div className="grid gap-3">
             <input
               className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-              placeholder="اسم المشروع"
+              placeholder="ا��م المشروع"
               value={newProject.name}
               onChange={(e) =>
                 setNewProject({ ...newProject, name: e.target.value })
@@ -1191,7 +1191,7 @@ export default function AccountingSystem() {
                 onClick={() => setNewCost({ projectId: "", type: "construction", amount: "", date: today(), note: "" })}
                 className="rounded-md border px-3 py-2 bg-white"
               >
-                إعادة تعيين
+                إع��دة تعيين
               </button>
             </div>
           </div>
@@ -1728,18 +1728,26 @@ function ReportsSection({
             ))}
           </select>
         )}
-        <input
-          type="date"
-          className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-          value={dateFrom}
-          onChange={(e) => setDateFrom(e.target.value)}
-        />
-        <input
-          type="date"
-          className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-          value={dateTo}
-          onChange={(e) => setDateTo(e.target.value)}
-        />
+        <div>
+          <label className="text-sm text-slate-600 mb-1 inline-block">من</label>
+          <input
+            type="date"
+            className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+            value={dateFrom}
+            onChange={(e) => setDateFrom(e.target.value)}
+            aria-label="تاريخ من"
+          />
+        </div>
+        <div>
+          <label className="text-sm text-slate-600 mb-1 inline-block">إلى</label>
+          <input
+            type="date"
+            className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
+            aria-label="تاريخ إلى"
+          />
+        </div>
         <button
           onClick={exportPDF}
           className="w-full rounded-md bg-indigo-600 px-4 py-2 text-white transition-colors sm:w-auto"
