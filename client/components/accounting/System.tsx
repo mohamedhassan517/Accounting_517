@@ -207,7 +207,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف المعاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حذف المعاملة";
+        error instanceof Error ? error.message : "تعذر حذف المعامل��";
       toast.error("فشل حذف المعاملة", { description: message });
     } finally {
       setDeletingTransactionId(null);
@@ -395,7 +395,7 @@ export default function AccountingSystem() {
       !Number.isFinite(units) ||
       units <= 0
     ) {
-      toast.error("القيم العددية ��ير صحيحة");
+      toast.error("القيم العددية غير صحيحة");
       return;
     }
     try {
@@ -735,7 +735,7 @@ export default function AccountingSystem() {
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="text-left bg-slate-50">
-                  <th className="px-3 py-2">التاريخ</th>
+                  <th className="px-3 py-2">الت��ريخ</th>
                   <th className="px-3 py-2">النوع</th>
                   <th className="px-3 py-2">الوصف</th>
                   <th className="px-3 py-2">المبلغ</th>
@@ -916,7 +916,7 @@ export default function AccountingSystem() {
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل صرف لمش��وع</h3>
+              <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
