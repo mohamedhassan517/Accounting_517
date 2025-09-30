@@ -1328,7 +1328,26 @@ export default function AccountingSystem() {
                       </div>
                       <div className="mt-3 flex items-center justify-between">
                         <div className="text-sm text-slate-500">الربح: <span className="font-semibold text-slate-700">{t.profit.toLocaleString()} ج.م</span></div>
-                        <button className="rounded-md bg-slate-900 text-white px-3 py-1">عرض</button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <button className="rounded-md bg-slate-900 text-white px-3 py-1">عرض</button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-lg">
+                            <DialogTitle>تفاصيل المشروع</DialogTitle>
+                            <DialogDescription>
+                              <div className="mt-2 space-y-2">
+                                <div><strong>الاسم:</strong> {p.name}</div>
+                                <div><strong>الموقع:</strong> {p.location}</div>
+                                <div><strong>الأدوار:</strong> {p.floors}</div>
+                                <div><strong>الوحدات:</strong> {p.units}</div>
+                                <div><strong>مباعة:</strong> {t.sold}</div>
+                                <div><strong>التكاليف:</strong> {t.costs.toLocaleString()} ج.م</div>
+                                <div><strong>المبيعات:</strong> {t.sales.toLocaleString()} ج.م</div>
+                                <div><strong>الربح:</strong> {t.profit.toLocaleString()} ج.م</div>
+                              </div>
+                            </DialogDescription>
+                          </DialogContent>
+                        </Dialog>
                       </div>
                     </div>
                   );
