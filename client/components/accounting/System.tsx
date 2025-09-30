@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جا��ٍ تحميل البيانات من قاعدة البيانات...
+        جارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -880,7 +880,7 @@ export default function AccountingSystem() {
                 />
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="سعر الوحدة"
+                  placeholder="سعر الوحد��"
                   value={receive.unitPrice}
                   onChange={(e) =>
                     setReceive({ ...receive, unitPrice: e.target.value })
@@ -991,7 +991,7 @@ export default function AccountingSystem() {
                   <div
                     className={`text-xs ${i.quantity < i.min ? "text-rose-600" : "text-emerald-600"}`}
                   >
-                    {i.quantity < i.min ? "مخزون منخفض" : "متوفر"}
+                    {i.quantity < i.min ? "مخزون منخف��" : "متوفر"}
                   </div>
                 </div>
                 <button
@@ -1354,7 +1354,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">التاريخ</th>
                       <th className="px-3 py-2">المشروع</th>
                       <th className="px-3 py-2">النوع</th>
-                      <th className="px-3 py-2">المبلغ</th>
+                      <th className="px-3 py-2">ا��مبلغ</th>
                       <th className="px-3 py-2">ملاحظة</th>
                     </tr>
                   </thead>
