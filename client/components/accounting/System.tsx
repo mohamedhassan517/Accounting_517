@@ -256,7 +256,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
-      toast.error("فشل حذف المادة", { description: message });
+      toast.error("فشل حذف الماد��", { description: message });
     } finally {
       setDeletingItemId(null);
     }
@@ -913,7 +913,7 @@ export default function AccountingSystem() {
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل ص��ف لمشروع</h3>
+              <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
