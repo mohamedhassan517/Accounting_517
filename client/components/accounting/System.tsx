@@ -472,7 +472,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال بيان��ت البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -513,7 +513,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل البيع";
-      toast.error("فشل ��سجيل البيع", { description: message });
+      toast.error("فشل تسجيل البيع", { description: message });
     } finally {
       setSavingSale(false);
     }
@@ -656,7 +656,7 @@ export default function AccountingSystem() {
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
             <Stat
               value={totals.revenue}
-              label="إجمالي الإيرادات"
+              label="إجمالي الإ��رادات"
               color="from-emerald-100 to-emerald-300"
               icon={<ArrowUp className="h-5 w-5 text-emerald-700" />}
             />
@@ -730,7 +730,7 @@ export default function AccountingSystem() {
 
       {active === "transactions" && (
         <section className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-          <h3 className="font-semibold mb-3">المعاملات ا��مالية</h3>
+          <h3 className="font-semibold mb-3">المعاملات المالية</h3>
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead>
@@ -738,7 +738,7 @@ export default function AccountingSystem() {
                   <th className="px-3 py-2">التاريخ</th>
                   <th className="px-3 py-2">النوع</th>
                   <th className="px-3 py-2">الوصف</th>
-                  <th className="px-3 py-2">المبلغ</th>
+                  <th className="px-3 py-2">المبل��</th>
                   <th className="px-3 py-2">الحالة</th>
                   <th className="px-3 py-2"></th>
                 </tr>
