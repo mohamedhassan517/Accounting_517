@@ -325,7 +325,7 @@ export default function AccountingSystem() {
 
   const issueSubmit = async () => {
     if (!issue.itemId || !issue.qty || !issue.unitPrice || !issue.project) {
-      toast.error("الرجاء إدخال جميع بيانات الصرف");
+      toast.error("الرجاء إد��ال جميع بيانات الصرف");
       return;
     }
     const qty = Number(issue.qty);
@@ -1060,195 +1060,221 @@ export default function AccountingSystem() {
       )}
 
       {active === "projects" && (
-        <section className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">إضافة مشروع عقاري</h3>
-              <div className="grid gap-3">
-                <input
-                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="اسم المشروع"
-                  value={newProject.name}
-                  onChange={(e) =>
-                    setNewProject({ ...newProject, name: e.target.value })
-                  }
-                />
-                <input
-                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="الموقع"
-                  value={newProject.location}
-                  onChange={(e) =>
-                    setNewProject({ ...newProject, location: e.target.value })
-                  }
-                />
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    placeholder="عدد الأدوار"
-                    value={newProject.floors}
-                    onChange={(e) =>
-                      setNewProject({ ...newProject, floors: e.target.value })
-                    }
-                  />
-                  <input
-                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    placeholder="عدد الوحدات"
-                    value={newProject.units}
-                    onChange={(e) =>
-                      setNewProject({ ...newProject, units: e.target.value })
-                    }
-                  />
-                </div>
-                <button
-                  onClick={() => void addProject()}
-                  disabled={savingProject}
-                  className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-                >
-                  {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
-                </button>
-              </div>
+    <section className="space-y-4">
+      {/* Add project occupies full width */}
+      <div className="">
+        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
+          <h3 className="font-semibold mb-3">إضافة مشروع عقاري</h3>
+          <div className="grid gap-3">
+            <input
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              placeholder="اسم المشروع"
+              value={newProject.name}
+              onChange={(e) =>
+                setNewProject({ ...newProject, name: e.target.value })
+              }
+            />
+            <input
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              placeholder="الموقع"
+              value={newProject.location}
+              onChange={(e) =>
+                setNewProject({ ...newProject, location: e.target.value })
+              }
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                placeholder="عدد الأدوار"
+                value={newProject.floors}
+                onChange={(e) =>
+                  setNewProject({ ...newProject, floors: e.target.value })
+                }
+              />
+              <input
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                placeholder="عدد الوحدات"
+                value={newProject.units}
+                onChange={(e) =>
+                  setNewProject({ ...newProject, units: e.target.value })
+                }
+              />
             </div>
-
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل تكلفة للمشروع</h3>
-              <div className="grid gap-3">
-                <select
-                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  value={newCost.projectId}
-                  onChange={(e) =>
-                    setNewCost({ ...newCost, projectId: e.target.value })
-                  }
-                >
-                  <option value="">اختر المشروع</option>
-                  {projects.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name}
-                    </option>
-                  ))}
-                </select>
-                <div className="grid grid-cols-2 gap-3">
-                  <select
-                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    value={newCost.type}
-                    onChange={(e) =>
-                      setNewCost({
-                        ...newCost,
-                        type: e.target.value as ProjectCost["type"],
-                      })
-                    }
-                  >
-                    <option value="construction">إنشاء</option>
-                    <option value="operation">تشغيل</option>
-                    <option value="expense">مصروفات</option>
-                  </select>
-                  <input
-                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    placeholder="المبلغ"
-                    value={newCost.amount}
-                    onChange={(e) =>
-                      setNewCost({ ...newCost, amount: e.target.value })
-                    }
-                  />
-                </div>
-                <input
-                  type="date"
-                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  value={newCost.date}
-                  onChange={(e) =>
-                    setNewCost({ ...newCost, date: e.target.value })
-                  }
-                />
-                <input
-                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="ملاحظة"
-                  value={newCost.note}
-                  onChange={(e) =>
-                    setNewCost({ ...newCost, note: e.target.value })
-                  }
-                />
-                <button
-                  onClick={() => void addProjectCost()}
-                  disabled={savingCost}
-                  className="w-full rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-                >
-                  {savingCost ? "جاري التسجيل..." : "تسجيل التكلفة"}
-                </button>
-              </div>
-            </div>
-
-            <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">
-                تسجيل بيع وحدة وإصدار فاتورة
-              </h3>
-              <div className="grid gap-3">
-                <select
-                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  value={newSale.projectId}
-                  onChange={(e) =>
-                    setNewSale({ ...newSale, projectId: e.target.value })
-                  }
-                >
-                  <option value="">اختر المشروع</option>
-                  {projects.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name}
-                    </option>
-                  ))}
-                </select>
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    placeholder="رقم الوحدة"
-                    value={newSale.unitNo}
-                    onChange={(e) =>
-                      setNewSale({ ...newSale, unitNo: e.target.value })
-                    }
-                  />
-                  <input
-                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    placeholder="السعر"
-                    value={newSale.price}
-                    onChange={(e) =>
-                      setNewSale({ ...newSale, price: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    placeholder="اسم المشتري"
-                    value={newSale.buyer}
-                    onChange={(e) =>
-                      setNewSale({ ...newSale, buyer: e.target.value })
-                    }
-                  />
-                  <input
-                    type="date"
-                    className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                    value={newSale.date}
-                    onChange={(e) =>
-                      setNewSale({ ...newSale, date: e.target.value })
-                    }
-                  />
-                </div>
-                <input
-                  className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="شروط التعاقد (اختياري)"
-                  value={newSale.terms}
-                  onChange={(e) =>
-                    setNewSale({ ...newSale, terms: e.target.value })
-                  }
-                />
-                <button
-                  onClick={() => void addProjectSale()}
-                  disabled={savingSale}
-                  className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-                >
-                  {savingSale ? "جاري التسجيل..." : "تسجيل الب��ع + فاتورة"}
-                </button>
-              </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => void addProject()}
+                disabled={savingProject}
+                className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
+              </button>
+              <button
+                onClick={() => setNewProject({ name: "", location: "", floors: "", units: "" })}
+                className="rounded-md border px-3 py-2 bg-white"
+              >
+                إعادة تعيين
+              </button>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Below: cost and sale side-by-side */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
+          <h3 className="font-semibold mb-3">تسجيل تكلفة للمشروع</h3>
+          <div className="grid gap-3">
+            <select
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              value={newCost.projectId}
+              onChange={(e) =>
+                setNewCost({ ...newCost, projectId: e.target.value })
+              }
+            >
+              <option value="">اختر المشروع</option>
+              {projects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
+            <div className="grid grid-cols-2 gap-3">
+              <select
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                value={newCost.type}
+                onChange={(e) =>
+                  setNewCost({
+                    ...newCost,
+                    type: e.target.value as ProjectCost["type"],
+                  })
+                }
+              >
+                <option value="construction">إنشاء</option>
+                <option value="operation">تشغيل</option>
+                <option value="expense">مصروفات</option>
+              </select>
+              <input
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                placeholder="المبلغ"
+                value={newCost.amount}
+                onChange={(e) =>
+                  setNewCost({ ...newCost, amount: e.target.value })
+                }
+              />
+            </div>
+            <input
+              type="date"
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              value={newCost.date}
+              onChange={(e) =>
+                setNewCost({ ...newCost, date: e.target.value })
+              }
+            />
+            <input
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              placeholder="ملاحظة"
+              value={newCost.note}
+              onChange={(e) =>
+                setNewCost({ ...newCost, note: e.target.value })
+              }
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={() => void addProjectCost()}
+                disabled={savingCost}
+                className="rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {savingCost ? "جاري التسجيل..." : "تسجيل التكلفة"}
+              </button>
+              <button
+                onClick={() => setNewCost({ projectId: "", type: "construction", amount: "", date: today(), note: "" })}
+                className="rounded-md border px-3 py-2 bg-white"
+              >
+                إعادة تعيين
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
+          <h3 className="font-semibold mb-3">تسجيل بيع وحدة وإصدار فاتورة</h3>
+          <div className="grid gap-3">
+            <select
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              value={newSale.projectId}
+              onChange={(e) =>
+                setNewSale({ ...newSale, projectId: e.target.value })
+              }
+            >
+              <option value="">اختر المشروع</option>
+              {projects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                placeholder="رقم الوحدة"
+                value={newSale.unitNo}
+                onChange={(e) =>
+                  setNewSale({ ...newSale, unitNo: e.target.value })
+                }
+              />
+              <input
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                placeholder="السعر"
+                value={newSale.price}
+                onChange={(e) =>
+                  setNewSale({ ...newSale, price: e.target.value })
+                }
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                placeholder="اسم المشتري"
+                value={newSale.buyer}
+                onChange={(e) =>
+                  setNewSale({ ...newSale, buyer: e.target.value })
+                }
+              />
+              <input
+                type="date"
+                className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+                value={newSale.date}
+                onChange={(e) =>
+                  setNewSale({ ...newSale, date: e.target.value })
+                }
+              />
+            </div>
+            <input
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              placeholder="شروط التعاقد (اختياري)"
+              value={newSale.terms}
+              onChange={(e) =>
+                setNewSale({ ...newSale, terms: e.target.value })
+              }
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={() => void addProjectSale()}
+                disabled={savingSale}
+                className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فاتورة"}
+              </button>
+              <button
+                onClick={() => setNewSale({ projectId: "", unitNo: "", buyer: "", price: "", date: today(), terms: "" })}
+                className="rounded-md border px-3 py-2 bg-white"
+              >
+                إعادة تعيين
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <div className="flex items-center justify-between mb-3">
