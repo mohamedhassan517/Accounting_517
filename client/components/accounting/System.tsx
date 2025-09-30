@@ -558,7 +558,7 @@ export default function AccountingSystem() {
           <div class="row"><div>المشروع:</div><div>${project?.name ?? ""}</div></div>
           <div class="row"><div>الموقع:</div><div>${project?.location ?? ""}</div></div>
           <div class="row"><div>رقم الوحدة:</div><div>${sale.unitNo}</div></div>
-          <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
+          <div class="row"><div>المش��ري:</div><div>${sale.buyer}</div></div>
           <div class="row"><div>التا��يخ:</div><div>${sale.date}</div></div>
         </div>
         <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
@@ -1279,7 +1279,7 @@ export default function AccountingSystem() {
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold">المشروعات</h3>
+              <h3 className="font-semibold">��لمشروعات</h3>
               <div className="flex items-center gap-2">
                 <input
                   placeholder="ابحث عن مشروع أو موقع"
@@ -1713,71 +1713,78 @@ function ReportsSection({
   return (
     <section className="bg-white border border-slate-200 rounded-xl p-4 shadow space-y-4">
       <h3 className="font-semibold">التقارير</h3>
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <select
-          className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-          value={reportType}
-          onChange={(e) => setReportType(e.target.value)}
-        >
-          <option value="profit-loss">الأرباح والخسائر</option>
-          <option value="revenue">الإيرادات</option>
-          <option value="expense">المصروفات</option>
-          <option value="salary">المرتبات</option>
-          <option value="project">تقرير مشروع</option>
-          <option value="inventory">تقرير المخزون</option>
-        </select>
-        {reportType === "project" && (
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 items-end">
+        <div className="flex flex-col">
+          <label className="text-sm text-slate-600 mb-1">نوع التقرير</label>
           <select
             className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-            value={selectedProject}
-            onChange={(e) => setSelectedProject(e.target.value)}
+            value={reportType}
+            onChange={(e) => setReportType(e.target.value)}
           >
-            <option value="">اختر المش��وع</option>
-            {projects.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name}
-              </option>
-            ))}
+            <option value="profit-loss">الأرباح والخسائر</option>
+            <option value="revenue">الإيرادات</option>
+            <option value="expense">المصروفات</option>
+            <option value="salary">المرتبات</option>
+            <option value="project">تقرير مشروع</option>
+            <option value="inventory">تقرير المخزون</option>
           </select>
+        </div>
+
+        {reportType === "project" && (
+          <div className="flex flex-col">
+            <label className="text-sm text-slate-600 mb-1">المشروع</label>
+            <select
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              value={selectedProject}
+              onChange={(e) => setSelectedProject(e.target.value)}
+            >
+              <option value="">اختر المشروع</option>
+              {projects.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
+          </div>
         )}
-        <div>
-          <label className="text-sm text-slate-600 mb-1 inline-block">��ن</label>
-          <input
-            type="date"
-            className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-            value={dateFrom}
-            onChange={(e) => setDateFrom(e.target.value)}
-            aria-label="تاريخ من"
-          />
+
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <label className="text-sm text-slate-600 mb-1 inline-block">من</label>
+            <input
+              type="date"
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              value={dateFrom}
+              onChange={(e) => setDateFrom(e.target.value)}
+              aria-label="تاريخ من"
+            />
+          </div>
+          <div className="flex-1">
+            <label className="text-sm text-slate-600 mb-1 inline-block">إلى</label>
+            <input
+              type="date"
+              className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
+              value={dateTo}
+              onChange={(e) => setDateTo(e.target.value)}
+              aria-label="تاريخ إلى"
+            />
+          </div>
         </div>
-        <div>
-          <label className="text-sm text-slate-600 mb-1 inline-block">إلى</label>
-          <input
-            type="date"
-            className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-            value={dateTo}
-            onChange={(e) => setDateTo(e.target.value)}
-            aria-label="تاريخ إلى"
-          />
+
+        <div className="flex gap-2 col-span-3 sm:col-auto sm:justify-end">
+          <button
+            onClick={exportPDF}
+            className="rounded-md bg-indigo-600 px-4 py-2 text-white transition-colors"
+          >
+            تصدير PDF
+          </button>
+          <button
+            onClick={exportExcel}
+            className="rounded-md bg-emerald-600 px-4 py-2 text-white transition-colors"
+          >
+            تصدير Excel
+          </button>
         </div>
-        <button
-          onClick={exportPDF}
-          className="w-full rounded-md bg-indigo-600 px-4 py-2 text-white transition-colors sm:w-auto"
-        >
-          تصدير PDF
-        </button>
-        <button
-          onClick={exportExcel}
-          className="w-full rounded-md bg-emerald-600 px-4 py-2 text-white transition-colors sm:w-auto"
-        >
-          تصدير Excel
-        </button>
-        <button
-          onClick={exportCsv}
-          className="w-full rounded-md bg-slate-900 px-4 py-2 text-white transition-colors sm:w-auto"
-        >
-          تصدير CSV
-        </button>
       </div>
       <div className="border rounded-lg p-3">
         <div className="font-semibold mb-2">نتيجة التقرير</div>
