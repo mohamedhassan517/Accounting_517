@@ -468,7 +468,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع ��املة");
+      toast.error("الر��اء إدخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل الب��انات من قاعدة البيانات...
+        جارٍ تح��يل الب��انات من قاعدة البيانات...
       </div>
     );
   }
