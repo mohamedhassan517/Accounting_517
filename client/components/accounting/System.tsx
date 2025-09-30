@@ -256,7 +256,7 @@ export default function AccountingSystem() {
       setDeletingItemId(id);
       await deleteInventoryItem(id);
       setItems((prev) => prev.filter((i) => i.id !== id));
-      toast.success("تم حذف المادة");
+      toast.success("تم ��ذف المادة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
@@ -384,7 +384,7 @@ export default function AccountingSystem() {
       !newProject.floors ||
       !newProject.units
     ) {
-      toast.error("الرجاء إدخال بيانات المش��وع كاملة");
+      toast.error("الرجاء ��دخال بيانات المشروع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
@@ -448,7 +448,7 @@ export default function AccountingSystem() {
       });
       setCosts((prev) => [result.cost, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
-      toast.success("تم تسجيل تكلفة المشروع و��حديث المصروفات");
+      toast.success("تم تسجيل تكلفة المشروع وتحديث المصروفات");
       setNewCost({
         projectId: "",
         type: "construction",
@@ -472,7 +472,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال بيانا�� البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -656,7 +656,7 @@ export default function AccountingSystem() {
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
             <Stat
               value={totals.revenue}
-              label="إجمالي الإيرادات"
+              label="إجمالي ال��يرادات"
               color="from-emerald-100 to-emerald-300"
               icon={<ArrowUp className="h-5 w-5 text-emerald-700" />}
             />
@@ -738,7 +738,7 @@ export default function AccountingSystem() {
                   <th className="px-3 py-2">التاريخ</th>
                   <th className="px-3 py-2">النوع</th>
                   <th className="px-3 py-2">الوصف</th>
-                  <th className="px-3 py-2">المبلغ</th>
+                  <th className="px-3 py-2">المب��غ</th>
                   <th className="px-3 py-2">الحالة</th>
                   <th className="px-3 py-2"></th>
                 </tr>
@@ -1787,7 +1787,7 @@ function ReportsSection({
         </div>
       </div>
       <div className="border rounded-lg p-3">
-        <div className="font-semibold mb-2">��تيجة التقرير</div>
+        <div className="font-semibold mb-2">نتيجة التقرير</div>
         <div className="text-sm text-slate-600">
           الفترة: من {formatDateLabel(dateFrom)} إلى {formatDateLabel(dateTo)}
         </div>
