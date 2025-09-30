@@ -384,7 +384,7 @@ export default function AccountingSystem() {
       !newProject.floors ||
       !newProject.units
     ) {
-      toast.error("الرجاء إدخال بيانات المشروع كاملة");
+      toast.error("الرجاء إدخال بيان��ت المشروع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
@@ -627,7 +627,7 @@ export default function AccountingSystem() {
                     : tab === "inventory"
                       ? "المخزون"
                       : tab === "projects"
-                        ? "العقارات"
+                        ? "ال��قارات"
                         : tab === "reports"
                           ? "التقارير"
                           : "المستخدمون"}
@@ -1020,7 +1020,7 @@ export default function AccountingSystem() {
                 <table className="min-w-full text-sm">
                   <thead>
                     <tr className="text-left bg-slate-50">
-                      <th className="px-3 py-2">التاريخ</th>
+                      <th className="px-3 py-2">ا��تاريخ</th>
                       <th className="px-3 py-2">المادة</th>
                       <th className="px-3 py-2">نوع الحركة</th>
                       <th className="px-3 py-2">الكمية</th>
@@ -1637,7 +1637,7 @@ function ReportsSection({
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
-        ["الربح/ال��سارة", (totalS - totalC).toLocaleString() + " ج.م"],
+        ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
         title: "تقرير مشروع عقاري",
@@ -1787,7 +1787,7 @@ function ReportsSection({
         </div>
       </div>
       <div className="border rounded-lg p-3">
-        <div className="font-semibold mb-2">نتيجة التقرير</div>
+        <div className="font-semibold mb-2">نتيجة ��لتقرير</div>
         <div className="text-sm text-slate-600">
           الفترة: من {formatDateLabel(dateFrom)} إلى {formatDateLabel(dateTo)}
         </div>
