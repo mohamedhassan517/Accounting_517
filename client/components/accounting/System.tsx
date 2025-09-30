@@ -395,7 +395,7 @@ export default function AccountingSystem() {
       !Number.isFinite(units) ||
       units <= 0
     ) {
-      toast.error("القيم العددية غير صحيحة");
+      toast.error("القيم العددية ��ير صحيحة");
       return;
     }
     try {
@@ -472,7 +472,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيان��ت البيع كاملة");
+      toast.error("الرجاء إدخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -656,7 +656,7 @@ export default function AccountingSystem() {
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
             <Stat
               value={totals.revenue}
-              label="إجمالي الإ��رادات"
+              label="إجمالي الإيرادات"
               color="from-emerald-100 to-emerald-300"
               icon={<ArrowUp className="h-5 w-5 text-emerald-700" />}
             />
@@ -738,7 +738,7 @@ export default function AccountingSystem() {
                   <th className="px-3 py-2">التاريخ</th>
                   <th className="px-3 py-2">النوع</th>
                   <th className="px-3 py-2">الوصف</th>
-                  <th className="px-3 py-2">المبل��</th>
+                  <th className="px-3 py-2">المبلغ</th>
                   <th className="px-3 py-2">الحالة</th>
                   <th className="px-3 py-2"></th>
                 </tr>
@@ -916,7 +916,7 @@ export default function AccountingSystem() {
             </div>
 
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل صرف لمشروع</h3>
+              <h3 className="font-semibold mb-3">تسجيل صرف لمش��وع</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
