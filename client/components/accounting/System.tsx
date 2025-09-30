@@ -300,7 +300,7 @@ export default function AccountingSystem() {
       setMovements((prev) => [result.movement, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
       if (result.item.quantity < result.item.min) {
-        toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
+        toast.warning(`تنبيه: مخ��ون ${result.item.name} منخفض`);
       } else {
         toast.success("تم تسجيل الوارد وتحديث المصروفات");
       }
@@ -468,7 +468,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرج��ء ��دخال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -593,7 +593,7 @@ export default function AccountingSystem() {
         <div className="space-y-1">
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
           <p className="text-slate-500 text-sm">
-            نظام محاسبة عقاري سهل الاستخدا��
+            نظام محاسبة عقاري سهل الاست��دام
           </p>
         </div>
         <div className="flex w-full flex-wrap gap-2 justify-center sm:justify-start md:w-auto md:justify-end">
@@ -651,7 +651,7 @@ export default function AccountingSystem() {
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
               <div className="text-sm text-slate-600">الوضع</div>
               <div className="mt-2 text-2xl font-bold">
-                {isManager ? "صلاحيات مدير" : "مست��دم عادي"}
+                {isManager ? "صلاحيات مدير" : "��ستخدم عادي"}
               </div>
             </div>
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
@@ -937,7 +937,7 @@ export default function AccountingSystem() {
                 />
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="سعر الوحدة"
+                  placeholder="��عر الوحدة"
                   value={issue.unitPrice}
                   onChange={(e) =>
                     setIssue({ ...issue, unitPrice: e.target.value })
@@ -1102,7 +1102,7 @@ export default function AccountingSystem() {
                   disabled={savingProject}
                   className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
-                  {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
+                  {savingProject ? "جاري ال��فظ..." : "حفظ المشروع"}
                 </button>
               </div>
             </div>
@@ -1158,7 +1158,7 @@ export default function AccountingSystem() {
                 />
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="ملاحظة"
+                  placeholder="م��احظة"
                   value={newCost.note}
                   onChange={(e) =>
                     setNewCost({ ...newCost, note: e.target.value })
@@ -1566,7 +1566,7 @@ function ReportsSection({
         rows,
       };
     }
-    return { title: "تقرير", headers: [], rows: [] };
+    return { title: "تقري��", headers: [], rows: [] };
   }, [
     reportType,
     filtered,
@@ -1700,7 +1700,7 @@ function ReportsSection({
             value={transactions
               .filter((t) => t.type === "revenue")
               .reduce((a, b) => a + b.amount, 0)}
-            label="إجمالي الإيرادات"
+            label="إجما��ي الإيرادات"
             color="text-emerald-600"
           />
           <Stat
