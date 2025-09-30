@@ -561,7 +561,7 @@ export default function AccountingSystem() {
           <div class="row"><div>التا��يخ:</div><div>${sale.date}</div></div>
         </div>
         <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
-        ${sale.terms ? `<div class="mt">الشروط: ${sale.terms}</div>` : ""}
+        ${sale.terms ? `<div class="mt">ال��روط: ${sale.terms}</div>` : ""}
         <a href="#" class="btn" onclick="window.print();return false;">طباعة</a>
       </div>
     </body></html>`);
@@ -652,7 +652,7 @@ export default function AccountingSystem() {
 
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
             <Stat
               value={totals.revenue}
               label="إجمالي الإيرادات"
@@ -933,7 +933,7 @@ export default function AccountingSystem() {
                 </select>
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="الكمية"
+                  placeholder="الكم��ة"
                   value={issue.qty}
                   onChange={(e) => setIssue({ ...issue, qty: e.target.value })}
                 />
