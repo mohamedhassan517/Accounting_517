@@ -125,7 +125,7 @@ export default function AccountingSystem() {
       const message =
         error instanceof Error ? error.message : "حدث خطأ أثناء تحميل البيانات";
       setLoadingError(message);
-      toast.error("تعذر تحميل البيانات من قا��دة البيانات", {
+      toast.error("تعذر تحميل البيانات من قاعدة البيانات", {
         description: message,
       });
     } finally {
@@ -203,7 +203,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف المعاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "��عذر حذف المعاملة";
+        error instanceof Error ? error.message : "تعذر حذف المعاملة";
       toast.error("فشل حذف المعاملة", { description: message });
     } finally {
       setDeletingTransactionId(null);
@@ -1292,7 +1292,7 @@ export default function AccountingSystem() {
               </table>
               {projects.length === 0 && (
                 <div className="py-6 text-center text-sm text-slate-500">
-                  لا ��وجد مشروعات مسجلة بعد.
+                  لا توجد مشروعات مسجلة بعد.
                 </div>
               )}
             </div>
@@ -1475,7 +1475,7 @@ function ReportsSection({
         headers: ["البند", "القيمة"],
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
-          ["إ��مالي المصروفات", exp.toLocaleString() + " ج.م"],
+          ["إجمالي المصروفات", exp.toLocaleString() + " ج.م"],
           ["صافي الربح", (rev - exp).toLocaleString() + " ج.م"],
         ],
       };
