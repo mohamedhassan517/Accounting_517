@@ -178,7 +178,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المعاملة";
-      toast.error("لم يتم حفظ المعاملة", { description: message });
+      toast.error("لم يتم ح��ظ المعاملة", { description: message });
     } finally {
       setSavingQuick(false);
     }
@@ -426,7 +426,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("المشروع غير موجود");
+      toast.error("��لمشروع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -512,7 +512,7 @@ export default function AccountingSystem() {
       printInvoice(result.sale.id, result.sale, project);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر تسجيل الب��ع";
+        error instanceof Error ? error.message : "تعذر تسجيل البيع";
       toast.error("فشل تسجيل البيع", { description: message });
     } finally {
       setSavingSale(false);
@@ -735,7 +735,7 @@ export default function AccountingSystem() {
             <table className="min-w-full text-sm">
               <thead>
                 <tr className="text-left bg-slate-50">
-                  <th className="px-3 py-2">الت��ريخ</th>
+                  <th className="px-3 py-2">التاريخ</th>
                   <th className="px-3 py-2">النوع</th>
                   <th className="px-3 py-2">الوصف</th>
                   <th className="px-3 py-2">المبلغ</th>
@@ -1413,7 +1413,7 @@ export default function AccountingSystem() {
                   <thead>
                     <tr className="text-left bg-slate-50">
                       <th className="px-3 py-2">التاريخ</th>
-                      <th className="px-3 py-2">المش��وع</th>
+                      <th className="px-3 py-2">المشروع</th>
                       <th className="px-3 py-2">النوع</th>
                       <th className="px-3 py-2">المبلغ</th>
                       <th className="px-3 py-2">ملاحظة</th>
@@ -1787,7 +1787,7 @@ function ReportsSection({
         </div>
       </div>
       <div className="border rounded-lg p-3">
-        <div className="font-semibold mb-2">��تيجة التقرير</div>
+        <div className="font-semibold mb-2">نتيجة التقرير</div>
         <div className="text-sm text-slate-600">
           الفترة: من {formatDateLabel(dateFrom)} إلى {formatDateLabel(dateTo)}
         </div>
