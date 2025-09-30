@@ -256,7 +256,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
-      toast.error("فشل حذف المادة", { description: message });
+      toast.error("فشل ��ذف المادة", { description: message });
     } finally {
       setDeletingItemId(null);
     }
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تح��يل البيانات من قاعدة البيانات...
+        جارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -655,7 +655,7 @@ export default function AccountingSystem() {
               </div>
             </div>
             <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
-              <div className="text-sm text-slate-600">الوصول</div>
+              <div className="text-sm text-slate-600">ال��صول</div>
               <div className="mt-2 text-2xl font-bold">
                 {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
               </div>
@@ -794,7 +794,7 @@ export default function AccountingSystem() {
             </table>
             {transactions.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا توجد معاملات مسجلة بعد.
+                لا توجد معام��ات مسجلة بعد.
               </div>
             )}
           </div>
@@ -830,7 +830,7 @@ export default function AccountingSystem() {
                 }
               >
                 <option value="طن">طن</option>
-                <option value="قطعة">قطعة</option>
+                <option value="قطعة">قط��ة</option>
                 <option value="متر">متر</option>
                 <option value="لتر">لتر</option>
               </select>
@@ -1102,7 +1102,7 @@ export default function AccountingSystem() {
                   disabled={savingProject}
                   className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
-                  {savingProject ? "ج��ري الحفظ..." : "حفظ المشروع"}
+                  {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
                 </button>
               </div>
             </div>
