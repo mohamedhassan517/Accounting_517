@@ -207,7 +207,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف المعاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حذف المعامل��";
+        error instanceof Error ? error.message : "تعذر حذف المعاملة";
       toast.error("فشل حذف المعاملة", { description: message });
     } finally {
       setDeletingTransactionId(null);
@@ -512,7 +512,7 @@ export default function AccountingSystem() {
       printInvoice(result.sale.id, result.sale, project);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر تسجيل البيع";
+        error instanceof Error ? error.message : "تعذر تسجيل الب��ع";
       toast.error("فشل تسجيل البيع", { description: message });
     } finally {
       setSavingSale(false);
@@ -1413,7 +1413,7 @@ export default function AccountingSystem() {
                   <thead>
                     <tr className="text-left bg-slate-50">
                       <th className="px-3 py-2">التاريخ</th>
-                      <th className="px-3 py-2">المشروع</th>
+                      <th className="px-3 py-2">المش��وع</th>
                       <th className="px-3 py-2">النوع</th>
                       <th className="px-3 py-2">المبلغ</th>
                       <th className="px-3 py-2">ملاحظة</th>
@@ -1787,7 +1787,7 @@ function ReportsSection({
         </div>
       </div>
       <div className="border rounded-lg p-3">
-        <div className="font-semibold mb-2">نتيجة التقرير</div>
+        <div className="font-semibold mb-2">��تيجة التقرير</div>
         <div className="text-sm text-slate-600">
           الفترة: من {formatDateLabel(dateFrom)} إلى {formatDateLabel(dateTo)}
         </div>
