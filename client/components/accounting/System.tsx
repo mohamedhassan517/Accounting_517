@@ -472,7 +472,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال ��يانات البيع كاملة");
+      toast.error("الرجاء إدخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -512,7 +512,7 @@ export default function AccountingSystem() {
       printInvoice(result.sale.id, result.sale, project);
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تع��ر تسجيل البيع";
+        error instanceof Error ? error.message : "تعذر تسجيل البيع";
       toast.error("فشل تسجيل البيع", { description: message });
     } finally {
       setSavingSale(false);
@@ -738,7 +738,7 @@ export default function AccountingSystem() {
                   <th className="px-3 py-2">التاريخ</th>
                   <th className="px-3 py-2">النوع</th>
                   <th className="px-3 py-2">الوصف</th>
-                  <th className="px-3 py-2">ا��مبلغ</th>
+                  <th className="px-3 py-2">المبلغ</th>
                   <th className="px-3 py-2">الحالة</th>
                   <th className="px-3 py-2"></th>
                 </tr>
@@ -1132,7 +1132,7 @@ export default function AccountingSystem() {
                 setNewCost({ ...newCost, projectId: e.target.value })
               }
             >
-              <option value="">اختر المشروع</option>
+              <option value="">��ختر المشروع</option>
               {projects.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.name}
@@ -1327,7 +1327,7 @@ export default function AccountingSystem() {
                         </div>
                       </div>
                       <div className="mt-3 flex items-center justify-between">
-                        <div className="text-sm text-slate-500">ال��بح: <span className="font-semibold text-slate-700">{t.profit.toLocaleString()} ج.م</span></div>
+                        <div className="text-sm text-slate-500">الربح: <span className="font-semibold text-slate-700">{t.profit.toLocaleString()} ج.م</span></div>
                         <Dialog>
                           <DialogTrigger asChild>
                             <button className="rounded-md bg-slate-900 text-white px-3 py-1">عرض</button>
