@@ -207,7 +207,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المعاملة";
-      toast.error("فشل حذف المعاملة", { description: message });
+      toast.error("فشل حذف المعام��ة", { description: message });
     } finally {
       setDeletingTransactionId(null);
     }
@@ -560,7 +560,7 @@ export default function AccountingSystem() {
           <div class="row"><div>المشتري:</div><div>${sale.buyer}</div></div>
           <div class="row"><div>التا��يخ:</div><div>${sale.date}</div></div>
         </div>
-        <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ��.م</div></div>
+        <div class="mt row total"><div>السعر الإجمالي:</div><div>${sale.price.toLocaleString()} ج.م</div></div>
         ${sale.terms ? `<div class="mt">الشروط: ${sale.terms}</div>` : ""}
         <a href="#" class="btn" onclick="window.print();return false;">طباعة</a>
       </div>
@@ -1251,53 +1251,66 @@ export default function AccountingSystem() {
           </div>
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-            <h3 className="font-semibold mb-3">المشروعات</h3>
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-sm">
-                <thead>
-                  <tr className="text-left bg-slate-50">
-                    <th className="px-3 py-2">المشروع</th>
-                    <th className="px-3 py-2">الموقع</th>
-                    <th className="px-3 py-2">الأدوار</th>
-                    <th className="px-3 py-2">الوحدات</th>
-                    <th className="px-3 py-2">مباعة/متاحة</th>
-                    <th className="px-3 py-2">التكاليف</th>
-                    <th className="px-3 py-2">المبيعات</th>
-                    <th className="px-3 py-2">الر��ح</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {projects.map((p) => {
-                    const t = projectTotals(p.id);
-                    return (
-                      <tr key={p.id} className="border-t">
-                        <td className="px-3 py-2">{p.name}</td>
-                        <td className="px-3 py-2">{p.location}</td>
-                        <td className="px-3 py-2">{p.floors}</td>
-                        <td className="px-3 py-2">{p.units}</td>
-                        <td className="px-3 py-2">
-                          {t.sold} / {Math.max(0, p.units - t.sold)}
-                        </td>
-                        <td className="px-3 py-2">
-                          {t.costs.toLocaleString()} ج.م
-                        </td>
-                        <td className="px-3 py-2">
-                          {t.sales.toLocaleString()} ج.م
-                        </td>
-                        <td className="px-3 py-2">
-                          {t.profit.toLocaleString()} ج.م
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-              {projects.length === 0 && (
-                <div className="py-6 text-center text-sm text-slate-500">
-                  لا توجد مشروعات مسجلة بعد.
-                </div>
-              )}
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold">المشروعات</h3>
+              <div className="flex items-center gap-2">
+                <input
+                  placeholder="ابحث عن مشروع أو موقع"
+                  className="rounded-md border-2 border-slate-200 px-3 py-2 outline-none focus:border-indigo-500"
+                  value={projQuery}
+                  onChange={(e) => setProjQuery(e.target.value)}
+                />
+              </div>
             </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {projects
+                .filter((p) =>
+                  projQuery
+                    ? (p.name + " " + p.location).toLowerCase().includes(projQuery.toLowerCase())
+                    : true,
+                )
+                .map((p) => {
+                  const t = projectTotals(p.id);
+                  return (
+                    <div key={p.id} className="rounded-lg border p-4 bg-white shadow">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <div className="font-semibold text-lg">{p.name}</div>
+                          <div className="text-sm text-slate-500">{p.location}</div>
+                        </div>
+                        <div className="text-sm text-slate-400">{p.floors} طوابق</div>
+                      </div>
+                      <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <div className="text-xs text-slate-500">الوحدات</div>
+                          <div className="font-medium">{p.units}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-slate-500">مباعة</div>
+                          <div className="font-medium">{t.sold}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-slate-500">التكاليف</div>
+                          <div className="font-medium">{t.costs.toLocaleString()} ج.م</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-slate-500">المبيعات</div>
+                          <div className="font-medium">{t.sales.toLocaleString()} ج.م</div>
+                        </div>
+                      </div>
+                      <div className="mt-3 flex items-center justify-between">
+                        <div className="text-sm text-slate-500">الربح: <span className="font-semibold text-slate-700">{t.profit.toLocaleString()} ج.م</span></div>
+                        <button className="rounded-md bg-slate-900 text-white px-3 py-1">عرض</button>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+
+            {projects.length === 0 && (
+              <div className="py-6 text-center text-sm text-slate-500">لا توجد مشروعات مسجلة بعد.</div>
+            )}
           </div>
 
           {sales.length > 0 && (
@@ -1566,7 +1579,7 @@ function ReportsSection({
         ["الموقع", project?.location || "-"],
         ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
-        ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
+        ["��جمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
