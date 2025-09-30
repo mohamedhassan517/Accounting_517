@@ -212,7 +212,7 @@ export default function AccountingSystem() {
 
   const addItem = async () => {
     if (!newItem.name || !newItem.quantity || !newItem.min) {
-      toast.error("الرجاء إدخ��ل بيانات المادة كاملة");
+      toast.error("الرجاء إدخال بيانات المادة كاملة");
       return;
     }
     const quantity = Number(newItem.quantity);
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل البيانات من قاعدة البيانات...
+        جارٍ تح��يل البيانات من قاعدة البيانات...
       </div>
     );
   }
