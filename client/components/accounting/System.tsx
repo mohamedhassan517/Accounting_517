@@ -675,7 +675,7 @@ export default function AccountingSystem() {
           </div>
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-md">
-            <h3 className="font-semibold mb-3">إضافة معاملة سريعة</h3>
+            <h3 className="font-semibold mb-3">إضافة معام��ة سريعة</h3>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
               <select
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2 bg-white"
@@ -1334,7 +1334,7 @@ export default function AccountingSystem() {
                           </DialogTrigger>
                           <DialogContent className="max-w-lg">
                             <DialogTitle>تفاصيل المشروع</DialogTitle>
-                            <DialogDescription>
+                            <DialogDescription asChild>
                               <div className="mt-2 space-y-2">
                                 <div><strong>الاسم:</strong> {p.name}</div>
                                 <div><strong>الموقع:</strong> {p.location}</div>
@@ -1343,7 +1343,7 @@ export default function AccountingSystem() {
                                 <div><strong>مباعة:</strong> {t.sold}</div>
                                 <div><strong>التكاليف:</strong> {t.costs.toLocaleString()} ج.م</div>
                                 <div><strong>المبيعات:</strong> {t.sales.toLocaleString()} ج.م</div>
-                                <div><strong>الربح:</strong> {t.profit.toLocaleString()} ج.م</div>
+                                <div><strong>الربح:</strong> {t.profit.toLocaleString()} ��.م</div>
                               </div>
                             </DialogDescription>
                           </DialogContent>
