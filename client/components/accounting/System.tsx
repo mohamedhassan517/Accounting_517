@@ -216,7 +216,7 @@ export default function AccountingSystem() {
 
   const addItem = async () => {
     if (!newItem.name || !newItem.quantity || !newItem.min) {
-      toast.error("الرجاء إدخال بيانات المادة كاملة");
+      toast.error("الرجاء إدخال بي��نات المادة كاملة");
       return;
     }
     const quantity = Number(newItem.quantity);
@@ -911,7 +911,7 @@ export default function AccountingSystem() {
                 disabled={savingReceive}
                 className="mt-3 w-full rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
               >
-                {savingReceive ? "جاري التسجيل..." : "تسجيل الوارد"}
+                {savingReceive ? "جاري التسجيل..." : "��سجيل الوارد"}
               </button>
             </div>
 
@@ -994,7 +994,7 @@ export default function AccountingSystem() {
                   <div
                     className={`text-xs ${i.quantity < i.min ? "text-rose-600" : "text-emerald-600"}`}
                   >
-                    {i.quantity < i.min ? "مخزون منخفض" : "متوفر"}
+                    {i.quantity < i.min ? "مخزون منخفض" : "مت��فر"}
                   </div>
                 </div>
                 <button
@@ -1107,7 +1107,7 @@ export default function AccountingSystem() {
                 disabled={savingProject}
                 className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {savingProject ? "جاري ��لحفظ..." : "حفظ المشروع"}
+                {savingProject ? "جاري الحفظ..." : "حفظ المش��وع"}
               </button>
               <button
                 onClick={() => setNewProject({ name: "", location: "", floors: "", units: "" })}
@@ -1369,7 +1369,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">التاريخ</th>
                       <th className="px-3 py-2">المشروع</th>
                       <th className="px-3 py-2">الوحدة</th>
-                      <th className="px-3 py-2">المشت��ي</th>
+                      <th className="px-3 py-2">المشتري</th>
                       <th className="px-3 py-2">السعر</th>
                       <th className="px-3 py-2"></th>
                     </tr>
@@ -1723,7 +1723,7 @@ function ReportsSection({
           >
             <option value="profit-loss">الأرباح والخسائر</option>
             <option value="revenue">الإيرادات</option>
-            <option value="expense">المصروفات</option>
+            <option value="expense">ا��مصروفات</option>
             <option value="salary">المرتبات</option>
             <option value="project">تقرير مشروع</option>
             <option value="inventory">تقرير المخزون</option>
