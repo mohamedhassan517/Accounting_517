@@ -70,11 +70,12 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
     return res.status(201).json(user);
   }
 
-  const { data: created, error: cErr } = await supabaseAdmin.auth.admin.createUser({
-    email: body.email,
-    password: body.password,
-    email_confirm: true,
-  });
+  const { data: created, error: cErr } =
+    await supabaseAdmin.auth.admin.createUser({
+      email: body.email,
+      password: body.password,
+      email_confirm: true,
+    });
   if (cErr || !created.user)
     return res
       .status(500)

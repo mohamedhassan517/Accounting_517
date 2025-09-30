@@ -1,6 +1,17 @@
 import { RequestHandler } from "express";
-import { createUser, deleteUser, listUsers, requireManager, updateUser } from "../store/auth";
-import type { ApiError, UserCreateRequest, UserUpdateRequest, UsersListResponse } from "@shared/api";
+import {
+  createUser,
+  deleteUser,
+  listUsers,
+  requireManager,
+  updateUser,
+} from "../store/auth";
+import type {
+  ApiError,
+  UserCreateRequest,
+  UserUpdateRequest,
+  UsersListResponse,
+} from "@shared/api";
 import { extractToken } from "./auth";
 
 export const listUsersHandler: RequestHandler = async (req, res) => {
@@ -27,7 +38,13 @@ export const createUserHandler: RequestHandler = async (req, res) => {
     return;
   }
   const body = req.body as UserCreateRequest;
-  if (!body.username || !body.password || !body.name || !body.email || !body.role) {
+  if (
+    !body.username ||
+    !body.password ||
+    !body.name ||
+    !body.email ||
+    !body.role
+  ) {
     res.status(400).json({ error: "Missing required fields" } as ApiError);
     return;
   }
