@@ -178,7 +178,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المعاملة";
-      toast.error("لم يتم ح��ظ المعاملة", { description: message });
+      toast.error("لم يتم حفظ المعاملة", { description: message });
     } finally {
       setSavingQuick(false);
     }
@@ -193,7 +193,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر اعتماد المعاملة";
-      toast.error("فشل اعتماد المعاملة", { description: message });
+      toast.error("فشل اعتماد ��لمعاملة", { description: message });
     } finally {
       setApprovingId(null);
     }
@@ -318,7 +318,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل الوارد";
-      toast.error("فشل تسجيل الوارد", { description: message });
+      toast.error("فشل تسجيل الو��رد", { description: message });
     } finally {
       setSavingReceive(false);
     }
@@ -426,7 +426,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("��لمشروع غير موجود");
+      toast.error("المشروع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -448,7 +448,7 @@ export default function AccountingSystem() {
       });
       setCosts((prev) => [result.cost, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
-      toast.success("تم تسجيل تكلفة المشروع وتحديث المصروفات");
+      toast.success("تم تسجيل تكلفة المشروع و��حديث المصروفات");
       setNewCost({
         projectId: "",
         type: "construction",
@@ -643,7 +643,7 @@ export default function AccountingSystem() {
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div className="rounded-xl p-4 bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-lg flex flex-col justify-between">
               <div>
-                <div className="text-sm opacity-90">الحساب</div>
+                <div className="text-sm opacity-90">ا��حساب</div>
                 <div className="mt-2 text-2xl font-extrabold">{user?.name}</div>
                 <div className="text-xs mt-1">الدور: {user?.role === "manager" ? "مدير" : user?.role === "accountant" ? "محاسب" : "موظف"}</div>
               </div>
@@ -1369,7 +1369,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">التاريخ</th>
                       <th className="px-3 py-2">المشروع</th>
                       <th className="px-3 py-2">الوحدة</th>
-                      <th className="px-3 py-2">المشتري</th>
+                      <th className="px-3 py-2">المشت��ي</th>
                       <th className="px-3 py-2">السعر</th>
                       <th className="px-3 py-2"></th>
                     </tr>
@@ -1466,7 +1466,7 @@ export default function AccountingSystem() {
             <UserManagement />
           ) : (
             <div className="rounded-xl p-6 bg-white border border-slate-200 shadow">
-              ليس لديك صلاحية لعرض إدارة المستخدمين
+              ليس لديك صلا��ية لعرض إدارة المستخدمين
             </div>
           )}
         </section>
@@ -1562,7 +1562,7 @@ function ReportsSection({
     if (reportType === "revenue") {
       return {
         title: "تقرير الإيرادات",
-        headers: ["التاريخ", "الوصف", "المبلغ"],
+        headers: ["التاريخ", "الوصف", "��لمبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
           .map((t) => [
@@ -1637,7 +1637,7 @@ function ReportsSection({
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
-        ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
+        ["الربح/ال��سارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
         title: "تقرير مشروع عقاري",
