@@ -256,7 +256,7 @@ export default function AccountingSystem() {
       setDeletingItemId(id);
       await deleteInventoryItem(id);
       setItems((prev) => prev.filter((i) => i.id !== id));
-      toast.success("تم ��ذف المادة");
+      toast.success("تم حذف المادة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
@@ -384,7 +384,7 @@ export default function AccountingSystem() {
       !newProject.floors ||
       !newProject.units
     ) {
-      toast.error("الرجاء ��دخال بيانات المشروع كاملة");
+      toast.error("الرجاء إدخال بيانات المشروع كاملة");
       return;
     }
     const floors = Number(newProject.floors);
@@ -472,7 +472,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانا�� البيع كاملة");
+      toast.error("الرجاء إدخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -643,7 +643,7 @@ export default function AccountingSystem() {
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div className="rounded-xl p-4 bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-lg flex flex-col justify-between">
               <div>
-                <div className="text-sm opacity-90">ا��حساب</div>
+                <div className="text-sm opacity-90">الحساب</div>
                 <div className="mt-2 text-2xl font-extrabold">{user?.name}</div>
                 <div className="text-xs mt-1">الدور: {user?.role === "manager" ? "مدير" : user?.role === "accountant" ? "محاسب" : "موظف"}</div>
               </div>
@@ -656,7 +656,7 @@ export default function AccountingSystem() {
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-3">
             <Stat
               value={totals.revenue}
-              label="إجمالي ال��يرادات"
+              label="إجمالي الإيرادات"
               color="from-emerald-100 to-emerald-300"
               icon={<ArrowUp className="h-5 w-5 text-emerald-700" />}
             />
@@ -738,7 +738,7 @@ export default function AccountingSystem() {
                   <th className="px-3 py-2">التاريخ</th>
                   <th className="px-3 py-2">النوع</th>
                   <th className="px-3 py-2">الوصف</th>
-                  <th className="px-3 py-2">المب��غ</th>
+                  <th className="px-3 py-2">المبلغ</th>
                   <th className="px-3 py-2">الحالة</th>
                   <th className="px-3 py-2"></th>
                 </tr>
@@ -1107,7 +1107,7 @@ export default function AccountingSystem() {
                 disabled={savingProject}
                 className="rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
+                {savingProject ? "جاري ��لحفظ..." : "حفظ المشروع"}
               </button>
               <button
                 onClick={() => setNewProject({ name: "", location: "", floors: "", units: "" })}
