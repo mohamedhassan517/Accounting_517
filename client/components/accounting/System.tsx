@@ -326,7 +326,7 @@ export default function AccountingSystem() {
 
   const issueSubmit = async () => {
     if (!issue.itemId || !issue.qty || !issue.unitPrice || !issue.project) {
-      toast.error("��لرجاء إدخال جميع بيانات الصرف");
+      toast.error("الرجاء إدخال جميع بيانات الصرف");
       return;
     }
     const qty = Number(issue.qty);
@@ -513,7 +513,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل البيع";
-      toast.error("فشل تسجيل البيع", { description: message });
+      toast.error("فشل ��سجيل البيع", { description: message });
     } finally {
       setSavingSale(false);
     }
