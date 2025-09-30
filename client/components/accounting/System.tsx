@@ -256,7 +256,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
-      toast.error("فشل ��ذف المادة", { description: message });
+      toast.error("فشل حذف المادة", { description: message });
     } finally {
       setDeletingItemId(null);
     }
@@ -300,7 +300,7 @@ export default function AccountingSystem() {
       setMovements((prev) => [result.movement, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
       if (result.item.quantity < result.item.min) {
-        toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
+        toast.warning(`تنبيه: مخزون ${result.item.name} ��نخفض`);
       } else {
         toast.success("تم تسجيل الوارد وتحديث المصروفات");
       }
