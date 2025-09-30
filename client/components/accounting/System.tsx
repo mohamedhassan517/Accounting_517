@@ -174,7 +174,7 @@ export default function AccountingSystem() {
       });
       setTransactions((prev) => [transaction, ...prev]);
       setQuick({ type: "revenue", amount: "", description: "", date: today() });
-      toast.success("تمت إضافة المعاملة");
+      toast.success("تمت إضافة ال��عاملة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المعاملة";
@@ -1198,7 +1198,7 @@ export default function AccountingSystem() {
         </div>
 
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-          <h3 className="font-semibold mb-3">تسجيل بيع وحدة وإصدار فاتورة</h3>
+          <h3 className="font-semibold mb-3">تسجيل ��يع وحدة وإصدار فاتورة</h3>
           <div className="grid gap-3">
             <select
               className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1694,12 +1694,14 @@ function ReportsSection({
     const rep = buildReport();
     const win = window.open("", "_blank");
     if (!win) return;
+    const fromLabel = formatDateLabel(dateFrom);
+    const toLabel = formatDateLabel(dateTo);
     win.document
       .write(`<!doctype html><html dir="rtl"><head><meta charset="utf-8"><title>${rep.title}</title>
       <style>body{font-family:Arial,system-ui;padding:24px} h1{font-size:20px;margin-bottom:12px} table{width:100%;border-collapse:collapse} th,td{border:1px solid #ddd;padding:8px} th{background:#f1f5f9}</style>
     </head><body>
       <h1>${rep.title}</h1>
-      <div>الفترة: ${dateFrom} - ${dateTo}</div>
+      <div>الفترة: من ${fromLabel} إلى ${toLabel}</div>
       <table><thead><tr>${rep.headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead><tbody>
         ${rep.rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("")}
       </tbody></table>
