@@ -409,7 +409,7 @@ export default function AccountingSystem() {
       });
       setProjects((prev) => [project, ...prev]);
       setNewProject({ name: "", location: "", floors: "", units: "" });
-      toast.success("تمت إضافة المشروع الع��اري");
+      toast.success("تمت إضافة المشروع العقاري");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر إضافة المشروع";
@@ -513,7 +513,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل البيع";
-      toast.error("فشل تسجيل البيع", { description: message });
+      toast.error("فشل ت��جيل البيع", { description: message });
     } finally {
       setSavingSale(false);
     }
