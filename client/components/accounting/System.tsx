@@ -300,7 +300,7 @@ export default function AccountingSystem() {
       setMovements((prev) => [result.movement, ...prev]);
       setTransactions((prev) => [result.transaction, ...prev]);
       if (result.item.quantity < result.item.min) {
-        toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
+        toast.warning(`تنبي��: مخزون ${result.item.name} منخفض`);
       } else {
         toast.success("تم تسجيل الوارد وتحديث المصروفات");
       }
@@ -468,7 +468,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع ��املة");
+      toast.error("الرجاء إدخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -1566,7 +1566,7 @@ function ReportsSection({
         rows,
       };
     }
-    return { title: "تقرير", headers: [], rows: [] };
+    return { title: "��قرير", headers: [], rows: [] };
   }, [
     reportType,
     filtered,
