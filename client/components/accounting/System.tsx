@@ -256,7 +256,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف المادة";
-      toast.error("فشل حذف الما��ة", { description: message });
+      toast.error("فشل حذف المادة", { description: message });
     } finally {
       setDeletingItemId(null);
     }
@@ -509,7 +509,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل البيع";
-      toast.error("فشل تسجيل البيع", { description: message });
+      toast.error("فشل تسجيل ��لبيع", { description: message });
     } finally {
       setSavingSale(false);
     }
@@ -568,7 +568,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        ��ارٍ تحميل البيانات من قاعدة البيانات...
+        جارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -794,7 +794,7 @@ export default function AccountingSystem() {
             </table>
             {transactions.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا توجد معاملات مسجل�� بعد.
+                لا توجد معاملات مسجلة بعد.
               </div>
             )}
           </div>
@@ -1242,7 +1242,7 @@ export default function AccountingSystem() {
                   disabled={savingSale}
                   className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
-                  {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فاتورة"}
+                  {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فات��رة"}
                 </button>
               </div>
             </div>
@@ -1561,7 +1561,7 @@ function ReportsSection({
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
-        title: "ت��رير مشروع عقاري",
+        title: "تقرير مشروع عقاري",
         headers: ["البند", "القيمة"],
         rows,
       };
