@@ -212,7 +212,7 @@ export default function AccountingSystem() {
 
   const addItem = async () => {
     if (!newItem.name || !newItem.quantity || !newItem.min) {
-      toast.error("الرجاء إدخال بيانات المادة كاملة");
+      toast.error("الرجاء إدخ��ل بيانات المادة كاملة");
       return;
     }
     const quantity = Number(newItem.quantity);
@@ -509,7 +509,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل البيع";
-      toast.error("فشل تسجيل ��لبيع", { description: message });
+      toast.error("فشل تسجيل البيع", { description: message });
     } finally {
       setSavingSale(false);
     }
@@ -1102,7 +1102,7 @@ export default function AccountingSystem() {
                   disabled={savingProject}
                   className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
-                  {savingProject ? "جاري الحفظ..." : "حفظ المشروع"}
+                  {savingProject ? "ج��ري الحفظ..." : "حفظ المشروع"}
                 </button>
               </div>
             </div>
@@ -1242,7 +1242,7 @@ export default function AccountingSystem() {
                   disabled={savingSale}
                   className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
-                  {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فات��رة"}
+                  {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فاتورة"}
                 </button>
               </div>
             </div>
