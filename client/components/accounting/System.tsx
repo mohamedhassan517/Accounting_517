@@ -550,7 +550,7 @@ export default function AccountingSystem() {
       <style>body{font-family:Arial,system-ui;padding:24px;background:#f6f7fb;color:#111} .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:20px;max-width:720px;margin:0 auto} .h{font-weight:800;font-size:20px;margin-bottom:8px} .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px} .row{display:flex;justify-content:space-between;margin:6px 0} .total{font-weight:800;font-size:18px} .mt{margin-top:16px} .btn{display:inline-block;margin-top:16px;padding:10px 16px;background:#111;color:#fff;border-radius:8px;text-decoration:none}</style>
     </head><body>
       <div class="card">
-        <div class="h">فاتورة ��يع وحدة عقارية</div>
+        <div class="h">فاتورة بيع وحدة عقارية</div>
         <div class="grid">
           <div class="row"><div>المشروع:</div><div>${project?.name ?? ""}</div></div>
           <div class="row"><div>الموقع:</div><div>${project?.location ?? ""}</div></div>
@@ -578,7 +578,7 @@ export default function AccountingSystem() {
     <div className="space-y-6">
       {loadingError && (
         <div className="rounded-lg border border-rose-200 bg-rose-50 p-4 text-rose-700">
-          <div className="font-semibold">ت��ذر تحميل البيانات</div>
+          <div className="font-semibold">تعذر تحميل البيانات</div>
           <div className="text-sm">{loadingError}</div>
           <button
             type="button"
@@ -687,7 +687,7 @@ export default function AccountingSystem() {
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <Stat
               value={totals.revenue}
-              label="إجما��ي الإيرادات"
+              label="إجمالي الإيرادات"
               color="from-emerald-100 to-emerald-300"
               icon={<ArrowUp className="h-5 w-5 text-emerald-700" />}
             />
@@ -1452,17 +1452,25 @@ function Stat({
   value,
   label,
   color,
+  icon,
 }: {
   value: number;
   label: string;
-  color: string;
+  color?: string;
+  icon?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl p-4 bg-white border border-slate-200 shadow text-center">
-      <div className={`text-2xl sm:text-3xl font-extrabold ${color}`}>
-        {value.toLocaleString()}
+    <div className="rounded-xl p-4 bg-white border border-slate-200 shadow flex items-center justify-between">
+      <div className="flex items-center gap-3">
+        <div className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${color ?? "from-slate-100 to-slate-50"}`}>
+          {icon ?? <DollarSign className="h-5 w-5 text-slate-700" />}
+        </div>
+        <div>
+          <div className="text-lg sm:text-xl font-extrabold">{value.toLocaleString()}</div>
+          <div className="text-sm text-slate-500 mt-1">{label}</div>
+        </div>
       </div>
-      <div className="text-sm text-slate-600 mt-1">{label}</div>
+      <div className="text-sm text-slate-400">ج.م</div>
     </div>
   );
 }
@@ -1536,7 +1544,7 @@ function ReportsSection({
           .map((t) => [
             t.date,
             t.description,
-            t.amount.toLocaleString() + " ج.م",
+            t.amount.toLocaleString() + " ��.م",
           ]),
       };
     }
