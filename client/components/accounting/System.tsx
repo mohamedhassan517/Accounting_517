@@ -238,7 +238,7 @@ export default function AccountingSystem() {
       });
       setItems((prev) => [item, ...prev]);
       setNewItem({ name: "", quantity: "", unit: "طن", min: "" });
-      toast.success("تم حفظ المادة");
+      toast.success("تم حف�� المادة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حفظ المادة";
@@ -281,7 +281,7 @@ export default function AccountingSystem() {
       !Number.isFinite(unitPrice) ||
       unitPrice <= 0
     ) {
-      toast.error("القيم العددية غير صحيحة");
+      toast.error("القيم العددية غير صح��حة");
       return;
     }
     try {
@@ -368,7 +368,7 @@ export default function AccountingSystem() {
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر تسجيل الصرف";
-      toast.error("فشل تسجيل الصرف", { description: message });
+      toast.error("فشل تسجيل الص��ف", { description: message });
     } finally {
       setSavingIssue(false);
     }
@@ -649,18 +649,6 @@ export default function AccountingSystem() {
                     : "موظف"}
               </div>
             </div>
-            <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
-              <div className="text-sm text-slate-600">الوضع</div>
-              <div className="mt-2 text-2xl font-bold">
-                {isManager ? "صلاحيات مدير" : "مستخدم عادي"}
-              </div>
-            </div>
-            <div className="rounded-xl p-4 bg-white border border-slate-200 shadow">
-              <div className="text-sm text-slate-600">الوصول</div>
-              <div className="mt-2 text-2xl font-bold">
-                {isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}
-              </div>
-            </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -673,15 +661,7 @@ export default function AccountingSystem() {
               <div className="mt-4 text-xs opacity-90">مرحباً بك في لوحة التحكم — يمكنك إدارة العمليات بسرعة وسهولة.</div>
             </div>
 
-            <div className="rounded-xl p-4 bg-white border border-slate-200 shadow hover:shadow-md transition-shadow">
-              <div className="text-sm text-slate-600">الوضع</div>
-              <div className="mt-2 text-2xl font-bold">{isManager ? "صلاحيات مدير" : "مستخدم عادي"}</div>
-            </div>
 
-            <div className="rounded-xl p-4 bg-white border border-slate-200 shadow hover:shadow-md transition-shadow">
-              <div className="text-sm text-slate-600">الوصول</div>
-              <div className="mt-2 text-2xl font-bold">{isManager ? "إدارة المستخدمين مسموحة" : "غير متاحة"}</div>
-            </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -888,7 +868,7 @@ export default function AccountingSystem() {
 
           <div className="grid gap-4 xl:grid-cols-2">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل وارد من مورد</h3>
+              <h3 className="font-semibold mb-3">تسجيل وار�� من مورد</h3>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1276,7 +1256,7 @@ export default function AccountingSystem() {
                   disabled={savingSale}
                   className="w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
-                  {savingSale ? "جاري التسجيل..." : "تسجيل البيع + فاتورة"}
+                  {savingSale ? "جاري التسجيل..." : "تسجيل الب��ع + فاتورة"}
                 </button>
               </div>
             </div>
@@ -1693,7 +1673,7 @@ function ReportsSection({
             value={selectedProject}
             onChange={(e) => setSelectedProject(e.target.value)}
           >
-            <option value="">اختر المشروع</option>
+            <option value="">اختر المش��وع</option>
             {projects.map((p) => (
               <option key={p.id} value={p.id}>
                 {p.name}
