@@ -25,7 +25,6 @@ const LIST_URL = "/api/admin/users"; // logical path
 
 export async function listUsers(): Promise<User[]> {
   const key = cacheKeyFor(LIST_URL);
-  // If online, fetch fresh and update cache; on failure or offline, fallback to cache
   if (isOnline()) {
     try {
       const res = await fetch(apiUrl(withToken(LIST_URL)));
@@ -33,14 +32,38 @@ export async function listUsers(): Promise<User[]> {
         const data = (await res.json()) as UsersListResponse;
         await setCached(key, data.users);
         return data.users;
+      } else {
+        // Try fallback cache first, otherwise surface a meaningful error
+        const cached = await getCached<User[]>(key);
+        if (cached) return cached;
+        let message = `${res.status} ${res.statusText}`;
+        try {
+          const text = await res.text();
+          if (text) {
+            try {
+              const json = JSON.parse(text);
+              message = (json && (json.error || json.message)) || message;
+            } catch {
+              message = text || message;
+            }
+          }
+        } catch {}
+        if (res.status === 403) {
+          throw new Error("غير مصرح: فقط المدير يمكنه عرض المستخدمين. تأكد أن دورك 'manager' وأن الخادم مهيأ.");
+        }
+        throw new Error(message || "تعذر جلب قائمة المستخدمين");
       }
-    } catch {
-      // ignore and fallback
+    } catch (e) {
+      // Network failure -> fallback to cache
+      const cached = await getCached<User[]>(key);
+      if (cached) return cached;
+      throw new Error(
+        e instanceof Error ? e.message : "تعذر الاتصال بالخادم ولا توجد بيانات مخزنة"
+      );
     }
   }
   const cached = await getCached<User[]>(key);
   if (cached) return cached;
-  // If nothing cached and request failed/offline, throw
   throw new Error("Failed to list users (offline and no cache)");
 }
 
