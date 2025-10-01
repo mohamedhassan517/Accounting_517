@@ -14,11 +14,9 @@ import {
 } from "@/lib/offline";
 import { apiUrl } from "@/lib/api";
 
-function withToken(url: string) {
+function authHeaders() {
   const t = getToken();
-  if (!t) return url;
-  const sep = url.includes("?") ? "&" : "?";
-  return `${url}${sep}token=${encodeURIComponent(t)}`;
+  return t ? { Authorization: `Bearer ${t}` } : {};
 }
 
 const LIST_URL = "/api/admin/users"; // logical path
@@ -28,7 +26,7 @@ export async function listUsers(): Promise<User[]> {
   // If online, fetch fresh and update cache; on failure or offline, fallback to cache
   if (isOnline()) {
     try {
-      const res = await fetch(apiUrl(withToken(LIST_URL)));
+      const res = await fetch(apiUrl(LIST_URL), { headers: { ...authHeaders() } });
       if (res.ok) {
         const data = (await res.json()) as UsersListResponse;
         await setCached(key, data.users);
@@ -47,6 +45,7 @@ export async function listUsers(): Promise<User[]> {
 export async function createUser(input: UserCreateRequest): Promise<User> {
   const headers = {
     "Content-Type": "application/json",
+    ...authHeaders(),
   } as Record<string, string>;
   const key = cacheKeyFor(LIST_URL);
 
@@ -63,7 +62,7 @@ export async function createUser(input: UserCreateRequest): Promise<User> {
     const current = (await getCached<User[]>(key)) ?? [];
     await setCached(key, [temp, ...current]);
     await enqueue({
-      url: withToken(LIST_URL),
+      url: LIST_URL,
       method: "POST",
       headers,
       body: input,
@@ -71,7 +70,7 @@ export async function createUser(input: UserCreateRequest): Promise<User> {
     return temp;
   }
 
-  const res = await fetch(apiUrl(withToken(LIST_URL)), {
+  const res = await fetch(apiUrl(LIST_URL), {
     method: "POST",
     headers,
     body: JSON.stringify(input),
@@ -105,6 +104,7 @@ export async function updateUser(
 ): Promise<User> {
   const headers = {
     "Content-Type": "application/json",
+    ...authHeaders(),
   } as Record<string, string>;
   const key = cacheKeyFor(LIST_URL);
 
@@ -116,7 +116,7 @@ export async function updateUser(
     );
     await setCached<User[]>(key, updated);
     await enqueue({
-      url: withToken(`${LIST_URL}/${id}`),
+      url: `${LIST_URL}/${id}`,
       method: "PUT",
       headers,
       body: patch,
@@ -134,7 +134,7 @@ export async function updateUser(
     } as User;
   }
 
-  const res = await fetch(apiUrl(withToken(`${LIST_URL}/${id}`)), {
+  const res = await fetch(apiUrl(`${LIST_URL}/${id}`), {
     method: "PUT",
     headers,
     body: JSON.stringify(patch),
@@ -162,7 +162,7 @@ export async function updateUser(
 }
 
 export async function deleteUserApi(id: string): Promise<void> {
-  const headers = {} as Record<string, string>;
+  const headers = { ...authHeaders() } as Record<string, string>;
   const key = cacheKeyFor(LIST_URL);
 
   if (!isOnline()) {
@@ -172,7 +172,7 @@ export async function deleteUserApi(id: string): Promise<void> {
       current.filter((u) => u.id !== id),
     );
     await enqueue({
-      url: withToken(`${LIST_URL}/${id}`),
+      url: `${LIST_URL}/${id}`,
       method: "DELETE",
       headers,
       body: null,
@@ -180,7 +180,7 @@ export async function deleteUserApi(id: string): Promise<void> {
     return;
   }
 
-  const res = await fetch(apiUrl(withToken(`${LIST_URL}/${id}`)), {
+  const res = await fetch(apiUrl(`${LIST_URL}/${id}`), {
     method: "DELETE",
     headers,
   });
