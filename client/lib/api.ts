@@ -13,7 +13,8 @@ function runtimeApiBase(): string | null {
 
 export function apiUrl(path: string): string {
   const override = runtimeApiBase();
-  const base = (override || ((import.meta as any).env?.VITE_API_BASE as string | undefined)) as
+  const base = (override ||
+    ((import.meta as any).env?.VITE_API_BASE as string | undefined)) as
     | string
     | undefined;
   if (!base) return path;
