@@ -16,6 +16,7 @@ import {
   updateUser as updateUserFallback,
   deleteUser as deleteUserFallback,
 } from "../store/auth";
+import { parseBody } from "../utils/parse-body";
 
 export const adminListUsers: RequestHandler = async (req, res) => {
   const token = extractToken(
@@ -54,7 +55,9 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
   const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
 
-  const raw = req.body as Partial<UserCreateRequest> & Record<string, any>;
+  const raw = parseBody<Partial<UserCreateRequest> & Record<string, any>>(
+    req.body,
+  );
   // Accept both 'email' and 'gmail' keys; trim values
   const email = String((raw as any).email ?? (raw as any).gmail ?? "").trim();
   const password = String((raw as any).password ?? "").trim();
@@ -141,11 +144,13 @@ export const adminUpdateUser: RequestHandler = async (req, res) => {
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
 
   const id = req.params.id;
-  const patch = req.body as UserUpdateRequest & {
-    password?: string;
-    email?: string;
-    name?: string;
-  };
+  const patch = parseBody<
+    UserUpdateRequest & {
+      password?: string;
+      email?: string;
+      name?: string;
+    }
+  >(req.body);
 
   if (!supabaseAdmin) {
     const updated = updateUserFallback(id, patch as any);
