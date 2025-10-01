@@ -38,7 +38,8 @@ export async function listUsers(): Promise<User[]> {
         const text = await res.text().catch(() => "");
         try {
           const json = text ? JSON.parse(text) : null;
-          serverErr = (json && json.error) || text || `${res.status} ${res.statusText}`;
+          serverErr =
+            (json && json.error) || text || `${res.status} ${res.statusText}`;
         } catch {
           serverErr = text || `${res.status} ${res.statusText}`;
         }
