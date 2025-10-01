@@ -55,7 +55,9 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
   const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
 
-  const raw = parseBody<Partial<UserCreateRequest> & Record<string, any>>(req.body);
+  const raw = parseBody<Partial<UserCreateRequest> & Record<string, any>>(
+    req.body,
+  );
   // Accept both 'email' and 'gmail' keys; trim values
   const email = String((raw as any).email ?? (raw as any).gmail ?? "").trim();
   const password = String((raw as any).password ?? "").trim();
