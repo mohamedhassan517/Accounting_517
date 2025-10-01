@@ -23,6 +23,7 @@ const LIST_URL = "/api/admin/users"; // logical path
 
 export async function listUsers(): Promise<User[]> {
   const key = cacheKeyFor(LIST_URL);
+  let serverErr: string | null = null;
   // If online, fetch fresh and update cache; on failure or offline, fallback to cache
   if (isOnline()) {
     try {
@@ -33,6 +34,15 @@ export async function listUsers(): Promise<User[]> {
         const data = (await res.json()) as UsersListResponse;
         await setCached(key, data.users);
         return data.users;
+      } else {
+        const text = await res.text().catch(() => "");
+        try {
+          const json = text ? JSON.parse(text) : null;
+          serverErr =
+            (json && json.error) || text || `${res.status} ${res.statusText}`;
+        } catch {
+          serverErr = text || `${res.status} ${res.statusText}`;
+        }
       }
     } catch {
       // ignore and fallback
@@ -41,7 +51,7 @@ export async function listUsers(): Promise<User[]> {
   const cached = await getCached<User[]>(key);
   if (cached) return cached;
   // If nothing cached and request failed/offline, throw
-  throw new Error("Failed to list users (offline and no cache)");
+  throw new Error(serverErr || "Failed to list users (offline and no cache)");
 }
 
 export async function createUser(input: UserCreateRequest): Promise<User> {
