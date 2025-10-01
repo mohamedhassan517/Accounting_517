@@ -130,7 +130,7 @@ export default function UserManagement() {
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-          <h3 className="font-semibold mb-3">إضا��ة مستخدم جديد</h3>
+          <h3 className="font-semibold mb-3">إضافة مستخدم جديد</h3>
           <form onSubmit={onCreate} className="grid gap-3">
             <input
               className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -139,6 +139,8 @@ export default function UserManagement() {
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
             <input
+              type="email"
+              required
               className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
               placeholder="البريد الإلكتروني"
               value={form.email}
