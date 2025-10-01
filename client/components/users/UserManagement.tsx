@@ -133,6 +133,7 @@ export default function UserManagement() {
           <h3 className="font-semibold mb-3">إضافة مستخدم جديد</h3>
           <form onSubmit={onCreate} className="grid gap-3">
             <input
+              required
               className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
               placeholder="الاسم"
               value={form.name}
@@ -147,6 +148,7 @@ export default function UserManagement() {
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
             <select
+              required
               className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
               value={form.role}
               onChange={(e) =>
@@ -159,6 +161,7 @@ export default function UserManagement() {
             </select>
             <input
               type="password"
+              required
               className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
               placeholder="كلمة المرور"
               value={form.password}
