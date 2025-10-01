@@ -55,13 +55,24 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
 
   const raw = req.body as Partial<UserCreateRequest> & Record<string, any>;
-  const email = String(raw.email || "").trim();
-  const password = String(raw.password || "");
-  const role = (raw.role as Role | undefined) || "employee";
+  // Accept both 'email' and 'gmail' keys; trim values
+  const email = String((raw as any).email ?? (raw as any).gmail ?? "").trim();
+  const password = String((raw as any).password ?? "").trim();
+  // Normalize role; accept Arabic labels
+  const roleInput = String((raw as any).role ?? "employee");
+  const roleMap: Record<string, Role> = {
+    manager: "manager",
+    accountant: "accountant",
+    employee: "employee",
+    مدير: "manager",
+    محاسب: "accountant",
+    موظف: "employee",
+  };
+  const role = (roleMap[roleInput] ?? "employee") as Role;
   const active = typeof raw.active === "boolean" ? raw.active : true;
-  let name = String(raw.name || raw.username || "").trim();
+  let name = String((raw as any).name ?? (raw as any).username ?? "").trim();
   if (!name && email) name = email.split("@")[0];
-  let username = String(raw.username || "").trim();
+  let username = String((raw as any).username ?? "").trim();
   if (!username) username = name;
 
   if (!email || !password || !username) {
