@@ -54,31 +54,43 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
   const manager = await requireManager(token);
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
 
-  const body = req.body as UserCreateRequest;
-  if (
-    !body.email ||
-    !body.password ||
-    !body.role ||
-    !(body.name || body.username)
-  )
-    return res.status(400).json({ error: "Missing fields" } as ApiError);
+  const raw = req.body as Partial<UserCreateRequest> & Record<string, any>;
+  const email = String(raw.email || "").trim();
+  const password = String(raw.password || "");
+  const role = (raw.role as Role | undefined) || "employee";
+  const active = typeof raw.active === "boolean" ? raw.active : true;
+  let name = String(raw.name || raw.username || "").trim();
+  if (!name && email) name = email.split("@")[0];
+  let username = String(raw.username || "").trim();
+  if (!username) username = name;
+
+  if (!email || !password || !username) {
+    const missing = [
+      !email ? "email" : null,
+      !password ? "password" : null,
+      !username ? "username/name" : null,
+    ].filter(Boolean);
+    return res
+      .status(400)
+      .json({ error: `Missing fields: ${missing.join(", ")}` } as ApiError);
+  }
 
   if (!supabaseAdmin) {
     const user = createUserFallback({
-      username: body.username || body.name,
-      name: body.name,
-      email: body.email,
-      role: body.role,
-      password: body.password,
-      active: body.active ?? true,
+      username,
+      name,
+      email,
+      role,
+      password,
+      active,
     });
     return res.status(201).json(user);
   }
 
   const { data: created, error: cErr } =
     await supabaseAdmin.auth.admin.createUser({
-      email: body.email,
-      password: body.password,
+      email,
+      password,
       email_confirm: true,
     });
   if (cErr || !created.user)
@@ -89,10 +101,10 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
   const { error: iErr } = await supabaseAdmin.from("user_profiles").upsert(
     {
       user_id: created.user.id,
-      name: body.name || body.username,
-      email: body.email,
-      role: body.role,
-      active: body.active ?? true,
+      name,
+      email,
+      role,
+      active,
     },
     { onConflict: "user_id" },
   );
@@ -100,11 +112,11 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
 
   const user: User = {
     id: created.user.id,
-    username: body.name || body.username,
-    name: body.name || body.username,
-    email: body.email,
-    role: body.role,
-    active: body.active ?? true,
+    username,
+    name,
+    email,
+    role,
+    active,
   };
   res.status(201).json(user);
 };
