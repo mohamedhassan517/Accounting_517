@@ -1,4 +1,4 @@
-import type { JsonValue } from "type-fest";
+type JsonLike = Record<string, unknown> | unknown[];
 
 function safeParse<T>(value: string): T {
   try {
@@ -8,7 +8,7 @@ function safeParse<T>(value: string): T {
   }
 }
 
-export function parseBody<T extends JsonValue | Record<string, unknown> = Record<string, unknown>>(
+export function parseBody<T extends JsonLike | null = Record<string, unknown>>(
   input: unknown,
 ): T {
   if (input == null) {
