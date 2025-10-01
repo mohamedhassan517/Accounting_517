@@ -64,9 +64,9 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
     manager: "manager",
     accountant: "accountant",
     employee: "employee",
-    "مدير": "manager",
-    "محاسب": "accountant",
-    "موظف": "employee",
+    مدير: "manager",
+    محاسب: "accountant",
+    موظف: "employee",
   };
   const role = (roleMap[roleInput] ?? "employee") as Role;
   const active = typeof raw.active === "boolean" ? raw.active : true;
