@@ -55,7 +55,12 @@ export const adminCreateUser: RequestHandler = async (req, res) => {
   if (!manager) return res.status(403).json({ error: "Forbidden" } as ApiError);
 
   const body = req.body as UserCreateRequest;
-  if (!body.email || !body.password || !body.role || !body.name)
+  if (
+    !body.email ||
+    !body.password ||
+    !body.role ||
+    !(body.name || body.username)
+  )
     return res.status(400).json({ error: "Missing fields" } as ApiError);
 
   if (!supabaseAdmin) {
