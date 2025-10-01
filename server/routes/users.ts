@@ -13,6 +13,7 @@ import type {
   UsersListResponse,
 } from "@shared/api";
 import { extractToken } from "./auth";
+import { parseBody } from "../utils/parse-body";
 
 export const listUsersHandler: RequestHandler = async (req, res) => {
   const token = extractToken(
@@ -37,7 +38,7 @@ export const createUserHandler: RequestHandler = async (req, res) => {
     res.status(403).json({ error: "Forbidden" } as ApiError);
     return;
   }
-  const body = req.body as UserCreateRequest;
+  const body = parseBody<UserCreateRequest>(req.body);
   if (
     !body.username ||
     !body.password ||
@@ -63,7 +64,7 @@ export const updateUserHandler: RequestHandler = async (req, res) => {
     return;
   }
   const id = req.params.id;
-  const patch = req.body as UserUpdateRequest;
+  const patch = parseBody<UserUpdateRequest>(req.body);
   const updated = updateUser(id, patch);
   if (!updated) {
     res.status(404).json({ error: "User not found" } as ApiError);
