@@ -8,7 +8,7 @@ export type Role = "manager" | "accountant" | "employee";
 
 export interface User {
   id: string;
-  //username: string;
+  username: string;
   name: string;
   email: string;
   role: Role;
@@ -38,7 +38,7 @@ export interface ApiError {
 }
 
 export interface UserCreateRequest {
-//  username: string;
+  username: string;
   name: string;
   email: string;
   role: Role;
