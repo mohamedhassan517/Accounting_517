@@ -50,13 +50,30 @@ export default function UserManagement() {
   const onCreate = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // Basic client-side validation to avoid server 400 "Missing fields"
+    const name = (form.name || "").trim();
+    const email = (form.email || "").trim();
+    const password = form.password || "";
+    const role = form.role;
+    const emailOk = /.+@.+\..+/.test(email);
+
+    if (!name || !email || !emailOk || !password || !role) {
+      setError(
+        !emailOk
+          ? "صيغة البريد الإلكتروني غير صحيحة"
+          : "الرجاء تعبئة الاسم، البريد الإلكتروني، كلمة المرور، وتحديد الدور"
+      );
+      return;
+    }
+
     try {
       const payload = {
-        username: generateUsername(form.name, form.email),
-        name: form.name,
-        email: form.email,
-        role: form.role,
-        password: form.password,
+        username: generateUsername(name, email),
+        name,
+        email,
+        role,
+        password,
         active: form.active,
       };
       await usersApi.createUser(payload);
@@ -113,7 +130,7 @@ export default function UserManagement() {
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-          <h3 className="font-semibold mb-3">إضافة مستخدم جديد</h3>
+          <h3 className="font-semibold mb-3">إضا��ة مستخدم جديد</h3>
           <form onSubmit={onCreate} className="grid gap-3">
             <input
               className="rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
