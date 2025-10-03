@@ -27,12 +27,12 @@ export default function Login() {
         <div className="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-slate-200">
           <h1 className="text-2xl font-bold text-center mb-1">تسجيل الدخول</h1>
           <p className="text-center text-sm text-slate-500 mb-6">
-            الدخول فقط بالحسابات الموجودة. المدير فقط يستطيع إدارة المستخدمين.
+            الدخول فقط بالحسابات الموجودة.
           </p>
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">
-                اسم المستخدم
+                Email
               </label>
               <input
                 value={username}
@@ -43,7 +43,7 @@ export default function Login() {
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">
-                كلمة المرور
+                Password
               </label>
               <input
                 type="password"
@@ -60,9 +60,7 @@ export default function Login() {
             >
               دخول
             </button>
-            <p className="text-xs text-slate-500 text-center">
-              مدير النظام الافتراضي: root / password123
-            </p>
+            
           </form>
         </div>
       </div>
