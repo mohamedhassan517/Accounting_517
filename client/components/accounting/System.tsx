@@ -421,7 +421,7 @@ export default function AccountingSystem() {
       });
       setProjects((prev) => [project, ...prev]);
       setNewProject({ name: "", location: "", floors: "", units: "" });
-      toast.success("تمت إضافة المشروع العقاري");
+      toast.success("تمت إضافة المشروع ��لعقاري");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر إضافة المشروع";
@@ -618,7 +618,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف عملية البيع");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حذف عملية البيع";
+        error instanceof Error ? error.message : "تعذر حذف عملية ��لبيع";
       toast.error("فشل حذف عملية البيع", { description: message });
     } finally {
       setDeletingSaleId(null);
@@ -1298,7 +1298,7 @@ export default function AccountingSystem() {
                   >
                     <option value="construction">إنشاء</option>
                     <option value="operation">تشغيل</option>
-                    <option value="expense">مص��وفات</option>
+                    <option value="expense">مصروفات</option>
                   </select>
                   <input
                     className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1444,7 +1444,7 @@ export default function AccountingSystem() {
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold">��لمشروعات</h3>
+              <h3 className="font-semibold">المشروعات</h3>
               <div className="flex items-center gap-2">
                 <input
                   placeholder="ابحث عن مشروع أو موقع"
@@ -1504,54 +1504,63 @@ export default function AccountingSystem() {
                           </div>
                         </div>
                       </div>
-                      <div className="mt-3 flex items-center justify-between">
+                      <div className="mt-3 flex items-center justify-between gap-2">
                         <div className="text-sm text-slate-500">
                           الربح:{" "}
                           <span className="font-semibold text-slate-700">
                             {t.profit.toLocaleString()} ج.م
                           </span>
                         </div>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <button className="rounded-md bg-slate-900 text-white px-3 py-1">
-                              عرض
-                            </button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-lg">
-                            <DialogTitle>تفاصيل المشروع</DialogTitle>
-                            <DialogDescription asChild>
-                              <div className="mt-2 space-y-2">
-                                <div>
-                                  <strong>الاسم:</strong> {p.name}
+                        <div className="flex items-center gap-2">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <button className="rounded-md bg-slate-900 text-white px-3 py-1">
+                                عرض
+                              </button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-lg">
+                              <DialogTitle>تفاصيل المشروع</DialogTitle>
+                              <DialogDescription asChild>
+                                <div className="mt-2 space-y-2">
+                                  <div>
+                                    <strong>الاسم:</strong> {p.name}
+                                  </div>
+                                  <div>
+                                    <strong>الموقع:</strong> {p.location}
+                                  </div>
+                                  <div>
+                                    <strong>الأدوار:</strong> {p.floors}
+                                  </div>
+                                  <div>
+                                    <strong>الوحدات:</strong> {p.units}
+                                  </div>
+                                  <div>
+                                    <strong>مباعة:</strong> {t.sold}
+                                  </div>
+                                  <div>
+                                    <strong>التكاليف:</strong>{" "}
+                                    {t.costs.toLocaleString()} ج.م
+                                  </div>
+                                  <div>
+                                    <strong>المبيعات:</strong>{" "}
+                                    {t.sales.toLocaleString()} ج.م
+                                  </div>
+                                  <div>
+                                    <strong>الربح:</strong>{" "}
+                                    {t.profit.toLocaleString()} ج.م
+                                  </div>
                                 </div>
-                                <div>
-                                  <strong>الموقع:</strong> {p.location}
-                                </div>
-                                <div>
-                                  <strong>الأدوار:</strong> {p.floors}
-                                </div>
-                                <div>
-                                  <strong>الوحدات:</strong> {p.units}
-                                </div>
-                                <div>
-                                  <strong>مباعة:</strong> {t.sold}
-                                </div>
-                                <div>
-                                  <strong>التكاليف:</strong>{" "}
-                                  {t.costs.toLocaleString()} ج.م
-                                </div>
-                                <div>
-                                  <strong>المبيعات:</strong>{" "}
-                                  {t.sales.toLocaleString()} ج.م
-                                </div>
-                                <div>
-                                  <strong>الربح:</strong>{" "}
-                                  {t.profit.toLocaleString()} ج.م
-                                </div>
-                              </div>
-                            </DialogDescription>
-                          </DialogContent>
-                        </Dialog>
+                              </DialogDescription>
+                            </DialogContent>
+                          </Dialog>
+                          <button
+                            className="rounded-md bg-red-600 text-white px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+                            onClick={() => void handleDeleteProject(p)}
+                            disabled={deletingProjectId === p.id}
+                          >
+                            {deletingProjectId === p.id ? "حذف..." : "حذف"}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );
@@ -1672,7 +1681,7 @@ export default function AccountingSystem() {
             <UserManagement />
           ) : (
             <div className="rounded-xl p-6 bg-white border border-slate-200 shadow">
-              ليس لديك صلاحية لعرض إدارة المستخدمين
+              ليس لديك صلاحية لعرض إدارة الم��تخدمين
             </div>
           )}
         </section>
@@ -1829,7 +1838,7 @@ function ReportsSection({
         headers: ["البند", "القيمة"],
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
-          ["إجمالي المصروفا��", exp.toLocaleString() + " ج.م"],
+          ["إجمالي المصروفات", exp.toLocaleString() + " ج.م"],
           ["صافي الربح", (rev - exp).toLocaleString() + " ج.م"],
         ],
       };
