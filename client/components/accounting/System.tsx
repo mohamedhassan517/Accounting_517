@@ -549,6 +549,120 @@ export default function AccountingSystem() {
     [costs, sales],
   );
 
+  const handleDeleteProject = async (project: Project) => {
+    if (
+      !window.confirm(
+        `هل أنت متأكد من حذف المشروع ${project.name}؟ سيتم حذف جميع المبيعات والتكاليف المرتبطة.`,
+      )
+    ) {
+      return;
+    }
+
+    const relatedCosts = costs.filter((cost) => cost.projectId === project.id);
+    const relatedSales = sales.filter((sale) => sale.projectId === project.id);
+    const signatures = [
+      ...relatedCosts.map((cost) => costSignature(project.name, cost)),
+      ...relatedSales.map((sale) => saleSignature(project.name, sale)),
+    ];
+
+    try {
+      setDeletingProjectId(project.id);
+      await deleteProject({ id: project.id, name: project.name });
+      setProjects((prev) => prev.filter((p) => p.id !== project.id));
+      setCosts((prev) => prev.filter((cost) => cost.projectId !== project.id));
+      setSales((prev) => prev.filter((sale) => sale.projectId !== project.id));
+      if (signatures.length > 0) {
+        setTransactions((prev) =>
+          filterTransactionsBySignatures(prev, signatures),
+        );
+      }
+      toast.success("تم حذف المشروع والسجلات المرتبطة به");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "تعذر حذف المشروع";
+      toast.error("فشل حذف المشروع", { description: message });
+    } finally {
+      setDeletingProjectId(null);
+    }
+  };
+
+  const handleDeleteSale = async (sale: ProjectSale) => {
+    const project = projects.find((p) => p.id === sale.projectId);
+    if (!project) {
+      toast.error("المشروع غير موجود");
+      return;
+    }
+
+    if (
+      !window.confirm(
+        `هل أنت متأكد من حذف بيع الوحدة ${sale.unitNo} من مشروع ${project.name}؟`,
+      )
+    ) {
+      return;
+    }
+
+    const signature = saleSignature(project.name, sale);
+
+    try {
+      setDeletingSaleId(sale.id);
+      await deleteProjectSale({
+        id: sale.id,
+        projectName: project.name,
+        unitNo: sale.unitNo,
+        buyer: sale.buyer,
+        price: sale.price,
+        date: sale.date,
+      });
+      setSales((prev) => prev.filter((s) => s.id !== sale.id));
+      setTransactions((prev) => filterTransactionsBySignatures(prev, [signature]));
+      toast.success("تم حذف عملية البيع");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "تعذر حذف عملية البيع";
+      toast.error("فشل حذف عملية البيع", { description: message });
+    } finally {
+      setDeletingSaleId(null);
+    }
+  };
+
+  const handleDeleteCost = async (cost: ProjectCost) => {
+    const project = projects.find((p) => p.id === cost.projectId);
+    if (!project) {
+      toast.error("المشروع غير موجود");
+      return;
+    }
+
+    if (
+      !window.confirm(
+        `هل أنت متأكد من حذف تكلفة ${costTypeLabel(cost.type)} لمشروع ${project.name}؟`,
+      )
+    ) {
+      return;
+    }
+
+    const signature = costSignature(project.name, cost);
+
+    try {
+      setDeletingCostId(cost.id);
+      await deleteProjectCost({
+        id: cost.id,
+        projectName: project.name,
+        type: cost.type,
+        amount: cost.amount,
+        date: cost.date,
+      });
+      setCosts((prev) => prev.filter((c) => c.id !== cost.id));
+      setTransactions((prev) => filterTransactionsBySignatures(prev, [signature]));
+      toast.success("تم حذف التكلفة");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "تعذر حذف التكلفة";
+      toast.error("فشل حذف التكلفة", { description: message });
+    } finally {
+      setDeletingCostId(null);
+    }
+  };
+
   function printInvoice(
     id: string,
     fallbackSale?: ProjectSale,
@@ -1184,7 +1298,7 @@ export default function AccountingSystem() {
                   >
                     <option value="construction">إنشاء</option>
                     <option value="operation">تشغيل</option>
-                    <option value="expense">مصروفات</option>
+                    <option value="expense">مص��وفات</option>
                   </select>
                   <input
                     className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1330,7 +1444,7 @@ export default function AccountingSystem() {
 
           <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold">المشروعات</h3>
+              <h3 className="font-semibold">��لمشروعات</h3>
               <div className="flex items-center gap-2">
                 <input
                   placeholder="ابحث عن مشروع أو موقع"
@@ -1446,7 +1560,7 @@ export default function AccountingSystem() {
 
             {projects.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا ت��جد مشروعات مسجلة بعد.
+                لا توجد مشروعات مسجلة بعد.
               </div>
             )}
           </div>
@@ -1715,14 +1829,14 @@ function ReportsSection({
         headers: ["البند", "القيمة"],
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
-          ["إجمالي المصروفات", exp.toLocaleString() + " ج.م"],
+          ["إجمالي المصروفا��", exp.toLocaleString() + " ج.م"],
           ["صافي الربح", (rev - exp).toLocaleString() + " ج.م"],
         ],
       };
     }
     if (reportType === "revenue") {
       return {
-        title: "تق��ير الإيرادات",
+        title: "تقرير الإيرادات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
@@ -1797,7 +1911,7 @@ function ReportsSection({
         ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
-        ["إجمالي ��لمبيعات", totalS.toLocaleString() + " ج.م"],
+        ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
