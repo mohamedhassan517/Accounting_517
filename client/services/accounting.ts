@@ -4,7 +4,7 @@ import type {
   PostgrestSingleResponse,
 } from "@supabase/supabase-js";
 
-export type TransType = "revenue" | "expense" | "payroll";
+export type TransType = "revenue" | "expense";
 
 export interface Transaction {
   id: string;
@@ -556,7 +556,7 @@ export async function createProjectCost(input: {
   const transaction = await createTransaction({
     date: input.date,
     type: "expense",
-    description: `ت��لفة ${projectCostTypeLabel(input.type)} لمشروع ${input.projectName}`,
+    description: `تكلفة ${projectCostTypeLabel(input.type)} لمشروع ${input.projectName}`,
     amount: input.amount,
     approved: input.approved,
     createdBy: input.createdBy ?? null,
