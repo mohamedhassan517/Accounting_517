@@ -438,7 +438,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("ال��شروع غير موجود");
+      toast.error("المشروع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -698,7 +698,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        ��ارٍ تحميل البيانات من قاعدة البيانات...
+        جارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -817,7 +817,7 @@ export default function AccountingSystem() {
                 }
               >
                 <option value="revenue">إيراد</option>
-                <option value="expense">مصروف</option>
+                <option value="expense">م��روف</option>
               </select>
               <input
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -990,7 +990,7 @@ export default function AccountingSystem() {
               disabled={savingItem}
               className="mt-3 w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
-              {savingItem ? "جاري الحفظ..." : "حفظ الما��ة"}
+              {savingItem ? "جاري الحفظ..." : "حفظ المادة"}
             </button>
           </div>
 
@@ -1073,7 +1073,7 @@ export default function AccountingSystem() {
                 </select>
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="الكم��ة"
+                  placeholder="الكمية"
                   value={issue.qty}
                   onChange={(e) => setIssue({ ...issue, qty: e.target.value })}
                 />
@@ -1662,6 +1662,15 @@ export default function AccountingSystem() {
                             {c.amount.toLocaleString()}
                           </td>
                           <td className="px-3 py-2">{c.note}</td>
+                          <td className="px-3 py-2 text-right">
+                            <button
+                              className="rounded-md bg-red-600 text-white px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+                              onClick={() => void handleDeleteCost(c)}
+                              disabled={deletingCostId === c.id}
+                            >
+                              {deletingCostId === c.id ? "حذف..." : "حذف"}
+                            </button>
+                          </td>
                         </tr>
                       );
                     })}
@@ -1842,7 +1851,7 @@ function ReportsSection({
         .filter((t) => t.type === "expense")
         .reduce((a, b) => a + b.amount, 0);
       return {
-        title: "تقرير الأرباح والخسائر",
+        title: "تقرير الأرباح و��لخسائر",
         headers: ["البند", "القيمة"],
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
