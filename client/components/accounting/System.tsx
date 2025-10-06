@@ -122,7 +122,9 @@ export default function AccountingSystem() {
     string | null
   >(null);
   const [deletingItemId, setDeletingItemId] = useState<string | null>(null);
-  const [deletingProjectId, setDeletingProjectId] = useState<string | null>(null);
+  const [deletingProjectId, setDeletingProjectId] = useState<string | null>(
+    null,
+  );
   const [deletingCostId, setDeletingCostId] = useState<string | null>(null);
   const [deletingSaleId, setDeletingSaleId] = useState<string | null>(null);
 
@@ -614,7 +616,9 @@ export default function AccountingSystem() {
         date: sale.date,
       });
       setSales((prev) => prev.filter((s) => s.id !== sale.id));
-      setTransactions((prev) => filterTransactionsBySignatures(prev, [signature]));
+      setTransactions((prev) =>
+        filterTransactionsBySignatures(prev, [signature]),
+      );
       toast.success("تم حذف عملية البيع");
     } catch (error) {
       const message =
@@ -652,7 +656,9 @@ export default function AccountingSystem() {
         date: cost.date,
       });
       setCosts((prev) => prev.filter((c) => c.id !== cost.id));
-      setTransactions((prev) => filterTransactionsBySignatures(prev, [signature]));
+      setTransactions((prev) =>
+        filterTransactionsBySignatures(prev, [signature]),
+      );
       toast.success("تم حذف التكلفة");
     } catch (error) {
       const message =
@@ -722,9 +728,7 @@ export default function AccountingSystem() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
-          <p className="text-slate-500 text-sm">
-            نظام محاسبة عقاري 
-          </p>
+          <p className="text-slate-500 text-sm">نظام محاسبة عقاري</p>
         </div>
         <div className="flex w-full flex-wrap gap-2 justify-center sm:justify-start md:w-auto md:justify-end">
           {(() => {
@@ -1707,7 +1711,10 @@ export default function AccountingSystem() {
   );
 }
 
-type TransactionSignature = Pick<Transaction, "type" | "amount" | "date" | "description">;
+type TransactionSignature = Pick<
+  Transaction,
+  "type" | "amount" | "date" | "description"
+>;
 
 function filterTransactionsBySignatures(
   transactions: Transaction[],
@@ -1739,7 +1746,10 @@ function costTypeLabel(type: ProjectCost["type"]): string {
   return "مصروفات";
 }
 
-function buildCostDescription(projectName: string, type: ProjectCost["type"]): string {
+function buildCostDescription(
+  projectName: string,
+  type: ProjectCost["type"],
+): string {
   return `تكلفة ${costTypeLabel(type)} لمشروع ${projectName}`;
 }
 
@@ -1750,7 +1760,10 @@ function buildSaleDescription(
   return `بيع وحدة ${sale.unitNo} من مشروع ${projectName} إلى ${sale.buyer}`;
 }
 
-function costSignature(projectName: string, cost: ProjectCost): TransactionSignature {
+function costSignature(
+  projectName: string,
+  cost: ProjectCost,
+): TransactionSignature {
   return {
     type: "expense",
     amount: cost.amount,
@@ -1759,7 +1772,10 @@ function costSignature(projectName: string, cost: ProjectCost): TransactionSigna
   };
 }
 
-function saleSignature(projectName: string, sale: ProjectSale): TransactionSignature {
+function saleSignature(
+  projectName: string,
+  sale: ProjectSale,
+): TransactionSignature {
   return {
     type: "revenue",
     amount: sale.price,
