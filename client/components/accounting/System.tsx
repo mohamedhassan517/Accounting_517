@@ -18,6 +18,9 @@ import {
   createProjectSale,
   createTransaction,
   deleteInventoryItem,
+  deleteProject,
+  deleteProjectCost,
+  deleteProjectSale,
   deleteTransaction,
   loadAccountingData,
   recordInventoryIssue,
@@ -233,7 +236,7 @@ export default function AccountingSystem() {
       !Number.isFinite(min) ||
       min < 0
     ) {
-      toast.error("القيم العددية غير صحيحة");
+      toast.error("القيم العددية غ��ر صحيحة");
       return;
     }
     try {
