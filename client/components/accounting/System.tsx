@@ -901,7 +901,11 @@ export default function AccountingSystem() {
                               : "bg-rose-100 text-rose-700"
                         }`}
                       >
-                        {t.type === "revenue" ? "إيراد" : t.type === "payroll" ? "مرتبات" : "مصروف"}
+                        {t.type === "revenue"
+                          ? "إيراد"
+                          : t.type === "payroll"
+                            ? "مرتبات"
+                            : "مصروف"}
                       </span>
                     </td>
                     <td className="px-3 py-2">{t.description}</td>
