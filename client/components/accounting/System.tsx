@@ -1446,7 +1446,7 @@ export default function AccountingSystem() {
 
             {projects.length === 0 && (
               <div className="py-6 text-center text-sm text-slate-500">
-                لا توجد مشروعات مسجلة بعد.
+                لا ت��جد مشروعات مسجلة بعد.
               </div>
             )}
           </div>
@@ -1567,6 +1567,67 @@ export default function AccountingSystem() {
   );
 }
 
+type TransactionSignature = Pick<Transaction, "type" | "amount" | "date" | "description">;
+
+function filterTransactionsBySignatures(
+  transactions: Transaction[],
+  signatures: TransactionSignature[],
+): Transaction[] {
+  if (signatures.length === 0) {
+    return transactions;
+  }
+  const remaining = [...signatures];
+  return transactions.filter((transaction) => {
+    const index = remaining.findIndex(
+      (signature) =>
+        signature.type === transaction.type &&
+        signature.amount === transaction.amount &&
+        signature.date === transaction.date &&
+        signature.description === transaction.description,
+    );
+    if (index !== -1) {
+      remaining.splice(index, 1);
+      return false;
+    }
+    return true;
+  });
+}
+
+function costTypeLabel(type: ProjectCost["type"]): string {
+  if (type === "construction") return "إنشاء";
+  if (type === "operation") return "تشغيل";
+  return "مصروفات";
+}
+
+function buildCostDescription(projectName: string, type: ProjectCost["type"]): string {
+  return `تكلفة ${costTypeLabel(type)} لمشروع ${projectName}`;
+}
+
+function buildSaleDescription(
+  projectName: string,
+  sale: Pick<ProjectSale, "unitNo" | "buyer">,
+): string {
+  return `بيع وحدة ${sale.unitNo} من مشروع ${projectName} إلى ${sale.buyer}`;
+}
+
+function costSignature(projectName: string, cost: ProjectCost): TransactionSignature {
+  return {
+    type: "expense",
+    amount: cost.amount,
+    date: cost.date,
+    description: buildCostDescription(projectName, cost.type),
+  };
+}
+
+function saleSignature(projectName: string, sale: ProjectSale): TransactionSignature {
+  return {
+    type: "revenue",
+    amount: sale.price,
+    date: sale.date,
+    description: buildSaleDescription(projectName, sale),
+  };
+}
+
 function Stat({
   value,
   label,
@@ -1661,7 +1722,7 @@ function ReportsSection({
     }
     if (reportType === "revenue") {
       return {
-        title: "تقرير الإيرادات",
+        title: "تق��ير الإيرادات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
@@ -1736,7 +1797,7 @@ function ReportsSection({
         ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
-        ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
+        ["إجمالي ��لمبيعات", totalS.toLocaleString() + " ج.م"],
         ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
@@ -1851,7 +1912,7 @@ function ReportsSection({
         <div className="flex gap-2">
           <div className="flex-1">
             <label className="text-sm text-slate-600 mb-1 inline-block">
-              ��ن
+              من
             </label>
             <input
               type="date"
@@ -1886,7 +1947,7 @@ function ReportsSection({
             onClick={exportExcel}
             className="rounded-md bg-emerald-600 px-4 py-2 text-white transition-colors"
           >
-            تصد��ر Excel
+            تصدير Excel
           </button>
         </div>
       </div>
