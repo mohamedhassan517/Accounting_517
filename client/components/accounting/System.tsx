@@ -156,13 +156,13 @@ export default function AccountingSystem() {
   }, [loadData]);
 
   const totals = useMemo(() => {
-    const revenue = transactions
+    const rev = transactions
       .filter((t) => t.type === "revenue")
-      .reduce((sum, transaction) => sum + transaction.amount, 0);
-    const expenses = transactions
-      .filter((t) => isExpenseType(t.type))
-      .reduce((sum, transaction) => sum + transaction.amount, 0);
-    return { revenue, expenses, profit: revenue - expenses };
+      .reduce((a, b) => a + b.amount, 0);
+    const exp = transactions
+      .filter((t) => t.type === "expense")
+      .reduce((a, b) => a + b.amount, 0);
+    return { revenue: rev, expenses: exp, profit: rev - exp };
   }, [transactions]);
 
   const addQuick = async () => {
@@ -821,8 +821,7 @@ export default function AccountingSystem() {
                 }
               >
                 <option value="revenue">إيراد</option>
-                <option value="expense">مصروف</option>
-                <option value="payroll">مرتبات</option>
+                <option value="expense">م��روف</option>
               </select>
               <input
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
