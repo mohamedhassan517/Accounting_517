@@ -156,13 +156,13 @@ export default function AccountingSystem() {
   }, [loadData]);
 
   const totals = useMemo(() => {
-    const rev = transactions
+    const revenue = transactions
       .filter((t) => t.type === "revenue")
-      .reduce((a, b) => a + b.amount, 0);
-    const exp = transactions
-      .filter((t) => t.type === "expense")
-      .reduce((a, b) => a + b.amount, 0);
-    return { revenue: rev, expenses: exp, profit: rev - exp };
+      .reduce((sum, transaction) => sum + transaction.amount, 0);
+    const expenses = transactions
+      .filter((t) => isExpenseType(t.type))
+      .reduce((sum, transaction) => sum + transaction.amount, 0);
+    return { revenue, expenses, profit: revenue - expenses };
   }, [transactions]);
 
   const addQuick = async () => {
@@ -821,7 +821,8 @@ export default function AccountingSystem() {
                 }
               >
                 <option value="revenue">إيراد</option>
-                <option value="expense">م��روف</option>
+                <option value="expense">مصروف</option>
+                <option value="payroll">مرتبات</option>
               </select>
               <input
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1546,7 +1547,7 @@ export default function AccountingSystem() {
                                     {t.costs.toLocaleString()} ج.م
                                   </div>
                                   <div>
-                                    <strong>المبيعات:</strong>{" "}
+                                    <strong>المبيع��ت:</strong>{" "}
                                     {t.sales.toLocaleString()} ج.م
                                   </div>
                                   <div>
@@ -1879,7 +1880,7 @@ function ReportsSection({
     if (reportType === "revenue") {
       return {
         title: "تقرير الإيرادات",
-        headers: ["التاريخ", "الوصف", "المبلغ"],
+        headers: ["التاريخ", "الوصف", "ا��مبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
           .map((t) => [
@@ -1954,7 +1955,7 @@ function ReportsSection({
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
-        ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
+        ["الربح/الخ��ارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
         title: "تقرير مشروع عقاري",
