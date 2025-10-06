@@ -191,7 +191,7 @@ export default function AccountingSystem() {
       toast.success("تمت إضافة المعاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حفظ المعاملة";
+        error instanceof Error ? error.message : "تعذر ح��ظ المعاملة";
       toast.error("لم يتم حفظ المعاملة", { description: message });
     } finally {
       setSavingQuick(false);
@@ -486,7 +486,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع كاملة");
+      toast.error("الرجاء إدخال بيانات البيع ��املة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -759,7 +759,7 @@ export default function AccountingSystem() {
                       : tab === "projects"
                         ? "العقارات"
                         : tab === "reports"
-                          ? "التقارير"
+                          ? "التق��رير"
                           : "المستخدمون"}
               </button>
             ));
@@ -896,10 +896,16 @@ export default function AccountingSystem() {
                         className={`px-2 py-1 rounded-full text-xs ${
                           t.type === "revenue"
                             ? "bg-emerald-100 text-emerald-700"
-                            : "bg-rose-100 text-rose-700"
+                            : t.type === "payroll"
+                              ? "bg-amber-100 text-amber-700"
+                              : "bg-rose-100 text-rose-700"
                         }`}
                       >
-                        {t.type === "revenue" ? "إيراد" : "مصروف"}
+                        {t.type === "revenue"
+                          ? "إيراد"
+                          : t.type === "payroll"
+                            ? "مرتبات"
+                            : "مصروف"}
                       </span>
                     </td>
                     <td className="px-3 py-2">{t.description}</td>
@@ -1098,7 +1104,7 @@ export default function AccountingSystem() {
                 />
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="اسم المشروع"
+                  placeholder="ا��م المشروع"
                   value={issue.project}
                   onChange={(e) =>
                     setIssue({ ...issue, project: e.target.value })
@@ -1712,6 +1718,10 @@ export default function AccountingSystem() {
   );
 }
 
+function isExpenseType(type: TransType): boolean {
+  return type === "expense" || type === "payroll";
+}
+
 type TransactionSignature = Pick<
   Transaction,
   "type" | "amount" | "date" | "description"
@@ -1751,7 +1761,7 @@ function buildCostDescription(
   projectName: string,
   type: ProjectCost["type"],
 ): string {
-  return `تكلفة ${costTypeLabel(type)} لمشروع ${projectName}`;
+  return `تكلفة ${costTypeLabel(type)} ل��شروع ${projectName}`;
 }
 
 function buildSaleDescription(
@@ -1865,7 +1875,7 @@ function ReportsSection({
         .filter((t) => t.type === "revenue")
         .reduce((a, b) => a + b.amount, 0);
       const exp = filtered
-        .filter((t) => t.type === "expense")
+        .filter((t) => isExpenseType(t.type))
         .reduce((a, b) => a + b.amount, 0);
       return {
         title: "تقرير الأرباح و��لخسائر",
@@ -1895,7 +1905,7 @@ function ReportsSection({
         title: "تقرير المصروفات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
-          .filter((t) => t.type === "expense")
+          .filter((t) => isExpenseType(t.type))
           .map((t) => [
             t.date,
             t.description,
@@ -1904,11 +1914,7 @@ function ReportsSection({
       };
     }
     if (reportType === "salary") {
-      const sal = filtered.filter(
-        (t) =>
-          t.type === "expense" &&
-          /(راتب|salary|مرتبات|موظف)/i.test(t.description),
-      );
+      const sal = filtered.filter((t) => t.type === "payroll");
       return {
         title: "تقرير المرتبات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
@@ -2123,7 +2129,7 @@ function ReportsSection({
           />
           <Stat
             value={transactions
-              .filter((t) => t.type === "expense")
+              .filter((t) => isExpenseType(t.type))
               .reduce((a, b) => a + b.amount, 0)}
             label="إجمالي المصروفات"
             color="text-rose-600"
