@@ -156,13 +156,13 @@ export default function AccountingSystem() {
   }, [loadData]);
 
   const totals = useMemo(() => {
-    const rev = transactions
+    const revenue = transactions
       .filter((t) => t.type === "revenue")
-      .reduce((a, b) => a + b.amount, 0);
-    const exp = transactions
-      .filter((t) => t.type === "expense")
-      .reduce((a, b) => a + b.amount, 0);
-    return { revenue: rev, expenses: exp, profit: rev - exp };
+      .reduce((sum, transaction) => sum + transaction.amount, 0);
+    const expenses = transactions
+      .filter((t) => isExpenseType(t.type))
+      .reduce((sum, transaction) => sum + transaction.amount, 0);
+    return { revenue, expenses, profit: revenue - expenses };
   }, [transactions]);
 
   const addQuick = async () => {
@@ -320,7 +320,7 @@ export default function AccountingSystem() {
       if (result.item.quantity < result.item.min) {
         toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
-        toast.success("تم تسجيل الوارد وتحديث المصروفات");
+        toast.success("تم تسجيل ��لوارد وتحديث المصروفات");
       }
       setReceive({
         itemId: "",
@@ -445,7 +445,7 @@ export default function AccountingSystem() {
     }
     const amount = Number(newCost.amount);
     if (!Number.isFinite(amount) || amount <= 0) {
-      toast.error("قيمة المبلغ غير صحيحة");
+      toast.error("قيمة الم��لغ غير صحيحة");
       return;
     }
     try {
@@ -1910,7 +1910,7 @@ function ReportsSection({
       );
       return {
         title: "تقرير المرتبات",
-        headers: ["التاريخ", "الوصف", "المبلغ"],
+        headers: ["ال��اريخ", "الوصف", "المبلغ"],
         rows: sal.map((t) => [
           t.date,
           t.description,
@@ -1949,7 +1949,7 @@ function ReportsSection({
       const totalS = saleRows.reduce((a, b) => a + b.price, 0);
       const rows: string[][] = [
         ["المشروع", project?.name || "-"],
-        ["الموقع", project?.location || "-"],
+        ["ا��موقع", project?.location || "-"],
         ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
