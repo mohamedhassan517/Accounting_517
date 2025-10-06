@@ -421,7 +421,7 @@ export default function AccountingSystem() {
       });
       setProjects((prev) => [project, ...prev]);
       setNewProject({ name: "", location: "", floors: "", units: "" });
-      toast.success("تمت إضافة المشروع ��لعقاري");
+      toast.success("تمت إضافة المشروع العقاري");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر إضافة المشروع";
@@ -595,7 +595,7 @@ export default function AccountingSystem() {
 
     if (
       !window.confirm(
-        `هل أنت متأكد من حذف بيع الوحدة ${sale.unitNo} من مشروع ${project.name}؟`,
+        `هل أنت ��تأكد من حذف بيع الوحدة ${sale.unitNo} من مشروع ${project.name}؟`,
       )
     ) {
       return;
@@ -618,7 +618,7 @@ export default function AccountingSystem() {
       toast.success("تم حذف عملية البيع");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر حذف عملية ��لبيع";
+        error instanceof Error ? error.message : "تعذر حذف عملية البيع";
       toast.error("فشل حذف عملية البيع", { description: message });
     } finally {
       setDeletingSaleId(null);
@@ -780,7 +780,7 @@ export default function AccountingSystem() {
                 </div>
               </div>
               <div className="mt-4 text-xs opacity-90">
-                مرحباً بك في لوحة التحكم — يمكنك إدارة العمليات بسرعة وسهولة.
+                مرحباً بك في لوحة التحكم — يمكنك إدارة العمليا�� بسرعة وسهولة.
               </div>
             </div>
           </div>
@@ -875,7 +875,7 @@ export default function AccountingSystem() {
               <thead>
                 <tr className="text-left bg-slate-50">
                   <th className="px-3 py-2">التاريخ</th>
-                  <th className="px-3 py-2">النوع</th>
+                  <th className="px-3 py-2">النو��</th>
                   <th className="px-3 py-2">الوصف</th>
                   <th className="px-3 py-2">المبلغ</th>
                   <th className="px-3 py-2">الحالة</th>
@@ -1269,7 +1269,7 @@ export default function AccountingSystem() {
           {/* Below: cost and sale side-by-side */}
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل تكلفة للمشروع</h3>
+              <h3 className="font-semibold mb-3">تسجيل تكلف�� للمشروع</h3>
               <div className="grid gap-3">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1603,12 +1603,19 @@ export default function AccountingSystem() {
                           <td className="px-3 py-2">
                             {s.price.toLocaleString()}
                           </td>
-                          <td className="px-3 py-2 text-right">
+                          <td className="px-3 py-2 text-right space-x-2 space-x-reverse">
                             <button
                               className="rounded-md bg-slate-900 text-white px-3 py-1"
                               onClick={() => printInvoice(s.id)}
                             >
                               فاتورة
+                            </button>
+                            <button
+                              className="rounded-md bg-red-600 text-white px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+                              onClick={() => void handleDeleteSale(s)}
+                              disabled={deletingSaleId === s.id}
+                            >
+                              {deletingSaleId === s.id ? "حذف..." : "حذف"}
                             </button>
                           </td>
                         </tr>
@@ -1681,7 +1688,7 @@ export default function AccountingSystem() {
             <UserManagement />
           ) : (
             <div className="rounded-xl p-6 bg-white border border-slate-200 shadow">
-              ليس لديك صلاحية لعرض إدارة الم��تخدمين
+              ليس لديك صلاحية لعرض إدارة المستخدمين
             </div>
           )}
         </section>
