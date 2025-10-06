@@ -896,16 +896,10 @@ export default function AccountingSystem() {
                         className={`px-2 py-1 rounded-full text-xs ${
                           t.type === "revenue"
                             ? "bg-emerald-100 text-emerald-700"
-                            : t.type === "payroll"
-                              ? "bg-amber-100 text-amber-700"
-                              : "bg-rose-100 text-rose-700"
+                            : "bg-rose-100 text-rose-700"
                         }`}
                       >
-                        {t.type === "revenue"
-                          ? "إيراد"
-                          : t.type === "payroll"
-                            ? "مرتبات"
-                            : "مصروف"}
+                        {t.type === "revenue" ? "إيراد" : "مصروف"}
                       </span>
                     </td>
                     <td className="px-3 py-2">{t.description}</td>
@@ -1718,10 +1712,6 @@ export default function AccountingSystem() {
   );
 }
 
-function isExpenseType(type: TransType): boolean {
-  return type === "expense" || type === "payroll";
-}
-
 type TransactionSignature = Pick<
   Transaction,
   "type" | "amount" | "date" | "description"
@@ -1875,7 +1865,7 @@ function ReportsSection({
         .filter((t) => t.type === "revenue")
         .reduce((a, b) => a + b.amount, 0);
       const exp = filtered
-        .filter((t) => isExpenseType(t.type))
+        .filter((t) => t.type === "expense")
         .reduce((a, b) => a + b.amount, 0);
       return {
         title: "تقرير الأرباح والخسائر",
@@ -1905,7 +1895,7 @@ function ReportsSection({
         title: "تقرير المصروفات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
-          .filter((t) => isExpenseType(t.type))
+          .filter((t) => t.type === "expense")
           .map((t) => [
             t.date,
             t.description,
@@ -1914,7 +1904,11 @@ function ReportsSection({
       };
     }
     if (reportType === "salary") {
-      const sal = filtered.filter((t) => t.type === "payroll");
+      const sal = filtered.filter(
+        (t) =>
+          t.type === "expense" &&
+          /(راتب|salary|مرتبات|موظف)/i.test(t.description),
+      );
       return {
         title: "تقرير المرتبات",
         headers: ["التاريخ", "الوصف", "المبلغ"],
@@ -2129,7 +2123,7 @@ function ReportsSection({
           />
           <Stat
             value={transactions
-              .filter((t) => isExpenseType(t.type))
+              .filter((t) => t.type === "expense")
               .reduce((a, b) => a + b.amount, 0)}
             label="إجمالي المصروفات"
             color="text-rose-600"
