@@ -320,7 +320,7 @@ export default function AccountingSystem() {
       if (result.item.quantity < result.item.min) {
         toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
-        toast.success("تم تسجيل الوارد وتحديث المصروفات");
+        toast.success("تم تسجيل ال��ارد وتحديث المصروفات");
       }
       setReceive({
         itemId: "",
@@ -445,7 +445,7 @@ export default function AccountingSystem() {
     }
     const amount = Number(newCost.amount);
     if (!Number.isFinite(amount) || amount <= 0) {
-      toast.error("قيمة المبلغ غير صحيحة");
+      toast.error("قيمة المبل�� غير صحيحة");
       return;
     }
     try {
@@ -496,7 +496,7 @@ export default function AccountingSystem() {
     }
     const price = Number(newSale.price);
     if (!Number.isFinite(price) || price <= 0) {
-      toast.error("قيمة السعر ��ير صحيحة");
+      toast.error("قيمة السعر غير صحيحة");
       return;
     }
     try {
@@ -659,7 +659,7 @@ export default function AccountingSystem() {
       setTransactions((prev) =>
         filterTransactionsBySignatures(prev, [signature]),
       );
-      toast.success("تم حذف الت��لفة");
+      toast.success("تم حذف التكلفة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف التكلفة";
@@ -1223,7 +1223,7 @@ export default function AccountingSystem() {
                 />
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="الموقع"
+                  placeholder="ا��موقع"
                   value={newProject.location}
                   onChange={(e) =>
                     setNewProject({ ...newProject, location: e.target.value })
@@ -1338,7 +1338,7 @@ export default function AccountingSystem() {
                     disabled={savingCost}
                     className="rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {savingCost ? "ج��ري التسجيل..." : "تسجيل التكلفة"}
+                    {savingCost ? "جاري التسجيل..." : "تسجيل التكلفة"}
                   </button>
                   <button
                     onClick={() =>
@@ -1714,6 +1714,10 @@ export default function AccountingSystem() {
   );
 }
 
+function isExpenseType(type: TransType): boolean {
+  return type === "expense" || type === "payroll";
+}
+
 type TransactionSignature = Pick<
   Transaction,
   "type" | "amount" | "date" | "description"
@@ -1870,7 +1874,7 @@ function ReportsSection({
         .filter((t) => t.type === "expense")
         .reduce((a, b) => a + b.amount, 0);
       return {
-        title: "تقرير الأرباح و��لخسائ��",
+        title: "تقرير الأرباح و��لخسائر",
         headers: ["البند", "القيمة"],
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
@@ -1901,7 +1905,7 @@ function ReportsSection({
           .map((t) => [
             t.date,
             t.description,
-            t.amount.toLocaleString() + " ج.م",
+            t.amount.toLocaleString() + " ��.م",
           ]),
       };
     }
