@@ -438,7 +438,7 @@ export default function AccountingSystem() {
     }
     const project = projects.find((p) => p.id === newCost.projectId);
     if (!project) {
-      toast.error("المشروع غير موجود");
+      toast.error("ال��شروع غير موجود");
       return;
     }
     const amount = Number(newCost.amount);
@@ -595,7 +595,7 @@ export default function AccountingSystem() {
 
     if (
       !window.confirm(
-        `هل أنت ��تأكد من حذف بيع الوحدة ${sale.unitNo} من مشروع ${project.name}؟`,
+        `هل أنت متأكد من حذف بيع الوحدة ${sale.unitNo} من مشروع ${project.name}؟`,
       )
     ) {
       return;
@@ -698,7 +698,7 @@ export default function AccountingSystem() {
   if (initialLoading) {
     return (
       <div className="py-10 text-center text-slate-500">
-        جارٍ تحميل البيانات من قاعدة البيانات...
+        ��ارٍ تحميل البيانات من قاعدة البيانات...
       </div>
     );
   }
@@ -780,7 +780,7 @@ export default function AccountingSystem() {
                 </div>
               </div>
               <div className="mt-4 text-xs opacity-90">
-                مرحباً بك في لوحة التحكم — يمكنك إدارة العمليا�� بسرعة وسهولة.
+                مرحباً بك في لوحة التحكم — يمكنك إدارة العمليات بسرعة وسهولة.
               </div>
             </div>
           </div>
@@ -875,7 +875,7 @@ export default function AccountingSystem() {
               <thead>
                 <tr className="text-left bg-slate-50">
                   <th className="px-3 py-2">التاريخ</th>
-                  <th className="px-3 py-2">النو��</th>
+                  <th className="px-3 py-2">النوع</th>
                   <th className="px-3 py-2">الوصف</th>
                   <th className="px-3 py-2">المبلغ</th>
                   <th className="px-3 py-2">الحالة</th>
@@ -990,7 +990,7 @@ export default function AccountingSystem() {
               disabled={savingItem}
               className="mt-3 w-full rounded-md bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             >
-              {savingItem ? "جاري الحفظ..." : "حفظ المادة"}
+              {savingItem ? "جاري الحفظ..." : "حفظ الما��ة"}
             </button>
           </div>
 
@@ -1073,7 +1073,7 @@ export default function AccountingSystem() {
                 </select>
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="الكمية"
+                  placeholder="الكم��ة"
                   value={issue.qty}
                   onChange={(e) => setIssue({ ...issue, qty: e.target.value })}
                 />
@@ -1269,7 +1269,7 @@ export default function AccountingSystem() {
           {/* Below: cost and sale side-by-side */}
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="bg-white border border-slate-200 rounded-xl p-4 shadow">
-              <h3 className="font-semibold mb-3">تسجيل تكلف�� للمشروع</h3>
+              <h3 className="font-semibold mb-3">تسجيل تكلفة للمشروع</h3>
               <div className="grid gap-3">
                 <select
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1639,6 +1639,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">النوع</th>
                       <th className="px-3 py-2">المبلغ</th>
                       <th className="px-3 py-2">ملاحظة</th>
+                      <th className="px-3 py-2"></th>
                     </tr>
                   </thead>
                   <tbody>
