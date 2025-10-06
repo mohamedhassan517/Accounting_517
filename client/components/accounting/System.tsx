@@ -320,7 +320,7 @@ export default function AccountingSystem() {
       if (result.item.quantity < result.item.min) {
         toast.warning(`تنبيه: مخزون ${result.item.name} منخفض`);
       } else {
-        toast.success("تم تسجيل ��لوارد وتحديث المصروفات");
+        toast.success("تم تسجيل الوارد وتحديث المصروفات");
       }
       setReceive({
         itemId: "",
@@ -445,7 +445,7 @@ export default function AccountingSystem() {
     }
     const amount = Number(newCost.amount);
     if (!Number.isFinite(amount) || amount <= 0) {
-      toast.error("قيمة الم��لغ غير صحيحة");
+      toast.error("قيمة المبلغ غير صحيحة");
       return;
     }
     try {
@@ -821,7 +821,8 @@ export default function AccountingSystem() {
                 }
               >
                 <option value="revenue">إيراد</option>
-                <option value="expense">م��روف</option>
+                <option value="expense">مصروف</option>
+                <option value="payroll">مرتبات</option>
               </select>
               <input
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1546,7 +1547,7 @@ export default function AccountingSystem() {
                                     {t.costs.toLocaleString()} ج.م
                                   </div>
                                   <div>
-                                    <strong>المبيعات:</strong>{" "}
+                                    <strong>المبيع��ت:</strong>{" "}
                                     {t.sales.toLocaleString()} ج.م
                                   </div>
                                   <div>
@@ -1879,7 +1880,7 @@ function ReportsSection({
     if (reportType === "revenue") {
       return {
         title: "تقرير الإيرادات",
-        headers: ["التاريخ", "الوصف", "المبلغ"],
+        headers: ["التاريخ", "الوصف", "ا��مبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
           .map((t) => [
@@ -1910,7 +1911,7 @@ function ReportsSection({
       );
       return {
         title: "تقرير المرتبات",
-        headers: ["ال��اريخ", "الوصف", "المبلغ"],
+        headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: sal.map((t) => [
           t.date,
           t.description,
@@ -1949,12 +1950,12 @@ function ReportsSection({
       const totalS = saleRows.reduce((a, b) => a + b.price, 0);
       const rows: string[][] = [
         ["المشروع", project?.name || "-"],
-        ["ا��موقع", project?.location || "-"],
+        ["الموقع", project?.location || "-"],
         ["عدد الأدوار", String(project?.floors ?? "-")],
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
-        ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
+        ["الربح/الخ��ارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
         title: "تقرير مشروع عقاري",
