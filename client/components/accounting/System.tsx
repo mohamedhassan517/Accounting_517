@@ -122,6 +122,9 @@ export default function AccountingSystem() {
     string | null
   >(null);
   const [deletingItemId, setDeletingItemId] = useState<string | null>(null);
+  const [deletingProjectId, setDeletingProjectId] = useState<string | null>(null);
+  const [deletingCostId, setDeletingCostId] = useState<string | null>(null);
+  const [deletingSaleId, setDeletingSaleId] = useState<string | null>(null);
 
   const loadData = useCallback(async () => {
     setLoadingError(null);
@@ -236,7 +239,7 @@ export default function AccountingSystem() {
       !Number.isFinite(min) ||
       min < 0
     ) {
-      toast.error("القيم العددية غ��ر صحيحة");
+      toast.error("القيم العددية غير صحيحة");
       return;
     }
     try {
@@ -1848,7 +1851,7 @@ function ReportsSection({
         <div className="flex gap-2">
           <div className="flex-1">
             <label className="text-sm text-slate-600 mb-1 inline-block">
-              من
+              ��ن
             </label>
             <input
               type="date"
@@ -1883,7 +1886,7 @@ function ReportsSection({
             onClick={exportExcel}
             className="rounded-md bg-emerald-600 px-4 py-2 text-white transition-colors"
           >
-            تصدير Excel
+            تصد��ر Excel
           </button>
         </div>
       </div>
