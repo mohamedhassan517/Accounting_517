@@ -496,7 +496,7 @@ export default function AccountingSystem() {
     }
     const price = Number(newSale.price);
     if (!Number.isFinite(price) || price <= 0) {
-      toast.error("قيمة السعر غير صحيحة");
+      toast.error("قيمة السعر ��ير صحيحة");
       return;
     }
     try {
@@ -659,7 +659,7 @@ export default function AccountingSystem() {
       setTransactions((prev) =>
         filterTransactionsBySignatures(prev, [signature]),
       );
-      toast.success("تم حذف التكلفة");
+      toast.success("تم حذف الت��لفة");
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "تعذر حذف التكلفة";
@@ -896,10 +896,12 @@ export default function AccountingSystem() {
                         className={`px-2 py-1 rounded-full text-xs ${
                           t.type === "revenue"
                             ? "bg-emerald-100 text-emerald-700"
-                            : "bg-rose-100 text-rose-700"
+                            : t.type === "payroll"
+                              ? "bg-amber-100 text-amber-700"
+                              : "bg-rose-100 text-rose-700"
                         }`}
                       >
-                        {t.type === "revenue" ? "إيراد" : "مصروف"}
+                        {t.type === "revenue" ? "إيراد" : t.type === "payroll" ? "مرتبات" : "مصروف"}
                       </span>
                     </td>
                     <td className="px-3 py-2">{t.description}</td>
@@ -1336,7 +1338,7 @@ export default function AccountingSystem() {
                     disabled={savingCost}
                     className="rounded-md bg-slate-900 px-4 py-2 text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {savingCost ? "جاري التسجيل..." : "تسجيل التكلفة"}
+                    {savingCost ? "ج��ري التسجيل..." : "تسجيل التكلفة"}
                   </button>
                   <button
                     onClick={() =>
@@ -1868,7 +1870,7 @@ function ReportsSection({
         .filter((t) => t.type === "expense")
         .reduce((a, b) => a + b.amount, 0);
       return {
-        title: "تقرير الأرباح و��لخسائر",
+        title: "تقرير الأرباح و��لخسائ��",
         headers: ["البند", "القيمة"],
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
