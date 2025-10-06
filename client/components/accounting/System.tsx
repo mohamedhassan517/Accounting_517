@@ -191,7 +191,7 @@ export default function AccountingSystem() {
       toast.success("تمت إضافة المعاملة");
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "تعذر ح��ظ المعاملة";
+        error instanceof Error ? error.message : "تعذر حفظ المعاملة";
       toast.error("لم يتم حفظ المعاملة", { description: message });
     } finally {
       setSavingQuick(false);
@@ -486,7 +486,7 @@ export default function AccountingSystem() {
       !newSale.unitNo ||
       !newSale.buyer
     ) {
-      toast.error("الرجاء إدخال بيانات البيع ��املة");
+      toast.error("الرجاء إدخال بيانات البيع كاملة");
       return;
     }
     const project = projects.find((p) => p.id === newSale.projectId);
@@ -759,7 +759,7 @@ export default function AccountingSystem() {
                       : tab === "projects"
                         ? "العقارات"
                         : tab === "reports"
-                          ? "التق��رير"
+                          ? "التقارير"
                           : "المستخدمون"}
               </button>
             ));
@@ -1104,7 +1104,7 @@ export default function AccountingSystem() {
                 />
                 <input
                   className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
-                  placeholder="ا��م المشروع"
+                  placeholder="اسم المشروع"
                   value={issue.project}
                   onChange={(e) =>
                     setIssue({ ...issue, project: e.target.value })
@@ -1553,7 +1553,7 @@ export default function AccountingSystem() {
                                     {t.costs.toLocaleString()} ج.م
                                   </div>
                                   <div>
-                                    <strong>المبيع��ت:</strong>{" "}
+                                    <strong>المبيعات:</strong>{" "}
                                     {t.sales.toLocaleString()} ج.م
                                   </div>
                                   <div>
@@ -1761,7 +1761,7 @@ function buildCostDescription(
   projectName: string,
   type: ProjectCost["type"],
 ): string {
-  return `تكلفة ${costTypeLabel(type)} ل��شروع ${projectName}`;
+  return `تكلفة ${costTypeLabel(type)} لمشروع ${projectName}`;
 }
 
 function buildSaleDescription(
@@ -1878,7 +1878,7 @@ function ReportsSection({
         .filter((t) => isExpenseType(t.type))
         .reduce((a, b) => a + b.amount, 0);
       return {
-        title: "تقرير الأرباح و��لخسائر",
+        title: "تقرير الأرباح والخسائر",
         headers: ["البند", "القيمة"],
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
@@ -1890,7 +1890,7 @@ function ReportsSection({
     if (reportType === "revenue") {
       return {
         title: "تقرير الإيرادات",
-        headers: ["التاريخ", "الوصف", "ا��مبلغ"],
+        headers: ["التاريخ", "الوصف", "المبلغ"],
         rows: filtered
           .filter((t) => t.type === "revenue")
           .map((t) => [
@@ -1961,7 +1961,7 @@ function ReportsSection({
         ["عدد الوحدات", String(project?.units ?? "-")],
         ["إجمالي التكاليف", totalC.toLocaleString() + " ج.م"],
         ["إجمالي المبيعات", totalS.toLocaleString() + " ج.م"],
-        ["الربح/الخ��ارة", (totalS - totalC).toLocaleString() + " ج.م"],
+        ["الربح/الخسارة", (totalS - totalC).toLocaleString() + " ج.م"],
       ];
       return {
         title: "تقرير مشروع عقاري",
