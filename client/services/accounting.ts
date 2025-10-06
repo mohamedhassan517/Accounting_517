@@ -612,6 +612,115 @@ export async function createProjectSale(input: {
   };
 }
 
+export async function deleteProjectSale(input: {
+  id: string;
+  projectName: string;
+  unitNo: string;
+  buyer: string;
+  price: number;
+  date: string;
+}): Promise<void> {
+  const { error: saleError } = await supabase
+    .from("project_sales")
+    .delete()
+    .eq("id", input.id);
+
+  if (saleError) {
+    throw new Error(saleError.message);
+  }
+
+  const description = `بيع وحدة ${input.unitNo} من مشروع ${input.projectName} إلى ${input.buyer}`;
+  const { error: transactionError } = await supabase
+    .from("transactions")
+    .delete()
+    .eq("type", "revenue")
+    .eq("description", description)
+    .eq("amount", input.price)
+    .eq("date", input.date);
+
+  if (transactionError) {
+    throw new Error(transactionError.message);
+  }
+}
+
+export async function deleteProjectCost(input: {
+  id: string;
+  projectName: string;
+  type: ProjectCost["type"];
+  amount: number;
+  date: string;
+}): Promise<void> {
+  const { error: costError } = await supabase
+    .from("project_costs")
+    .delete()
+    .eq("id", input.id);
+
+  if (costError) {
+    throw new Error(costError.message);
+  }
+
+  const description = `تكلفة ${projectCostTypeLabel(input.type)} لمشروع ${input.projectName}`;
+  const { error: transactionError } = await supabase
+    .from("transactions")
+    .delete()
+    .eq("type", "expense")
+    .eq("description", description)
+    .eq("amount", input.amount)
+    .eq("date", input.date);
+
+  if (transactionError) {
+    throw new Error(transactionError.message);
+  }
+}
+
+export async function deleteProject(input: {
+  id: string;
+  name: string;
+}): Promise<void> {
+  const [costsToRemove, salesToRemove] = await Promise.all([
+    ensureList<ProjectCostRow>(
+      supabase.from("project_costs").select("*").eq("project_id", input.id),
+    ),
+    ensureList<ProjectSaleRow>(
+      supabase.from("project_sales").select("*").eq("project_id", input.id),
+    ),
+  ]);
+
+  await Promise.all(
+    costsToRemove.map((cost) =>
+      deleteProjectCost({
+        id: cost.id,
+        projectName: input.name,
+        type: cost.type,
+        amount: asNumber(cost.amount),
+        date: cost.date,
+      }),
+    ),
+  );
+
+  await Promise.all(
+    salesToRemove.map((sale) =>
+      deleteProjectSale({
+        id: sale.id,
+        projectName: input.name,
+        unitNo: sale.unit_no,
+        buyer: sale.buyer,
+        price: asNumber(sale.price),
+        date: sale.date,
+      }),
+    ),
+  );
+
+  const { error: projectError } = await supabase
+    .from("projects")
+    .delete()
+    .eq("id", input.id);
+
+  if (projectError) {
+    throw new Error(projectError.message);
+  }
+}
+
 export async function loadProjectById(id: string): Promise<Project | null> {
   try {
     const row = await ensureSingle<ProjectRow>(

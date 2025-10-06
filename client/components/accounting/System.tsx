@@ -18,6 +18,9 @@ import {
   createProjectSale,
   createTransaction,
   deleteInventoryItem,
+  deleteProject,
+  deleteProjectCost,
+  deleteProjectSale,
   deleteTransaction,
   loadAccountingData,
   recordInventoryIssue,
@@ -119,6 +122,11 @@ export default function AccountingSystem() {
     string | null
   >(null);
   const [deletingItemId, setDeletingItemId] = useState<string | null>(null);
+  const [deletingProjectId, setDeletingProjectId] = useState<string | null>(
+    null,
+  );
+  const [deletingCostId, setDeletingCostId] = useState<string | null>(null);
+  const [deletingSaleId, setDeletingSaleId] = useState<string | null>(null);
 
   const loadData = useCallback(async () => {
     setLoadingError(null);
@@ -543,6 +551,124 @@ export default function AccountingSystem() {
     [costs, sales],
   );
 
+  const handleDeleteProject = async (project: Project) => {
+    if (
+      !window.confirm(
+        `هل أنت متأكد من حذف المشروع ${project.name}؟ سيتم حذف جميع المبيعات والتكاليف المرتبطة.`,
+      )
+    ) {
+      return;
+    }
+
+    const relatedCosts = costs.filter((cost) => cost.projectId === project.id);
+    const relatedSales = sales.filter((sale) => sale.projectId === project.id);
+    const signatures = [
+      ...relatedCosts.map((cost) => costSignature(project.name, cost)),
+      ...relatedSales.map((sale) => saleSignature(project.name, sale)),
+    ];
+
+    try {
+      setDeletingProjectId(project.id);
+      await deleteProject({ id: project.id, name: project.name });
+      setProjects((prev) => prev.filter((p) => p.id !== project.id));
+      setCosts((prev) => prev.filter((cost) => cost.projectId !== project.id));
+      setSales((prev) => prev.filter((sale) => sale.projectId !== project.id));
+      if (signatures.length > 0) {
+        setTransactions((prev) =>
+          filterTransactionsBySignatures(prev, signatures),
+        );
+      }
+      toast.success("تم حذف المشروع والسجلات المرتبطة به");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "تعذر حذف المشروع";
+      toast.error("فشل حذف المشروع", { description: message });
+    } finally {
+      setDeletingProjectId(null);
+    }
+  };
+
+  const handleDeleteSale = async (sale: ProjectSale) => {
+    const project = projects.find((p) => p.id === sale.projectId);
+    if (!project) {
+      toast.error("المشروع غير موجود");
+      return;
+    }
+
+    if (
+      !window.confirm(
+        `هل أنت متأكد من حذف بيع الوحدة ${sale.unitNo} من مشروع ${project.name}؟`,
+      )
+    ) {
+      return;
+    }
+
+    const signature = saleSignature(project.name, sale);
+
+    try {
+      setDeletingSaleId(sale.id);
+      await deleteProjectSale({
+        id: sale.id,
+        projectName: project.name,
+        unitNo: sale.unitNo,
+        buyer: sale.buyer,
+        price: sale.price,
+        date: sale.date,
+      });
+      setSales((prev) => prev.filter((s) => s.id !== sale.id));
+      setTransactions((prev) =>
+        filterTransactionsBySignatures(prev, [signature]),
+      );
+      toast.success("تم حذف عملية البيع");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "تعذر حذف عملية البيع";
+      toast.error("فشل حذف عملية البيع", { description: message });
+    } finally {
+      setDeletingSaleId(null);
+    }
+  };
+
+  const handleDeleteCost = async (cost: ProjectCost) => {
+    const project = projects.find((p) => p.id === cost.projectId);
+    if (!project) {
+      toast.error("المشروع غير موجود");
+      return;
+    }
+
+    if (
+      !window.confirm(
+        `هل أنت متأكد من حذف تكلفة ${costTypeLabel(cost.type)} لمشروع ${project.name}؟`,
+      )
+    ) {
+      return;
+    }
+
+    const signature = costSignature(project.name, cost);
+
+    try {
+      setDeletingCostId(cost.id);
+      await deleteProjectCost({
+        id: cost.id,
+        projectName: project.name,
+        type: cost.type,
+        amount: cost.amount,
+        date: cost.date,
+      });
+      setCosts((prev) => prev.filter((c) => c.id !== cost.id));
+      setTransactions((prev) =>
+        filterTransactionsBySignatures(prev, [signature]),
+      );
+      toast.success("تم حذف التكلفة");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "تعذر حذف التكلفة";
+      toast.error("فشل حذف التكلفة", { description: message });
+    } finally {
+      setDeletingCostId(null);
+    }
+  };
+
   function printInvoice(
     id: string,
     fallbackSale?: ProjectSale,
@@ -602,9 +728,7 @@ export default function AccountingSystem() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
           <h1 className="text-2xl font-extrabold">لوحة التحكم</h1>
-          <p className="text-slate-500 text-sm">
-            نظام محاسبة عقاري 
-          </p>
+          <p className="text-slate-500 text-sm">نظام محاسبة عقاري</p>
         </div>
         <div className="flex w-full flex-wrap gap-2 justify-center sm:justify-start md:w-auto md:justify-end">
           {(() => {
@@ -697,7 +821,7 @@ export default function AccountingSystem() {
                 }
               >
                 <option value="revenue">إيراد</option>
-                <option value="expense">مصروف</option>
+                <option value="expense">م��روف</option>
               </select>
               <input
                 className="w-full rounded-md border-2 border-slate-200 focus:border-indigo-500 outline-none px-3 py-2"
@@ -1384,54 +1508,63 @@ export default function AccountingSystem() {
                           </div>
                         </div>
                       </div>
-                      <div className="mt-3 flex items-center justify-between">
+                      <div className="mt-3 flex items-center justify-between gap-2">
                         <div className="text-sm text-slate-500">
                           الربح:{" "}
                           <span className="font-semibold text-slate-700">
                             {t.profit.toLocaleString()} ج.م
                           </span>
                         </div>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <button className="rounded-md bg-slate-900 text-white px-3 py-1">
-                              عرض
-                            </button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-lg">
-                            <DialogTitle>تفاصيل المشروع</DialogTitle>
-                            <DialogDescription asChild>
-                              <div className="mt-2 space-y-2">
-                                <div>
-                                  <strong>الاسم:</strong> {p.name}
+                        <div className="flex items-center gap-2">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <button className="rounded-md bg-slate-900 text-white px-3 py-1">
+                                عرض
+                              </button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-lg">
+                              <DialogTitle>تفاصيل المشروع</DialogTitle>
+                              <DialogDescription asChild>
+                                <div className="mt-2 space-y-2">
+                                  <div>
+                                    <strong>الاسم:</strong> {p.name}
+                                  </div>
+                                  <div>
+                                    <strong>الموقع:</strong> {p.location}
+                                  </div>
+                                  <div>
+                                    <strong>الأدوار:</strong> {p.floors}
+                                  </div>
+                                  <div>
+                                    <strong>الوحدات:</strong> {p.units}
+                                  </div>
+                                  <div>
+                                    <strong>مباعة:</strong> {t.sold}
+                                  </div>
+                                  <div>
+                                    <strong>التكاليف:</strong>{" "}
+                                    {t.costs.toLocaleString()} ج.م
+                                  </div>
+                                  <div>
+                                    <strong>المبيعات:</strong>{" "}
+                                    {t.sales.toLocaleString()} ج.م
+                                  </div>
+                                  <div>
+                                    <strong>الربح:</strong>{" "}
+                                    {t.profit.toLocaleString()} ج.م
+                                  </div>
                                 </div>
-                                <div>
-                                  <strong>الموقع:</strong> {p.location}
-                                </div>
-                                <div>
-                                  <strong>الأدوار:</strong> {p.floors}
-                                </div>
-                                <div>
-                                  <strong>الوحدات:</strong> {p.units}
-                                </div>
-                                <div>
-                                  <strong>مباعة:</strong> {t.sold}
-                                </div>
-                                <div>
-                                  <strong>التكاليف:</strong>{" "}
-                                  {t.costs.toLocaleString()} ج.م
-                                </div>
-                                <div>
-                                  <strong>المبيعات:</strong>{" "}
-                                  {t.sales.toLocaleString()} ج.م
-                                </div>
-                                <div>
-                                  <strong>الربح:</strong>{" "}
-                                  {t.profit.toLocaleString()} ج.م
-                                </div>
-                              </div>
-                            </DialogDescription>
-                          </DialogContent>
-                        </Dialog>
+                              </DialogDescription>
+                            </DialogContent>
+                          </Dialog>
+                          <button
+                            className="rounded-md bg-red-600 text-white px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+                            onClick={() => void handleDeleteProject(p)}
+                            disabled={deletingProjectId === p.id}
+                          >
+                            {deletingProjectId === p.id ? "حذف..." : "حذف"}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   );
@@ -1474,12 +1607,19 @@ export default function AccountingSystem() {
                           <td className="px-3 py-2">
                             {s.price.toLocaleString()}
                           </td>
-                          <td className="px-3 py-2 text-right">
+                          <td className="px-3 py-2 text-right space-x-2 space-x-reverse">
                             <button
                               className="rounded-md bg-slate-900 text-white px-3 py-1"
                               onClick={() => printInvoice(s.id)}
                             >
                               فاتورة
+                            </button>
+                            <button
+                              className="rounded-md bg-red-600 text-white px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+                              onClick={() => void handleDeleteSale(s)}
+                              disabled={deletingSaleId === s.id}
+                            >
+                              {deletingSaleId === s.id ? "حذف..." : "حذف"}
                             </button>
                           </td>
                         </tr>
@@ -1503,6 +1643,7 @@ export default function AccountingSystem() {
                       <th className="px-3 py-2">النوع</th>
                       <th className="px-3 py-2">المبلغ</th>
                       <th className="px-3 py-2">ملاحظة</th>
+                      <th className="px-3 py-2"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1525,6 +1666,15 @@ export default function AccountingSystem() {
                             {c.amount.toLocaleString()}
                           </td>
                           <td className="px-3 py-2">{c.note}</td>
+                          <td className="px-3 py-2 text-right">
+                            <button
+                              className="rounded-md bg-red-600 text-white px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+                              onClick={() => void handleDeleteCost(c)}
+                              disabled={deletingCostId === c.id}
+                            >
+                              {deletingCostId === c.id ? "حذف..." : "حذف"}
+                            </button>
+                          </td>
                         </tr>
                       );
                     })}
@@ -1559,6 +1709,79 @@ export default function AccountingSystem() {
       )}
     </div>
   );
+}
+
+type TransactionSignature = Pick<
+  Transaction,
+  "type" | "amount" | "date" | "description"
+>;
+
+function filterTransactionsBySignatures(
+  transactions: Transaction[],
+  signatures: TransactionSignature[],
+): Transaction[] {
+  if (signatures.length === 0) {
+    return transactions;
+  }
+  const remaining = [...signatures];
+  return transactions.filter((transaction) => {
+    const index = remaining.findIndex(
+      (signature) =>
+        signature.type === transaction.type &&
+        signature.amount === transaction.amount &&
+        signature.date === transaction.date &&
+        signature.description === transaction.description,
+    );
+    if (index !== -1) {
+      remaining.splice(index, 1);
+      return false;
+    }
+    return true;
+  });
+}
+
+function costTypeLabel(type: ProjectCost["type"]): string {
+  if (type === "construction") return "إنشاء";
+  if (type === "operation") return "تشغيل";
+  return "مصروفات";
+}
+
+function buildCostDescription(
+  projectName: string,
+  type: ProjectCost["type"],
+): string {
+  return `تكلفة ${costTypeLabel(type)} لمشروع ${projectName}`;
+}
+
+function buildSaleDescription(
+  projectName: string,
+  sale: Pick<ProjectSale, "unitNo" | "buyer">,
+): string {
+  return `بيع وحدة ${sale.unitNo} من مشروع ${projectName} إلى ${sale.buyer}`;
+}
+
+function costSignature(
+  projectName: string,
+  cost: ProjectCost,
+): TransactionSignature {
+  return {
+    type: "expense",
+    amount: cost.amount,
+    date: cost.date,
+    description: buildCostDescription(projectName, cost.type),
+  };
+}
+
+function saleSignature(
+  projectName: string,
+  sale: ProjectSale,
+): TransactionSignature {
+  return {
+    type: "revenue",
+    amount: sale.price,
+    date: sale.date,
+    description: buildSaleDescription(projectName, sale),
+  };
 }
 
 function Stat({
@@ -1644,7 +1867,7 @@ function ReportsSection({
         .filter((t) => t.type === "expense")
         .reduce((a, b) => a + b.amount, 0);
       return {
-        title: "تقرير الأرباح والخسائر",
+        title: "تقرير الأرباح و��لخسائر",
         headers: ["البند", "القيمة"],
         rows: [
           ["إجمالي الإيرادات", rev.toLocaleString() + " ج.م"],
